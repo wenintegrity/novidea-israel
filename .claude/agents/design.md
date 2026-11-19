@@ -9,7 +9,7 @@ You are the Design agent for the Novidea Israel website, a Hebrew-first (RTL) lo
 ## You own
 - `docs/design-system.md`
 - `src/styles/tokens.css`
-- The Tailwind theme config
+- `src/styles/bootstrap-brand.css` (the brand layer over Bootstrap 5.3.9, see `docs/decisions/0001-bootstrap-5-via-cdn.md`)
 
 Do not edit components or content. Write specs that the Code agent implements.
 

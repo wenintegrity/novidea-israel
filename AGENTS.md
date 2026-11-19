@@ -15,7 +15,7 @@ Read it before you change anything. If it conflicts with a request, raise the co
 | Secondary language | English (`en`, LTR), served at `/en/` |
 | Source of truth for product messaging | novidea.com, adapted for Israel, not machine-translated |
 | Framework | [Astro](https://astro.build) + TypeScript (static-first, fast, good for SEO) |
-| Styling | Tailwind CSS with **logical properties only** (`ms-*`, `pe-*`, `start-*`, never `ml-*`, `pr-*`, `left-*`) |
+| Styling | **Bootstrap 5.3.9 from the jsDelivr CDN** with SRI: `bootstrap.rtl.min.css` on Hebrew pages, `bootstrap.min.css` on English pages, plus a Novidea brand layer (`src/styles/bootstrap-brand.css`). Our own CSS uses **logical properties only**; in markup use Bootstrap's start/end utilities (`ms-*`, `pe-*`, `text-start`). See ADR 0001 |
 | Content | Markdown/MDX in Astro content collections, one folder per locale |
 | Testing | Vitest (unit), Playwright (E2E and visual), axe-core (accessibility), Lighthouse CI (performance and SEO) |
 | Hosting | To be decided (Vercel, Netlify or Cloudflare Pages all work for a static Astro build). Record the choice in `docs/decisions/` |
@@ -43,7 +43,7 @@ Stack changes go through an Architecture Decision Record (ADR) in `docs/decision
 │   ├── components/
 │   ├── content/{he,en}/      ← page and article content
 │   ├── i18n/                 ← UI strings per locale
-│   └── styles/tokens.css     ← design tokens (owned by Design agent)
+│   └── styles/               ← tokens.css + bootstrap-brand.css (owned by Design agent)
 ├── public/                   ← static assets (images, fonts, favicons)
 └── tests/{unit,e2e,a11y}/
 ```
@@ -92,7 +92,7 @@ Each handoff is a file in the repo, not a chat message. If it isn't written down
 
 **Purpose:** visual language, design tokens, component specs, and RTL correctness.
 
-**Owns:** `docs/design-system.md`, `src/styles/tokens.css`, Tailwind theme config.
+**Owns:** `docs/design-system.md`, `src/styles/tokens.css`, `src/styles/bootstrap-brand.css` (the brand layer over Bootstrap).
 
 **Responsibilities**
 - Inherit Novidea's global brand (logo, colors, imagery style) from novidea.com and the brand guidelines. The Israeli site should feel like Novidea, not a separate brand.
