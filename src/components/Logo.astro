@@ -1,0 +1,71 @@
+---
+// Novidea logo (docs/design-system.md §2), inlined from the official SVG so each variant only
+// changes fills. The paths are never edited, mirrored or redrawn.
+//
+//   variant="light" (default): navy wordmark, yellow mark   → white, navy-50, yellow-50 surfaces
+//   variant="dark":            white wordmark, yellow mark  → navy surfaces
+//   variant="mono":            all black                    → yellow, sky and red surfaces
+import svgSource from '../assets/brand/novidea-logo.svg?raw';
+
+interface Props {
+  variant?: 'light' | 'dark' | 'mono';
+  /** Set when the surrounding link already carries the name (avoids "Novidea Novidea"). */
+  decorative?: boolean;
+}
+
+const { variant = 'light', decorative = false } = Astro.props;
+
+const WORDMARK = '#101338';
+const MARK = '#fccf0f';
+
+// Keep only the shapes: drop the XML prolog, the outer <svg> (and its non-unique id="a"),
+// and turn inline style fills into classes so CSP never sees inline styles.
+const shapes = svgSource
+  .replace(/^[\s\S]*?<svg[^>]*>/, '')
+  .replace(/<\/svg>\s*$/, '')
+  .replaceAll(`style="fill:${WORDMARK};"`, 'class="logo__wordmark"')
+  .replaceAll(`style="fill:${MARK};"`, 'class="logo__mark"');
+---
+
+<svg
+  class:list={['logo', `logo--${variant}`]}
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 1398.33333 462.8661"
+  focusable="false"
+  role={decorative ? undefined : 'img'}
+  aria-label={decorative ? undefined : 'Novidea'}
+  aria-hidden={decorative ? 'true' : undefined}
+  set:html={shapes}
+/>
+
+<style>
+  .logo {
+    display: block;
+    block-size: 1.5rem; /* 24px, mobile minimum (design-system.md §2) */
+    inline-size: auto;
+    aspect-ratio: 1398.33333 / 462.8661;
+  }
+
+  @media (min-width: 992px) {
+    .logo {
+      block-size: 2rem; /* 32px, desktop */
+    }
+  }
+
+  .logo :global(.logo__wordmark) {
+    fill: var(--color-navy);
+  }
+
+  .logo :global(.logo__mark) {
+    fill: var(--color-logo-yellow);
+  }
+
+  .logo--dark :global(.logo__wordmark) {
+    fill: var(--color-white);
+  }
+
+  .logo--mono :global(.logo__wordmark),
+  .logo--mono :global(.logo__mark) {
+    fill: var(--color-black);
+  }
+</style>

@@ -1,0 +1,276 @@
+/*
+ * Novidea brand layer on top of Bootstrap 5.3.9 (loaded from the CDN before this file).
+ * Spec: docs/design-system.md §13. Owner: Design (values), Code (wiring).
+ *
+ * Bootstrap's CDN build can't be recompiled, so the brand is applied by overriding its CSS
+ * variables. Selectors here match Bootstrap's own specificity and win because this file loads later.
+ * Everything here uses logical properties, so the same file works with bootstrap.css and bootstrap.rtl.css.
+ */
+
+/* ---------- Global Bootstrap variables ---------- */
+:root {
+  --bs-font-sans-serif: var(--font-body);
+  --bs-body-font-family: var(--font-body);
+  --bs-body-font-size: var(--text-body);
+  --bs-body-line-height: var(--leading-body);
+  --bs-body-color: var(--color-navy);
+  --bs-body-color-rgb: 16, 19, 56;
+  --bs-body-bg: var(--color-white);
+  --bs-emphasis-color: var(--color-navy);
+  --bs-emphasis-color-rgb: 16, 19, 56;
+  --bs-secondary-color: var(--color-grey-700);
+  --bs-heading-color: inherit;
+  --bs-primary: var(--color-navy);
+  --bs-primary-rgb: 16, 19, 56;
+  --bs-link-color: var(--color-navy);
+  --bs-link-color-rgb: 16, 19, 56;
+  --bs-link-hover-color: var(--color-navy);
+  --bs-link-hover-color-rgb: 16, 19, 56;
+  --bs-border-color: var(--color-navy-200);
+  --bs-border-radius: var(--radius-sm);
+  --bs-border-radius-sm: var(--radius-sm);
+  --bs-border-radius-lg: var(--radius-sm);
+  --bs-border-radius-xl: var(--radius-sm);
+  --bs-border-radius-xxl: var(--radius-sm);
+  --bs-focus-ring-color: var(--focus-ring);
+  scroll-padding-top: calc(var(--header-height) + var(--space-4));
+}
+
+/* ---------- Typography ---------- */
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, .display-nv {
+  font-family: var(--font-heading);
+  font-weight: 700;
+}
+h1, .h1 { font-size: var(--text-h1); line-height: var(--leading-h1); }
+h2, .h2 { font-size: var(--text-h2); line-height: var(--leading-h2); }
+h3, .h3 { font-size: var(--text-h3); line-height: var(--leading-h3); }
+h4, .h4 { font-size: var(--text-h4); line-height: var(--leading-h4); font-weight: 600; }
+.display-nv { font-size: var(--text-display); line-height: var(--leading-display); }
+:lang(he) h3, :lang(he) .h3 { font-weight: 600; }
+
+/* Headline pairing: bold phrase + regular phrase (design-system.md §4.3) */
+.headline-rest { font-weight: 400; }
+
+/* English capitals are applied by CSS, never typed in content */
+:lang(en) .caps { text-transform: uppercase; letter-spacing: var(--tracking-caps); }
+
+.lead-nv { font-size: var(--text-body-lg); line-height: var(--leading-body); }
+.text-sm-nv { font-size: var(--text-sm); line-height: var(--leading-sm); }
+.text-secondary-nv { color: var(--text-secondary); }
+.measure { max-inline-size: var(--measure); }
+.eyebrow {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  margin-block-end: var(--space-2);
+}
+
+a { text-underline-offset: 0.2em; }
+a:hover { text-decoration-thickness: 2px; }
+
+/* ---------- Focus (design-system.md §9) ---------- */
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+.btn:focus-visible,
+.nav-link:focus-visible,
+.navbar-brand:focus-visible,
+.navbar-toggler:focus-visible,
+.btn-close:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  box-shadow: none;
+}
+.navbar-toggler:focus,
+.btn-close:focus { box-shadow: none; }
+
+/* ---------- Buttons (design-system.md §10.4) ---------- */
+.btn {
+  --bs-btn-padding-y: 0.75rem;
+  --bs-btn-padding-x: 1.5rem;
+  --bs-btn-font-family: var(--font-body);
+  --bs-btn-font-size: var(--text-body);
+  --bs-btn-font-weight: 500;
+  --bs-btn-line-height: 1.5;
+  --bs-btn-border-radius: var(--radius-sm);
+  --bs-btn-disabled-opacity: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-block-size: 3rem;
+}
+.btn-sm {
+  --bs-btn-padding-y: 0.5rem;
+  --bs-btn-padding-x: 1rem;
+  --bs-btn-font-size: var(--text-sm);
+  min-block-size: 2.5rem;
+}
+.btn .icon { inline-size: 1.25em; block-size: 1.25em; }
+
+/* primary: navy / white (17.91:1) */
+.btn-primary {
+  --bs-btn-color: var(--color-white);
+  --bs-btn-bg: var(--color-navy);
+  --bs-btn-border-color: var(--color-navy);
+  --bs-btn-hover-color: var(--color-white);
+  --bs-btn-hover-bg: var(--color-navy-800);
+  --bs-btn-hover-border-color: var(--color-navy-800);
+  --bs-btn-active-color: var(--color-white);
+  --bs-btn-active-bg: var(--color-navy-800);
+  --bs-btn-active-border-color: var(--color-navy-800);
+  --bs-btn-disabled-color: var(--color-grey-700);
+  --bs-btn-disabled-bg: var(--color-grey-100);
+  --bs-btn-disabled-border-color: var(--color-grey-100);
+}
+
+/* primary-on-dark: yellow / navy (12.12:1) */
+.btn-on-dark {
+  --bs-btn-color: var(--color-navy);
+  --bs-btn-bg: var(--color-yellow);
+  --bs-btn-border-color: var(--color-yellow);
+  --bs-btn-hover-color: var(--color-navy);
+  --bs-btn-hover-bg: var(--color-yellow-600);
+  --bs-btn-hover-border-color: var(--color-yellow-600);
+  --bs-btn-active-color: var(--color-navy);
+  --bs-btn-active-bg: var(--color-yellow-600);
+  --bs-btn-active-border-color: var(--color-yellow-600);
+  --bs-btn-disabled-color: var(--color-grey-700);
+  --bs-btn-disabled-bg: var(--color-grey-100);
+  --bs-btn-disabled-border-color: var(--color-grey-100);
+}
+
+/* accent: sky / navy (8.92:1) */
+.btn-accent {
+  --bs-btn-color: var(--color-navy);
+  --bs-btn-bg: var(--color-sky);
+  --bs-btn-border-color: var(--color-sky);
+  --bs-btn-hover-color: var(--color-navy);
+  --bs-btn-hover-bg: var(--color-sky-600);
+  --bs-btn-hover-border-color: var(--color-sky-600);
+  --bs-btn-active-color: var(--color-navy);
+  --bs-btn-active-bg: var(--color-sky-600);
+  --bs-btn-active-border-color: var(--color-sky-600);
+  --bs-btn-disabled-color: var(--color-grey-700);
+  --bs-btn-disabled-bg: var(--color-grey-100);
+  --bs-btn-disabled-border-color: var(--color-grey-100);
+}
+
+/* outline: navy border on light, yellow, sky and red surfaces */
+.btn-outline-primary {
+  --bs-btn-color: var(--color-navy);
+  --bs-btn-border-color: var(--color-navy);
+  --bs-btn-hover-color: var(--color-white);
+  --bs-btn-hover-bg: var(--color-navy);
+  --bs-btn-hover-border-color: var(--color-navy);
+  --bs-btn-active-color: var(--color-white);
+  --bs-btn-active-bg: var(--color-navy);
+  --bs-btn-active-border-color: var(--color-navy);
+  --bs-btn-disabled-color: var(--color-grey-700);
+  --bs-btn-disabled-bg: transparent;
+  --bs-btn-disabled-border-color: var(--color-grey-700);
+}
+
+/* outline-on-dark: white border on navy */
+.btn-outline-on-dark {
+  --bs-btn-color: var(--color-white);
+  --bs-btn-bg: transparent;
+  --bs-btn-border-color: var(--color-white);
+  --bs-btn-hover-color: var(--color-navy);
+  --bs-btn-hover-bg: var(--color-white);
+  --bs-btn-hover-border-color: var(--color-white);
+  --bs-btn-active-color: var(--color-navy);
+  --bs-btn-active-bg: var(--color-white);
+  --bs-btn-active-border-color: var(--color-white);
+}
+
+/* ---------- Surfaces (design-system.md §3.3) ---------- */
+.surface-light,
+.surface-subtle,
+.surface-tint,
+.surface-yellow,
+.surface-sky,
+.surface-red {
+  color: var(--color-navy);
+  --focus-ring: var(--color-navy);
+  --bs-link-color-rgb: 16, 19, 56;
+  --bs-link-hover-color-rgb: 16, 19, 56;
+}
+.surface-light { background-color: var(--color-white); --text-secondary: var(--color-grey-700); }
+.surface-subtle { background-color: var(--color-navy-50); --text-secondary: var(--color-grey-700); }
+.surface-tint { background-color: var(--color-yellow-50); --text-secondary: var(--color-navy); }
+.surface-yellow { background-color: var(--color-yellow); --text-secondary: var(--color-navy); }
+.surface-sky { background-color: var(--color-sky); --text-secondary: var(--color-navy); }
+.surface-red { background-color: var(--color-red); --text-secondary: var(--color-navy); }
+.surface-navy {
+  background-color: var(--color-navy);
+  color: var(--color-white);
+  --text-secondary: var(--color-navy-muted);
+  --focus-ring: var(--color-yellow);
+  --bs-link-color-rgb: 253, 208, 17;
+  --bs-link-hover-color-rgb: 253, 208, 17;
+}
+
+/* ---------- Layout helpers ---------- */
+.section { padding-block: var(--section-pad); }
+.section-header { margin-block-end: var(--space-8); }
+.section-header > :last-child { margin-block-end: 0; }
+
+.icon { inline-size: var(--icon-sm); block-size: var(--icon-sm); flex-shrink: 0; }
+
+/* Directional icons mirror in RTL (design-system.md §8.1).
+   Physical transform is intentional: see design-system.md §8.3. */
+.icon-directional:dir(rtl) { transform: scaleX(-1); }
+
+/* Skip link (design-system.md §10.1) */
+.skip-link {
+  position: absolute;
+  inset-block-start: var(--space-2);
+  inset-inline-start: var(--space-2);
+  z-index: var(--z-skip-link);
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--color-navy);
+  color: var(--color-white);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  --focus-ring: var(--color-yellow);
+  transform: translateY(-200%);
+}
+.skip-link:focus { transform: none; color: var(--color-white); }
+
+/* ---------- Motion (design-system.md §6.1) ---------- */
+/* Entrance keyframes, used by CSS-only entrances (the hero). Scroll entrances use src/scripts/animate-on-scroll.ts. */
+@keyframes nv-enter-up {
+  from { opacity: 0; transform: translateY(1rem); }
+}
+
+/* Hover lift on buttons */
+.btn {
+  transition:
+    color var(--duration-fast) var(--ease-out),
+    background-color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out),
+    transform var(--duration-fast) var(--ease-out);
+}
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: none; }
+
+/* Scroll-animated content must always print */
+@media print {
+  [data-animate],
+  [data-animate-children] > * {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

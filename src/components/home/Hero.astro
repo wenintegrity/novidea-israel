@@ -1,0 +1,199 @@
+---
+// Hero (docs/design-system.md §10.6). Mobile/tablet: media then panel, stacked.
+// Desktop (≥ lg): media on 7 columns at the inline-start, slanted yellow panel on 6 columns at the
+// inline-end, overlapping by one column. Grid columns follow the document direction.
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Icon from '../Icon.astro';
+import StripeMotif from '../StripeMotif.astro';
+
+interface Link {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  titleStrong: string;
+  titleRest: string;
+  lead: string;
+  points: string[];
+  primaryCta: Link;
+  secondaryCta?: Link;
+  picture?: { src: ImageMetadata; alt: string };
+}
+
+const { titleStrong, titleRest, lead, points, primaryCta, secondaryCta, picture } = Astro.props;
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="container">
+    <div class="hero__grid">
+      {
+        picture ? (
+          <div class="hero__media hero__media--picture">
+            {/* Likely LCP element: load eagerly, high priority (design-system.md §10.6) */}
+            <Image
+              src={picture.src}
+              alt={picture.alt}
+              widths={[640, 960, 1280]}
+              sizes="(min-width: 992px) 58vw, 100vw"
+              loading="eager"
+              fetchpriority="high"
+              class="hero__picture"
+            />
+          </div>
+        ) : (
+          <div class="hero__media" aria-hidden="true">
+            <StripeMotif class="hero__stripes" />
+          </div>
+        )
+      }
+
+      <div class="hero__panel surface-yellow">
+        <h1 id="hero-title" class="display-nv">
+          <strong>{titleStrong}</strong>
+          <span class="headline-rest">{titleRest}</span>
+        </h1>
+        <p class="lead-nv">{lead}</p>
+        {
+          points.length > 0 && (
+            <ul class="hero__points list-unstyled">
+              {points.map((point) => (
+                <li>
+                  <Icon name="check" class="hero__check" />
+                  <span>{point}</span>
+                </li>
+              ))}
+            </ul>
+          )
+        }
+        <div class="d-flex flex-wrap gap-3">
+          <a class="btn btn-primary" href={primaryCta.href}>{primaryCta.label}</a>
+          {secondaryCta && <a class="btn btn-outline-primary" href={secondaryCta.href}>{secondaryCta.label}</a>}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-block: var(--space-6) var(--section-pad);
+  }
+
+  .hero__grid {
+    display: grid;
+  }
+
+  .hero__media {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+    background-color: var(--color-navy-50);
+  }
+
+  /* The brand picture carries its own stripes past the photo edge (transparent areas), so no
+     placeholder background behind it and no forced crop. */
+  .hero__media--picture {
+    aspect-ratio: auto;
+    background-color: transparent;
+    overflow: visible;
+  }
+
+  .hero__picture {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+  }
+
+  .hero__panel {
+    padding: var(--space-8) var(--space-6);
+  }
+
+  /* Load entrance: the panel's content rises in, staggered. The picture stays static (it's the LCP). */
+  .hero__panel > * {
+    animation: nv-enter-up 0.7s var(--ease-out) both;
+  }
+
+  .hero__panel > :nth-child(2) { animation-delay: 0.08s; }
+  .hero__panel > :nth-child(3) { animation-delay: 0.16s; }
+  .hero__panel > :nth-child(4) { animation-delay: 0.24s; }
+
+  h1 {
+    margin-block-end: var(--space-4);
+  }
+
+  h1 strong {
+    display: block;
+    font-weight: 700;
+  }
+
+  .lead-nv {
+    margin-block-end: var(--space-6);
+  }
+
+  .hero__points {
+    display: grid;
+    gap: var(--space-3);
+    margin-block-end: var(--space-8);
+  }
+
+  .hero__points li {
+    display: flex;
+    gap: var(--space-3);
+    align-items: flex-start;
+  }
+
+  .hero__points :global(.hero__check) {
+    margin-block-start: 0.15em;
+    padding: 0.2rem;
+    border-radius: var(--radius-full);
+    background-color: var(--color-navy);
+    color: var(--color-white);
+  }
+
+  @media (min-width: 768px) {
+    .hero__panel {
+      padding: var(--space-12);
+    }
+  }
+
+  @media (min-width: 992px) {
+    .hero {
+      padding-block-start: var(--space-12);
+    }
+
+    .hero__grid {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      align-items: center;
+    }
+
+    .hero__media {
+      grid-column: 1 / span 7;
+      grid-row: 1;
+      align-self: stretch;
+      aspect-ratio: auto;
+      min-block-size: 34rem;
+    }
+
+    .hero__media--picture {
+      align-self: center;
+      min-block-size: 0;
+    }
+
+    .hero__panel {
+      grid-column: 7 / span 6;
+      grid-row: 1;
+      z-index: 1;
+      padding-block: var(--space-12);
+      padding-inline: calc(var(--space-12) + var(--slant)) var(--space-12);
+      /* Slanted inline-start edge, wider at the top (design-system.md §7.1).
+         clip-path has no logical form, so RTL gets its own polygon (design-system.md §8.3). */
+      clip-path: polygon(0 0, 100% 0, 100% 100%, var(--slant) 100%);
+    }
+
+    .hero__panel:dir(rtl) {
+      clip-path: polygon(0 0, 100% 0, calc(100% - var(--slant)) 100%, 0 100%);
+    }
+  }
+</style>

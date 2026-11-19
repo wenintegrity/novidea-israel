@@ -1,0 +1,33 @@
+---
+// Hebrew home page (/). Structure: docs/content-model.md, page type "home".
+import { getEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/home/Hero.astro';
+import FeatureGrid from '../components/home/FeatureGrid.astro';
+import ResultsBand from '../components/home/ResultsBand.astro';
+import Spotlight from '../components/home/Spotlight.astro';
+import CustomerStory from '../components/home/CustomerStory.astro';
+import AudienceTiles from '../components/home/AudienceTiles.astro';
+import Customers from '../components/home/Customers.astro';
+import NewsTeaser from '../components/home/NewsTeaser.astro';
+import CtaBand from '../components/home/CtaBand.astro';
+import { getLocale } from '../i18n/utils';
+
+const locale = getLocale(Astro.currentLocale);
+const entry = await getEntry('home', `${locale}/home`);
+if (!entry) throw new Error(`Missing content: src/content/${locale}/home.yaml`);
+const c = entry.data;
+---
+
+<BaseLayout locale={locale} title={c.seo.title} description={c.seo.description}>
+  <Hero {...c.hero} />
+  <FeatureGrid id="platform" surface="subtle" {...c.pillars} />
+  <ResultsBand {...c.results} />
+  <Spotlight {...c.spotlight} />
+  <FeatureGrid id="ai" surface="navy" {...c.ai} />
+  <CustomerStory {...c.story} />
+  <AudienceTiles {...c.audiences} />
+  <Customers {...c.customers} />
+  <NewsTeaser locale={locale} {...c.news} />
+  <CtaBand {...c.cta} />
+</BaseLayout>

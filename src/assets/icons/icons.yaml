@@ -1,0 +1,254 @@
+# Novidea brand icon library: names and metadata.
+# Files: <id>.png (navy lines, for light backgrounds) and <id>.on-dark.png (white lines, for navy).
+# Entries are optional: any icon file in this folder is usable by its file name. Run `npm run icons` after adding files.
+
+analytics-search:
+  en: "Analytics"
+  he: "ניתוח נתונים"
+  category: data
+pie-chart:
+  en: "Data breakdown"
+  he: "פילוח נתונים"
+  category: data
+gears-exchange:
+  en: "Process integration"
+  he: "שילוב תהליכים"
+  category: process
+api:
+  en: "API"
+  he: "ממשקי API"
+  category: integration
+ai-brain:
+  en: "Artificial intelligence"
+  he: "בינה מלאכותית"
+  category: ai
+document-billing:
+  en: "Documents and billing"
+  he: "מסמכים וחיובים"
+  category: finance
+growth-chart:
+  en: "Growth"
+  he: "צמיחה"
+  category: business
+cloud-scale:
+  en: "Scalable cloud"
+  he: "ענן גמיש"
+  category: cloud
+document-settings:
+  en: "Document configuration"
+  he: "הגדרות מסמכים"
+  category: process
+cloud-network:
+  en: "Cloud network"
+  he: "רשת ענן"
+  category: cloud
+cloud-security:
+  en: "Cloud security"
+  he: "אבטחת ענן"
+  category: cloud
+customer-care:
+  en: "Customer care"
+  he: "טיפול בלקוח"
+  category: people
+currencies:
+  en: "Multiple currencies"
+  he: "ריבוי מטבעות"
+  category: finance
+browser-settings:
+  en: "Configuration"
+  he: "התאמה אישית"
+  category: process
+database:
+  en: "Database"
+  he: "מסד נתונים"
+  category: data
+financial-analysis:
+  en: "Financial analysis"
+  he: "ניתוח פיננסי"
+  category: finance
+team-dashboard:
+  en: "Team dashboard"
+  he: "לוח צוות"
+  category: people
+saas:
+  en: "Software as a service"
+  he: "תוכנה כשירות"
+  category: cloud
+strength:
+  en: "Strength"
+  he: "עוצמה"
+  category: brand
+hero-summit:
+  en: "Leadership"
+  he: "מובילות"
+  category: brand
+hero:
+  en: "Empowerment"
+  he: "העצמה"
+  category: brand
+speed-horse:
+  en: "Speed"
+  he: "מהירות"
+  category: brand
+  directional: true  # points in the reading direction; mirrored on Hebrew pages
+process-cycle:
+  en: "Process automation"
+  he: "אוטומציה של תהליכים"
+  category: process
+product-module:
+  en: "Product module"
+  he: "מודול"
+  category: process
+information:
+  en: "Information"
+  he: "מידע"
+  category: misc
+idea:
+  en: "Insight"
+  he: "תובנה"
+  category: ai
+online-billing:
+  en: "Online billing"
+  he: "חיוב דיגיטלי"
+  category: finance
+revenue-growth:
+  en: "Revenue growth"
+  he: "צמיחה בהכנסות"
+  category: finance
+checklist:
+  en: "Task list"
+  he: "רשימת משימות"
+  category: process
+profitable-idea:
+  en: "Profitability"
+  he: "רווחיות"
+  category: finance
+fast-track:
+  en: "Fast track"
+  he: "מסלול מהיר"
+  category: process
+  directional: true  # points in the reading direction; mirrored on Hebrew pages
+london-lloyds:
+  en: "Lloyd's building"
+  he: "בניין לוידס"
+  category: places
+london-skyline:
+  en: "London market"
+  he: "שוק לונדון"
+  category: places
+time-automation:
+  en: "Time savings"
+  he: "חיסכון בזמן"
+  category: process
+org-chart:
+  en: "Organization"
+  he: "מבנה ארגוני"
+  category: people
+business-performance:
+  en: "Business performance"
+  he: "ביצועים עסקיים"
+  category: business
+sales-funnel:
+  en: "Sales funnel"
+  he: "משפך מכירות"
+  category: business
+mobile-integration:
+  en: "Mobile integration"
+  he: "אינטגרציה במובייל"
+  category: integration
+city-buildings:
+  en: "Enterprises"
+  he: "ארגונים"
+  category: places
+platform-integration:
+  en: "Integrations"
+  he: "אינטגרציות"
+  category: integration
+partnership:
+  en: "Partnership"
+  he: "שותפות"
+  category: people
+portal:
+  en: "Web portal"
+  he: "פורטל"
+  category: integration
+document-automation:
+  en: "Document automation"
+  he: "אוטומציה של מסמכים"
+  category: process
+certified:
+  en: "Certified quality"
+  he: "איכות מאושרת"
+  category: business
+financial-report:
+  en: "Financial reporting"
+  he: "דוחות כספיים"
+  category: finance
+renewals:
+  en: "Renewals"
+  he: "חידושים"
+  category: finance
+dashboard:
+  en: "Dashboard"
+  he: "לוח מחוונים"
+  category: data
+people-exchange:
+  en: "Collaboration"
+  he: "שיתוף פעולה"
+  category: people
+online-support:
+  en: "Online support"
+  he: "תמיכה מקוונת"
+  category: people
+mobile-app:
+  en: "Mobile app"
+  he: "אפליקציה"
+  category: integration
+protection:
+  en: "Protection"
+  he: "הגנה"
+  category: business
+performance:
+  en: "Performance"
+  he: "ביצועים"
+  category: data
+data-filter:
+  en: "Data filtering"
+  he: "סינון נתונים"
+  category: data
+smart-ai:
+  en: "Smart thinking"
+  he: "חשיבה חכמה"
+  category: ai
+career-growth:
+  en: "Progress"
+  he: "התקדמות"
+  category: people
+support-agent:
+  en: "Service agent"
+  he: "נציג שירות"
+  category: people
+settings:
+  en: "Settings"
+  he: "הגדרות"
+  category: process
+puzzle:
+  en: "Flexibility"
+  he: "גמישות"
+  category: integration
+tech-integration:
+  en: "Technology"
+  he: "טכנולוגיה"
+  category: integration
+work-life:
+  en: "Work-life balance"
+  he: "איזון בין עבודה לחיים"
+  category: misc
+landmark:
+  en: "Landmark building"
+  he: "ציון דרך"
+  category: places
+office-building:
+  en: "Office"
+  he: "משרד"
+  category: places

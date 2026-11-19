@@ -1,0 +1,225 @@
+---
+// Header (docs/design-system.md §10.2): Bootstrap navbar with a responsive offcanvas (.offcanvas-lg).
+// Below lg the nav opens as a panel from the inline-end side; from lg up it's inline.
+import Icon from './Icon.astro';
+import Logo from './Logo.astro';
+import { ctaAnchor, homePath, primaryNav, sectionHref } from '../config/nav';
+import { useTranslations } from '../i18n/utils';
+import type { Locale } from '../i18n/ui';
+
+interface Props {
+  locale: Locale;
+  alternateHref?: string;
+}
+
+const { locale, alternateHref } = Astro.props;
+const t = useTranslations(locale);
+const otherLocale = locale === 'he' ? 'en' : 'he';
+---
+
+<header class="site-header sticky-top">
+  <nav class="navbar navbar-expand-lg" aria-label={t('nav.label')}>
+    <div class="container">
+      <a class="navbar-brand" href={homePath(locale)} aria-label={t('nav.home')}>
+        <Logo variant="light" decorative />
+      </a>
+
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#site-nav"
+        aria-controls="site-nav"
+        aria-label={t('nav.open')}
+      >
+        <Icon name="menu" />
+      </button>
+
+      <div
+        class="offcanvas offcanvas-end offcanvas-lg site-nav"
+        tabindex="-1"
+        id="site-nav"
+        aria-labelledby="site-nav-title"
+      >
+        <div class="offcanvas-header">
+          <h2 class="offcanvas-title h4" id="site-nav-title">{t('nav.menu')}</h2>
+          <button
+            type="button"
+            class="btn-close btn-close-white"
+            data-bs-dismiss="offcanvas"
+            data-bs-target="#site-nav"
+            aria-label={t('nav.close')}></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav">
+            {
+              primaryNav.map((item) => (
+                <li class="nav-item">
+                  <a class="nav-link" href={sectionHref(locale, item.anchor)} data-nav-section>
+                    {t(item.key)}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+          <div class="site-nav__actions">
+            {
+              alternateHref && (
+                <a class="nav-link lang-switch" href={alternateHref} lang={otherLocale} hreflang={otherLocale}>
+                  {t('lang.switch')}
+                </a>
+              )
+            }
+            <a class="btn btn-accent btn-sm site-nav__cta" href={sectionHref(locale, ctaAnchor)} data-nav-section>
+              {t('nav.cta')}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<script>
+  // Section links inside the open mobile panel: close the panel first, then move to the section
+  // and put focus there. Bootstrap's own dismiss trigger blocks link navigation, so it isn't used.
+  type OffcanvasInstance = { hide(): void };
+  type BootstrapGlobal = { Offcanvas: { getInstance(el: Element): OffcanvasInstance | null } };
+
+  const panel = document.getElementById('site-nav');
+  panel?.querySelectorAll<HTMLAnchorElement>('a[data-nav-section]').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      const bs = (window as unknown as { bootstrap?: BootstrapGlobal }).bootstrap;
+      const instance = bs?.Offcanvas.getInstance(panel);
+      if (!instance || !panel.classList.contains('show')) return; // desktop: normal link
+
+      const hash = new URL(link.href).hash;
+      if (!hash || new URL(link.href).pathname !== window.location.pathname) return;
+
+      event.preventDefault();
+      panel.addEventListener(
+        'hidden.bs.offcanvas',
+        () => {
+          history.pushState(null, '', hash);
+          const target = document.getElementById(hash.slice(1));
+          target?.focus({ preventScroll: true });
+          target?.scrollIntoView();
+        },
+        { once: true },
+      );
+      instance.hide();
+    });
+  });
+</script>
+
+<style>
+  .site-header {
+    background-color: var(--color-white);
+    border-block-end: var(--border-thin) solid var(--color-navy-200);
+  }
+
+  .navbar {
+    --bs-navbar-padding-y: 0;
+    --bs-navbar-color: var(--color-navy);
+    --bs-navbar-hover-color: var(--color-navy);
+    --bs-navbar-active-color: var(--color-navy);
+    --bs-navbar-brand-color: var(--color-navy);
+    --bs-navbar-brand-hover-color: var(--color-navy);
+    --bs-navbar-toggler-border-color: transparent;
+    --bs-navbar-toggler-padding-x: var(--space-2);
+    --bs-navbar-toggler-padding-y: var(--space-2);
+    min-block-size: var(--header-height);
+  }
+
+  .navbar-brand {
+    padding-block: var(--space-2);
+  }
+
+  .navbar-toggler {
+    min-inline-size: 2.75rem;
+    min-block-size: 2.75rem;
+    color: var(--color-navy);
+  }
+
+  .nav-link {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    min-block-size: 2.75rem;
+  }
+
+  .nav-link:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.35em;
+  }
+
+  .site-nav__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  /* Mobile and tablet: the panel is a navy surface (Bootstrap lg breakpoint = 992px) */
+  @media (max-width: 991.98px) {
+    /* Only below lg: from lg up Bootstrap hides the toggler, and a display value here would override that */
+    .navbar-toggler {
+      display: inline-grid;
+      place-items: center;
+    }
+
+    .site-nav {
+      --bs-offcanvas-width: min(100vw, 22rem);
+      --bs-offcanvas-bg: var(--color-navy);
+      --bs-offcanvas-color: var(--color-white);
+      --bs-navbar-color: var(--color-white);
+      --bs-navbar-hover-color: var(--color-white);
+      --bs-navbar-active-color: var(--color-white);
+      --focus-ring: var(--color-yellow);
+    }
+
+    .offcanvas-title {
+      margin: 0;
+      color: var(--color-white);
+    }
+
+    .site-nav .nav-link {
+      font-size: var(--text-h4);
+    }
+
+    .site-nav__actions {
+      flex-direction: column;
+      align-items: stretch;
+      margin-block-start: var(--space-8);
+    }
+
+    /* The CTA becomes primary-on-dark inside the navy panel */
+    .site-nav__cta {
+      --bs-btn-color: var(--color-navy);
+      --bs-btn-bg: var(--color-yellow);
+      --bs-btn-border-color: var(--color-yellow);
+      --bs-btn-hover-color: var(--color-navy);
+      --bs-btn-hover-bg: var(--color-yellow-600);
+      --bs-btn-hover-border-color: var(--color-yellow-600);
+      min-block-size: 3rem;
+    }
+  }
+
+  /* Desktop: inline nav, CTA at the inline-end */
+  @media (min-width: 992px) {
+    .offcanvas-body {
+      align-items: center;
+      flex-grow: 1;
+    }
+
+    .navbar-nav {
+      gap: var(--space-6);
+      margin-inline-start: var(--space-12);
+    }
+
+    .site-nav__actions {
+      margin-inline-start: auto;
+    }
+  }
+</style>

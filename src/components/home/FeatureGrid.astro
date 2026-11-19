@@ -1,0 +1,101 @@
+---
+// Feature items (docs/design-system.md §10.8). Used for the platform pillars (subtle surface)
+// and the AI section (navy surface). 1 column on mobile, 2 on tablet, 3 on desktop.
+// Optional picture: shown beside the section header from lg up, above the items on smaller screens.
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import BrandIcon from '../BrandIcon.astro';
+
+interface Item {
+  icon: { id: string };
+  title: string;
+  body: string;
+}
+
+interface Props {
+  id: string;
+  surface: 'subtle' | 'navy';
+  title: string;
+  intro?: string;
+  body?: string;
+  badge?: string;
+  items: Item[];
+  picture?: { src: ImageMetadata; alt: string };
+}
+
+const { id, surface, title, intro, body, badge, items, picture } = Astro.props;
+const headingId = `${id}-title`;
+const iconVariant = surface === 'navy' ? 'dark' : 'light';
+---
+
+<section id={id} tabindex="-1" class:list={['section', `surface-${surface}`]} aria-labelledby={headingId}>
+  <div class="container">
+    <div class="row gy-4 align-items-center section-header">
+      <header class:list={['col-12', { 'col-lg-6': picture }]}>
+        <div class="measure" data-animate="fade-up">
+          {badge && <span class="badge-nv">{badge}</span>}
+          <h2 id={headingId}>{title}</h2>
+          {intro && <p class="lead-nv text-secondary-nv">{intro}</p>}
+          {body && <p class="lead-nv mb-0">{body}</p>}
+        </div>
+      </header>
+      {
+        picture && (
+          <div class="col-12 col-lg-5 offset-lg-1" data-animate="zoom-in" data-animate-delay="0.1">
+            <Image
+              src={picture.src}
+              alt={picture.alt}
+              widths={[480, 720, 960]}
+              sizes="(min-width: 992px) 40vw, 100vw"
+              class="section-picture"
+              loading="lazy"
+            />
+          </div>
+        )
+      }
+    </div>
+    {/* gx-4 matches the container padding; a larger horizontal gutter overflows on mobile */}
+    <ul class="row row-cols-1 row-cols-md-2 row-cols-lg-3 gx-4 gy-5 list-unstyled mb-0" data-animate-children="fade-up">
+      {
+        items.map((item) => (
+          <li class="col">
+            <BrandIcon id={item.icon.id} variant={iconVariant} size="xl" class="feature-icon" />
+            <h3>{item.title}</h3>
+            <p class="text-secondary-nv mb-0">{item.body}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .badge-nv {
+    display: inline-block;
+    margin-block-end: var(--space-4);
+    padding: var(--space-1) var(--space-3);
+    background-color: var(--color-yellow);
+    color: var(--color-navy);
+    font-size: var(--text-sm);
+    font-weight: 500;
+  }
+
+  h3 {
+    margin-block-end: var(--space-2);
+  }
+
+  li :global(.feature-icon) {
+    margin-block-end: var(--space-4);
+    transition: transform var(--duration-base) var(--ease-out);
+  }
+
+  li:hover :global(.feature-icon) {
+    transform: scale(1.08);
+  }
+
+  .section-picture {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+  }
+</style>

@@ -1,0 +1,116 @@
+---
+// Customers (docs/design-system.md §10.9 and §10.10): key figures, then customer names.
+// Names render as text until marketing supplies logo files (`src`).
+interface Props {
+  title: string;
+  stats: { value: string; label: string }[];
+  logos: { name: string; src?: string }[];
+}
+
+const { title, stats, logos } = Astro.props;
+---
+
+<section id="customers" tabindex="-1" class="section surface-subtle" aria-labelledby="customers-title">
+  <div class="container">
+    <header class="section-header" data-animate="fade-up">
+      <h2 id="customers-title">{title}</h2>
+    </header>
+
+    <dl class="row row-cols-2 row-cols-lg-4 g-4 stats" data-animate-children="fade-up">
+      {
+        stats.map((stat) => (
+          <div class="col stat">
+            <dt class="stat__label">{stat.label}</dt>
+            {/* Numbers with signs or units reorder in RTL: isolate them (design-system.md §8.2) */}
+            <dd class="stat__value">
+              <span dir="ltr">{stat.value}</span>
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+
+    {
+      logos.length > 0 && (
+        <ul class="logos list-unstyled mb-0" data-animate-children="fade-in">
+          {logos.map((logo) => (
+            <li class="logo">
+              {logo.src ? <img src={logo.src} alt={logo.name} height="40" loading="lazy" /> : <span>{logo.name}</span>}
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .stats {
+    margin-block-end: var(--space-12);
+  }
+
+  /* Visually the value comes first; in the DOM the label (dt) comes first, as <dl> requires. */
+  .stat {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+    border-inline-start: 4px solid var(--color-yellow);
+    padding-inline-start: var(--space-4);
+  }
+
+  .stat__value {
+    margin: 0;
+    font-family: var(--font-heading);
+    font-size: var(--text-h1);
+    line-height: var(--leading-h1);
+    font-weight: 700;
+  }
+
+  .stat__label {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--text-secondary);
+  }
+
+  .logos {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-3);
+  }
+
+  .logo {
+    display: grid;
+    place-items: center;
+    min-block-size: 4.5rem;
+    padding: var(--space-3);
+    background-color: var(--color-white);
+    border: var(--border-thin) solid var(--color-navy-200);
+    text-align: center;
+    font-weight: 600;
+  }
+
+  .logo img {
+    max-inline-size: 100%;
+    block-size: 2.5rem;
+    inline-size: auto;
+    object-fit: contain;
+  }
+
+  @media (min-width: 576px) {
+    .logos {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 768px) {
+    .logos {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 992px) {
+    .logos {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+  }
+</style>

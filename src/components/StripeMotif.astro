@@ -1,0 +1,37 @@
+---
+// Decorative stripe motif (docs/design-system.md §7.2): rounded diagonal bars in brand yellow.
+// An abstract stand-in, not a copy of the logo mark. The angle never mirrors in RTL.
+interface Props {
+  class?: string;
+}
+const { class: className } = Astro.props;
+const bars = [
+  { x1: 70, y1: 20, x2: 200, y2: 115 },
+  { x1: 45, y1: 55, x2: 200, y2: 168 },
+  { x1: 55, y1: 105, x2: 195, y2: 207 },
+  { x1: 75, y1: 152, x2: 170, y2: 222 },
+  { x1: 100, y1: 197, x2: 140, y2: 226 },
+];
+---
+
+<svg class:list={['stripe-motif', className]} viewBox="0 0 240 240" aria-hidden="true" focusable="false">
+  {bars.map((b) => <line {...b} />)}
+</svg>
+
+<style>
+  .stripe-motif {
+    position: absolute;
+    inset-block: 8%;
+    inset-inline-end: 6%;
+    block-size: 84%;
+    inline-size: auto;
+    aspect-ratio: 1;
+  }
+
+  line {
+    stroke: var(--color-yellow);
+    stroke-width: 18;
+    stroke-linecap: round;
+    opacity: 0.85;
+  }
+</style>

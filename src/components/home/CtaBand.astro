@@ -1,0 +1,39 @@
+---
+// Contact CTA band (docs/design-system.md §10.17): yellow surface, navy primary button.
+interface Props {
+  title: string;
+  body: string;
+  button: { label: string; href: string };
+}
+
+const { title, body, button } = Astro.props;
+---
+
+<section id="contact" tabindex="-1" class="section surface-yellow" aria-labelledby="contact-title">
+  <div class="container">
+    <div
+      class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-4"
+      data-animate="fade-up"
+    >
+      <div class="measure">
+        <h2 id="contact-title">{title}</h2>
+        <p class="lead-nv mb-0">{body}</p>
+      </div>
+      <a class="btn btn-primary cta-button" href={button.href}>{button.label}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  @media (max-width: 575.98px) {
+    .cta-button {
+      inline-size: 100%;
+    }
+  }
+
+  @media (min-width: 992px) {
+    .cta-button {
+      flex-shrink: 0;
+    }
+  }
+</style>

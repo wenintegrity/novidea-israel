@@ -1,0 +1,30 @@
+---
+import { directionalIcons, iconPaths, type IconName } from './icons';
+
+interface Props {
+  name: IconName;
+  /** Accessible name. Omit for decorative icons (the default). */
+  label?: string;
+  class?: string;
+}
+
+const { name, label, class: className } = Astro.props;
+const classes = ['icon', directionalIcons.has(name) && 'icon-directional', className]
+  .filter(Boolean)
+  .join(' ');
+---
+
+<svg
+  class={classes}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.75"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  focusable="false"
+  role={label ? 'img' : undefined}
+  aria-label={label}
+  aria-hidden={label ? undefined : 'true'}
+  set:html={iconPaths[name]}
+/>

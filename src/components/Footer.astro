@@ -1,0 +1,78 @@
+---
+// Footer (docs/design-system.md §10.13), navy surface.
+import Logo from './Logo.astro';
+import { ctaAnchor, homePath, primaryNav, sectionHref } from '../config/nav';
+import { useTranslations } from '../i18n/utils';
+import type { Locale } from '../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer surface-navy">
+  <div class="container">
+    <div class="row gy-5">
+      <div class="col-12 col-lg-5">
+        <a href={homePath(locale)} aria-label={t('nav.home')} class="footer-brand">
+          <Logo variant="dark" decorative />
+        </a>
+        <p class="text-secondary-nv text-sm-nv measure mt-3 mb-0">{t('footer.about')}</p>
+      </div>
+      <nav class="col-12 col-md-6 col-lg-3 offset-lg-1" aria-labelledby="footer-nav-title">
+        <h2 class="h4" id="footer-nav-title">{t('footer.navTitle')}</h2>
+        <ul class="list-unstyled mb-0">
+          {
+            primaryNav.map((item) => (
+              <li>
+                <a href={sectionHref(locale, item.anchor)}>{t(item.key)}</a>
+              </li>
+            ))
+          }
+          <li><a href={sectionHref(locale, ctaAnchor)}>{t('nav.cta')}</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    {/*
+      TODO: legal row. Privacy policy, accessibility statement (required by law) and cookie settings
+      go here once those pages exist (docs/sitemap.md). Not linked yet to avoid dead links.
+    */}
+    <div class="footer-legal text-sm-nv text-secondary-nv">
+      <p class="mb-0">© <span dir="ltr">{year}</span> Novidea. {t('footer.rights')}</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    padding-block: var(--space-16) var(--space-8);
+  }
+
+  .footer-brand {
+    display: inline-block;
+    text-decoration: none;
+  }
+
+  ul a {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 2.75rem;
+    color: var(--color-white);
+    text-decoration: none;
+  }
+
+  ul a:hover {
+    text-decoration: underline;
+  }
+
+  .footer-legal {
+    margin-block-start: var(--space-12);
+    padding-block-start: var(--space-6);
+    border-block-start: var(--border-thin) solid var(--color-navy-800);
+  }
+</style>
