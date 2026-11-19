@@ -40,7 +40,7 @@ Every block has `type` and an optional `id` (becomes the section anchor). `surfa
 
 **Pictures:** `picture.src` is a path relative to the YAML file, pointing into `src/assets/images/` (e.g. `../../../assets/images/hero-empower-your-people.png`). `picture.alt` is required; use `""` only for purely decorative pictures.
 
-**Mixed direction text:** wrap numbers with signs or units in Unicode LTR isolates inside the YAML string: `"⁦360°⁩"`, `"⁦100+⁩"`. Otherwise the sign moves to the wrong side in RTL.
+**Mixed direction text:** wrap numbers with signs or units in Unicode LTR isolates inside the YAML string, written as escapes in a double-quoted string: `"\u2066360°\u2069"`, `"\u2066100+\u2069"`. Otherwise the sign moves to the wrong side in RTL.
 
 ---
 
