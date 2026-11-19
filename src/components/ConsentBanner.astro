@@ -22,7 +22,9 @@ const categories = [
     <div class="consent-banner__inner">
       <div class="consent-banner__text">
         <p id="consent-title" class="consent-banner__title">{t('consent.title')}</p>
-        <p class="text-sm-nv mb-0">{t('consent.body')}</p>
+        <p class="text-sm-nv mb-0">
+          {t('consent.body')} <a href={locale === 'he' ? '/privacy' : `/${locale}/privacy`}>{t('consent.privacyLink')}</a>
+        </p>
       </div>
       <div class="consent-banner__actions">
         {/* Accept and reject are equally prominent (same style, same size) */}

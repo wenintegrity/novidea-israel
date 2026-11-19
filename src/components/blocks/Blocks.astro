@@ -7,6 +7,7 @@ import FeaturesBlock from './FeaturesBlock.astro';
 import NamesBlock from './NamesBlock.astro';
 import LinksBlock from './LinksBlock.astro';
 import LeadForm from './LeadForm.astro';
+import ProseBlock from './ProseBlock.astro';
 
 interface Props {
   locale: Locale;
@@ -29,6 +30,8 @@ const { locale, blocks } = Astro.props;
         return <LinksBlock locale={locale} {...block} />;
       case 'leadForm':
         return <LeadForm locale={locale} {...block} />;
+      case 'prose':
+        return <ProseBlock {...block} />;
     }
   })
 }

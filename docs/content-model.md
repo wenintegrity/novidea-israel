@@ -31,7 +31,8 @@ Every block has `type` and an optional `id` (becomes the section anchor). `surfa
 | `features` | `title`, `intro` (optional), `columns` 2 or 3, `surface`, `picture` (optional), `items[]`: `{icon, title, body, soon, soonNote}`. An item needs a title or a body. `soon: true` labels the whole item "בקרוב"; `soonNote` adds an upcoming extra to an available item | `FeaturesBlock.astro` |
 | `names` | `title`, `names[]`, `more` (e.g. "ועוד"), `surface` (default subtle) | `NamesBlock.astro` |
 | `links` | `title` (optional), `items[]`: `{icon, title, body, href}`, `surface` | `LinksBlock.astro` |
-| `leadForm` | `fields[]`: the field list the HubSpot form must have | `LeadFormPlaceholder.astro` |
+| `leadForm` | `hubspot {portalId, formId, region}` (optional), `fields[]` (shown only without `hubspot`) | `LeadForm.astro` |
+| `prose` | `sections[]`: `{title, paragraphs[], bullets[], after[]}`. Long-form text for legal pages. Inline links `[label](href)`; `[label](#cookie-settings)` opens the cookie settings; `[לעדכון: …]` is highlighted as a placeholder | `ProseBlock.astro` |
 
 **Heading order:** a block's `title` is an `h2` and its items are `h3`. Without a block title, items become `h2`, so headings never skip a level.
 

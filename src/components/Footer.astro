@@ -42,13 +42,17 @@ const links: { key: UiKey; href: string }[] = [
       </nav>
     </div>
 
-    {/*
-      TODO: legal row. Privacy policy and accessibility statement (required by law) go here once
-      those pages exist (docs/sitemap.md). Not linked yet to avoid dead links.
-    */}
     <div class="footer-legal text-sm-nv text-secondary-nv">
       <p class="mb-0">© <span dir="ltr">{year}</span> Novidea. {t('footer.rights')}</p>
-      <button type="button" class="footer-link-button" data-consent-open>{t('footer.cookies')}</button>
+      <nav aria-label={t('footer.legal')}>
+        <ul class="footer-legal__links list-unstyled mb-0">
+          <li><a href={pagePath(locale, 'privacy')}>{t('footer.privacy')}</a></li>
+          <li><a href={pagePath(locale, 'accessibility')}>{t('footer.accessibility')}</a></li>
+          <li>
+            <button type="button" class="footer-link-button" data-consent-open>{t('footer.cookies')}</button>
+          </li>
+        </ul>
+      </nav>
     </div>
   </div>
 </footer>
@@ -84,6 +88,22 @@ const links: { key: UiKey; href: string }[] = [
     margin-block-start: var(--space-12);
     padding-block-start: var(--space-6);
     border-block-start: var(--border-thin) solid var(--color-navy-800);
+  }
+
+  .footer-legal__links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: var(--space-6);
+  }
+
+  .footer-legal__links a {
+    display: inline-flex;
+    align-items: center;
+    color: var(--color-white);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    min-block-size: 2.75rem;
   }
 
   /* A button (it opens a dialog) styled as a footer link */

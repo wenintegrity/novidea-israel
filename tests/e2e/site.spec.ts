@@ -8,6 +8,8 @@ const pages = [
   { path: '/why-novidea', name: 'why-novidea' },
   { path: '/israel', name: 'israel' },
   { path: '/contact', name: 'contact' },
+  { path: '/privacy', name: 'privacy' },
+  { path: '/accessibility', name: 'accessibility' },
 ];
 
 const viewports = [
@@ -123,6 +125,22 @@ test.describe('navigation', () => {
     for (const item of menu.slice(0, 4)) {
       await expect(page.locator(`main a[href="${item.path}"]`).first()).toBeVisible();
     }
+  });
+
+  test('footer links to the privacy policy and accessibility statement on every page', async ({ page }) => {
+    for (const pg of pages) {
+      await page.goto(pg.path);
+      const legal = page.getByRole('navigation', { name: 'מידע משפטי' });
+      await expect(legal.getByRole('link', { name: 'מדיניות פרטיות' })).toHaveAttribute('href', '/privacy');
+      await expect(legal.getByRole('link', { name: 'הצהרת נגישות' })).toHaveAttribute('href', '/accessibility');
+      await expect(legal.getByRole('button', { name: 'הגדרות עוגיות' })).toBeVisible();
+    }
+  });
+
+  test('privacy policy: "הגדרות עוגיות" inside the text opens the cookie settings', async ({ page }) => {
+    await page.goto('/privacy');
+    await page.locator('.prose').getByRole('button', { name: 'הגדרות עוגיות' }).click();
+    await expect(page.getByRole('dialog', { name: 'הגדרות עוגיות' })).toBeVisible();
   });
 
   test('skip link is the first focusable element', async ({ page }) => {

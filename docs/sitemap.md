@@ -15,10 +15,10 @@ Hebrew pages are served at the root, English pages under `/en/`. Slugs are Engli
 | Core capabilities | `/capabilities` | `pages/he/capabilities.yaml` | יכולות ליבה: מקצה לקצה | **Built** |
 | Why Novidea | `/why-novidea` | `pages/he/why-novidea.yaml` | למה נובידאה? | **Built** |
 | Headquarters in Israel | `/israel` | `pages/he/israel.yaml` | המטה כאן בישראל – יחד איתכם בכל שלב | **Built** |
-| Contact (lead) | `/contact` | `pages/he/contact.yaml` | פתיחת ליד | **Built**, form is a placeholder until the HubSpot embed |
+| Contact (lead) | `/contact` | `pages/he/contact.yaml` | פתיחת ליד | **Built**, HubSpot form loads after marketing-cookie consent |
 | Blog | `/blog` | | | Planned |
-| Privacy policy | `/privacy` | | | Planned, needs legal review |
-| Accessibility statement (הצהרת נגישות) | `/accessibility` | | | Planned, **required by law before launch** |
+| Privacy policy | `/privacy` | `pages/he/privacy.yaml` | (drafted, not in the content document) | **Built**, draft: placeholders and legal review pending |
+| Accessibility statement (הצהרת נגישות) | `/accessibility` | `pages/he/accessibility.yaml` | (drafted, not in the content document) | **Built**, draft: coordinator details pending (**required by law**) |
 | 404 | `/404` | | | Planned |
 
 English versions (`/en/…`) are planned; there are no English pages yet.
@@ -27,7 +27,7 @@ English versions (`/en/…`) are planned; there are no English pages yet.
 
 **Header:** logo → `/` · הבעיה והפתרון → `/solution` · יכולות ליבה → `/capabilities` · למה נובידאה? → `/why-novidea` · המטה בישראל → `/israel` · button **השאירו פרטים** → `/contact`. The current page is marked with `aria-current="page"`.
 
-**Footer:** עמוד הבית plus the same links. Legal links (privacy, accessibility statement, cookie settings) are added when those pages exist.
+**Footer:** עמוד הבית plus the same links, and a legal row: מדיניות פרטיות · הצהרת נגישות · הגדרות עוגיות (opens the cookie settings).
 
 **Lead banner:** every page except `/contact` ends with the "מוכנים להוביל את הסוכנות לעידן הבא?" banner linking to `/contact`.
 

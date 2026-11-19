@@ -1,0 +1,94 @@
+---
+// Long-form text for legal pages (docs/design-system.md §10.24): numbered h2 sections, paragraphs,
+// bullet lists. Readable measure, light surface. Inline links via renderInline().
+import { renderInline } from '../../i18n/inline';
+
+interface Section {
+  title: string;
+  paragraphs: string[];
+  bullets: string[];
+  after: string[];
+}
+
+interface Props {
+  id?: string;
+  sections: Section[];
+}
+
+const { id, sections } = Astro.props;
+---
+
+<section id={id} class="section surface-light prose-block">
+  <div class="container">
+    <div class="prose">
+      {
+        sections.map((section, i) => (
+          <section class="prose__section" aria-labelledby={`prose-${i}`}>
+            <h2 id={`prose-${i}`} class="h3">
+              <span class="prose__number" dir="ltr">
+                {i + 1}.
+              </span>{' '}
+              {section.title}
+            </h2>
+            {section.paragraphs.map((p) => (
+              <p set:html={renderInline(p)} />
+            ))}
+            {section.bullets.length > 0 && (
+              <ul>
+                {section.bullets.map((b) => (
+                  <li set:html={renderInline(b)} />
+                ))}
+              </ul>
+            )}
+            {section.after.map((p) => (
+              <p set:html={renderInline(p)} />
+            ))}
+          </section>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .prose {
+    max-inline-size: var(--measure);
+  }
+
+  .prose__section + .prose__section {
+    margin-block-start: var(--space-10);
+  }
+
+  .prose h2 {
+    margin-block-end: var(--space-4);
+  }
+
+  .prose__number {
+    color: var(--text-secondary);
+  }
+
+  .prose ul {
+    padding-inline-start: var(--space-6);
+  }
+
+  .prose li + li {
+    margin-block-start: var(--space-2);
+  }
+
+  /* Placeholders still to fill in render highlighted, so they're impossible to miss */
+  .prose :global(mark) {
+    background-color: var(--color-yellow-50);
+    color: inherit;
+  }
+
+  .prose :global(.prose-link-button) {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--color-navy);
+    font: inherit;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    cursor: pointer;
+  }
+</style>

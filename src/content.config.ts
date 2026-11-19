@@ -137,7 +137,33 @@ const pages = defineCollection({
       fields: z.array(z.string().min(1)).default([]),
     });
 
-    const block = z.discriminatedUnion('type', [textBlock, featuresBlock, namesBlock, linksBlock, leadFormBlock]);
+    /**
+     * Long-form text (legal pages): numbered sections with paragraphs, an optional bullet list and
+     * paragraphs after it. Inline links: [label](href); [label](#cookie-settings) opens the cookie settings.
+     */
+    const proseBlock = z.object({
+      type: z.literal('prose'),
+      id: z.string().optional(),
+      sections: z
+        .array(
+          z.object({
+            title: z.string().min(1),
+            paragraphs: z.array(z.string().min(1)).default([]),
+            bullets: z.array(z.string().min(1)).default([]),
+            after: z.array(z.string().min(1)).default([]),
+          }),
+        )
+        .min(1),
+    });
+
+    const block = z.discriminatedUnion('type', [
+      textBlock,
+      featuresBlock,
+      namesBlock,
+      linksBlock,
+      leadFormBlock,
+      proseBlock,
+    ]);
 
     return z.object({
       seo: z.object({

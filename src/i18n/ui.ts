@@ -34,7 +34,7 @@ export const ui = {
     'leadForm.error': 'לא הצלחנו לטעון את הטופס. ייתכן שחוסם פרסומות מונע אותו. נסו לרענן את העמוד או לבטל את החסימה לאתר זה.',
     'leadForm.noscript': 'כדי להציג את טופס השארת הפרטים יש להפעיל JavaScript בדפדפן.',
     // Cookie consent. TODO(verify): legal review of all consent wording (Privacy Protection Law,
-    // Amendment 13), and a link to the privacy policy once /privacy exists.
+    // Amendment 13).
     'consent.title': 'האתר משתמש בעוגיות',
     'consent.body':
       'אנחנו משתמשים בעוגיות הכרחיות כדי שהאתר יפעל. בהסכמתכם נשתמש גם בעוגיות לניתוח השימוש באתר ולשיווק, כולל טופס יצירת הקשר של HubSpot. אפשר לשנות את הבחירה בכל עת בקישור "הגדרות עוגיות" בתחתית העמוד.',
@@ -52,6 +52,10 @@ export const ui = {
     'consent.marketingDesc': 'משמשות את HubSpot להצגת טופס יצירת הקשר ולמעקב אחר פניות.',
     'consent.save': 'שמירת ההעדפות',
     'footer.cookies': 'הגדרות עוגיות',
+    'footer.privacy': 'מדיניות פרטיות',
+    'footer.accessibility': 'הצהרת נגישות',
+    'footer.legal': 'מידע משפטי',
+    'consent.privacyLink': 'למדיניות הפרטיות',
   },
   en: {
     'skip.main': 'Skip to main content',
@@ -97,6 +101,10 @@ export const ui = {
     'consent.marketingDesc': 'Used by HubSpot to show the contact form and track enquiries.',
     'consent.save': 'Save preferences',
     'footer.cookies': 'Cookie settings',
+    'footer.privacy': 'Privacy policy',
+    'footer.accessibility': 'Accessibility statement',
+    'footer.legal': 'Legal',
+    'consent.privacyLink': 'Privacy policy',
   },
 } as const satisfies Record<Locale, Record<string, string>>;
 
