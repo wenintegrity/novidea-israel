@@ -1,0 +1,93 @@
+{
+  "version": 2,
+  "skills": {
+    "bootstrap-color-system": {
+      "source": "twbs/bootstrap",
+      "commit": "cca152095afcf92b9defb5deae8304a2a84f61eb",
+      "sourceType": "github",
+      "skillPath": "skills/bootstrap-color-system/SKILL.md",
+      "computedHash": "bfd3a0f820498f72483d6f27c3d9380260ba3ae7826e7138066e65009e00efd7",
+      "installMode": "copy"
+    },
+    "bootstrap-component": {
+      "source": "twbs/bootstrap",
+      "commit": "cca152095afcf92b9defb5deae8304a2a84f61eb",
+      "sourceType": "github",
+      "skillPath": "skills/bootstrap-component/SKILL.md",
+      "computedHash": "266b13b42cbf418d66019605feba654f81f828f00eb716c0d287e0fd29af5059",
+      "installMode": "copy"
+    },
+    "bootstrap-component-js": {
+      "source": "twbs/bootstrap",
+      "commit": "cca152095afcf92b9defb5deae8304a2a84f61eb",
+      "sourceType": "github",
+      "skillPath": "skills/bootstrap-component-js/SKILL.md",
+      "computedHash": "f9144d4a79651f70d467825af9bda3aa9631bf6bfb70e206d09acfa68505b672",
+      "installMode": "copy"
+    },
+    "bootstrap-npm": {
+      "source": "twbs/bootstrap",
+      "commit": "cca152095afcf92b9defb5deae8304a2a84f61eb",
+      "sourceType": "github",
+      "skillPath": "skills/bootstrap-npm/SKILL.md",
+      "computedHash": "57591cbb02eb99a693d7d309f76bcf08eecaf7c47a1f8a6f44be98514ab34892",
+      "installMode": "copy"
+    },
+    "bootstrap-parcel": {
+      "source": "twbs/bootstrap",
+      "commit": "cca152095afcf92b9defb5deae8304a2a84f61eb",
+      "sourceType": "github",
+      "skillPath": "skills/bootstrap-parcel/SKILL.md",
+      "computedHash": "2156798b0a7ae690b33613bbda4140f147e917af4d037fed1d43628e789cdfc6",
+      "installMode": "copy"
+    },
+    "bootstrap-utility-api": {
+      "source": "twbs/bootstrap",
+      "commit": "cca152095afcf92b9defb5deae8304a2a84f61eb",
+      "sourceType": "github",
+      "skillPath": "skills/bootstrap-utility-api/SKILL.md",
+      "computedHash": "120c43c5cfb7deab255318829f679f0945f676002a37f3b614e7a75c6fcc7e25",
+      "installMode": "copy"
+    },
+    "bootstrap-v4-v6-migration": {
+      "source": "twbs/bootstrap",
+      "commit": "cca152095afcf92b9defb5deae8304a2a84f61eb",
+      "sourceType": "github",
+      "skillPath": "skills/bootstrap-v4-v6-migration/SKILL.md",
+      "computedHash": "3e10f27c3696293115056830e43d51890f7989f31e500007fc59ee403f056bd5",
+      "installMode": "copy"
+    },
+    "bootstrap-v5-v6-migration": {
+      "source": "twbs/bootstrap",
+      "commit": "cca152095afcf92b9defb5deae8304a2a84f61eb",
+      "sourceType": "github",
+      "skillPath": "skills/bootstrap-v5-v6-migration/SKILL.md",
+      "computedHash": "4b4216eeb6fab056219bf4c2cbaa89a94102c04277d58c5cec3bf520e5223c6c",
+      "installMode": "copy"
+    },
+    "bootstrap-v6-install": {
+      "source": "twbs/bootstrap",
+      "commit": "cca152095afcf92b9defb5deae8304a2a84f61eb",
+      "sourceType": "github",
+      "skillPath": "skills/bootstrap-v6-install/SKILL.md",
+      "computedHash": "ab4a447b2f2f2708ca6796df49ebbbc5739c11848334b6b96723453b86139b5a",
+      "installMode": "copy"
+    },
+    "bootstrap-vite": {
+      "source": "twbs/bootstrap",
+      "commit": "cca152095afcf92b9defb5deae8304a2a84f61eb",
+      "sourceType": "github",
+      "skillPath": "skills/bootstrap-vite/SKILL.md",
+      "computedHash": "77158c69268f0a43dc9e9543172f6ad0a525575e370ef0d110139bdd615a262e",
+      "installMode": "copy"
+    },
+    "bootstrap-webpack": {
+      "source": "twbs/bootstrap",
+      "commit": "cca152095afcf92b9defb5deae8304a2a84f61eb",
+      "sourceType": "github",
+      "skillPath": "skills/bootstrap-webpack/SKILL.md",
+      "computedHash": "44dbe74600a311fe5db7139085d0c5175f0582527644776e7fe94cce8a125f0c",
+      "installMode": "copy"
+    }
+  }
+}
