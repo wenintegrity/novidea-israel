@@ -1,33 +1,22 @@
 ---
-// Hebrew home page (/). Structure: docs/content-model.md, page type "home".
+// Hebrew home page (/). Content: src/content/pages/he/home.yaml
 import { getEntry } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/home/Hero.astro';
-import FeatureGrid from '../components/home/FeatureGrid.astro';
-import ResultsBand from '../components/home/ResultsBand.astro';
-import Spotlight from '../components/home/Spotlight.astro';
-import CustomerStory from '../components/home/CustomerStory.astro';
-import AudienceTiles from '../components/home/AudienceTiles.astro';
-import Customers from '../components/home/Customers.astro';
-import NewsTeaser from '../components/home/NewsTeaser.astro';
-import CtaBand from '../components/home/CtaBand.astro';
+import Blocks from '../components/blocks/Blocks.astro';
+import LeadCta from '../components/blocks/LeadCta.astro';
 import { getLocale } from '../i18n/utils';
 
 const locale = getLocale(Astro.currentLocale);
-const entry = await getEntry('home', `${locale}/home`);
-if (!entry) throw new Error(`Missing content: src/content/${locale}/home.yaml`);
-const c = entry.data;
+const page = await getEntry('pages', `${locale}/home`);
+const shared = await getEntry('shared', locale);
+if (!page?.data.hero) throw new Error(`Missing hero: src/content/pages/${locale}/home.yaml`);
+if (!shared) throw new Error(`Missing content: src/content/shared/${locale}.yaml`);
+const { seo, hero, sections, leadCta } = page.data;
 ---
 
-<BaseLayout locale={locale} title={c.seo.title} description={c.seo.description}>
-  <Hero {...c.hero} />
-  <FeatureGrid id="platform" surface="subtle" {...c.pillars} />
-  <ResultsBand {...c.results} />
-  <Spotlight {...c.spotlight} />
-  <FeatureGrid id="ai" surface="navy" {...c.ai} />
-  <CustomerStory {...c.story} />
-  <AudienceTiles {...c.audiences} />
-  <Customers {...c.customers} />
-  <NewsTeaser locale={locale} {...c.news} />
-  <CtaBand {...c.cta} />
+<BaseLayout locale={locale} title={seo.title} description={seo.description}>
+  <Hero {...hero} points={[]} />
+  <Blocks locale={locale} blocks={sections} />
+  {leadCta && <LeadCta {...shared.data.leadCta} />}
 </BaseLayout>

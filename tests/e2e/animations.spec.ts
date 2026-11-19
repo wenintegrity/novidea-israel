@@ -7,7 +7,7 @@ test.describe('scroll animations, motion allowed', () => {
 
   test('below-the-fold content starts hidden and appears when scrolled into view', async ({ page }) => {
     await page.goto('/');
-    const header = page.locator('#audiences [data-animate]').first();
+    const header = page.locator('#customers [data-animate]').first();
 
     await expect(header).toHaveCSS('opacity', '0');
     await header.scrollIntoViewIfNeeded();
@@ -19,6 +19,21 @@ test.describe('scroll animations, motion allowed', () => {
     await expect(header).toHaveCSS('transform', 'none');
   });
 
+  test('mobile: waiting entrance animations never make the page wider than the screen', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 812 });
+    for (const path of ['/', '/solution', '/capabilities', '/why-novidea', '/israel']) {
+      await page.goto(path);
+      const offsets = await page.evaluate(() => {
+        const vw = document.documentElement.clientWidth;
+        return [...document.querySelectorAll('[data-animate], [data-animate-children] > *')]
+          .map((el) => el.getBoundingClientRect())
+          .filter((r) => r.left < -1 || r.right > vw + 1).length;
+      });
+      expect(offsets, `${path}: elements pushed past the screen edge`).toBe(0);
+      expect(await page.evaluate(() => window.scrollX)).toBe(0);
+    }
+  });
+
   test('content above the fold is never hidden', async ({ page }) => {
     await page.goto('/');
     await expect(page.locator('h1')).toBeVisible();
@@ -27,7 +42,7 @@ test.describe('scroll animations, motion allowed', () => {
 
   test('group children enter one after another', async ({ page }) => {
     await page.goto('/');
-    const items = page.locator('#audiences [data-animate-children] > li');
+    const items = page.locator('#explore [data-animate-children] > li');
     await items.first().scrollIntoViewIfNeeded();
     await expect(items.last()).toHaveCSS('opacity', '1');
   });

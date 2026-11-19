@@ -59,13 +59,19 @@ function reveal(targets: HTMLElement[], kind: Kind, rtl: boolean, baseDelay: num
     );
 }
 
+/** Below lg the layout is a single column: sideways entrances would push content past the screen edge. */
+function forViewport(kind: Kind, narrow: boolean): Kind {
+  return narrow && (kind === 'fade-start' || kind === 'fade-end') ? 'fade-up' : kind;
+}
+
 function init() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const rtl = document.documentElement.dir === 'rtl';
+  const narrow = window.matchMedia('(max-width: 991.98px)').matches;
 
   // Single elements
   document.querySelectorAll<HTMLElement>('[data-animate]').forEach((el) => {
-    const kind = isKind(el.dataset.animate) ? el.dataset.animate : 'fade-up';
+    const kind = forViewport(isKind(el.dataset.animate) ? el.dataset.animate : 'fade-up', narrow);
     if (!belowFold(el)) return;
     const play = reveal([el], kind, rtl, Number(el.dataset.animateDelay ?? 0));
     const stop = inView(el, () => {
@@ -76,7 +82,7 @@ function init() {
 
   // Groups: children enter one after another
   document.querySelectorAll<HTMLElement>('[data-animate-children]').forEach((group) => {
-    const kind = isKind(group.dataset.animateChildren) ? group.dataset.animateChildren : 'fade-up';
+    const kind = forViewport(isKind(group.dataset.animateChildren) ? group.dataset.animateChildren : 'fade-up', narrow);
     if (!belowFold(group)) return;
     const children = Array.from(group.children) as HTMLElement[];
     const play = reveal(children, kind, rtl, Number(group.dataset.animateDelay ?? 0));

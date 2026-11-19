@@ -46,123 +46,142 @@ const icons = defineCollection({
   }),
 });
 
-// ---------- Home page ----------
-const home = defineCollection({
-  // One file per locale: src/content/he/home.yaml → id "he/home"
-  loader: glob({ pattern: '*/home.yaml', base: './src/content' }),
+// ---------- Pages: src/content/<locale>/<slug>.yaml ----------
+// "home" renders at the locale root; every other file renders at /<slug>.
+const pages = defineCollection({
+  loader: glob({ pattern: '*/*.yaml', base: './src/content/pages' }),
   schema: ({ image }) => {
-    const link = z.object({
-      label: z.string().min(1),
-      href: z.string().min(1),
+    const link = z.object({ label: z.string().min(1), href: z.string().min(1) });
+
+    /** A picture with its alt text. Use alt "" only for purely decorative pictures. */
+    const picture = z.object({ src: image(), alt: z.string() });
+
+    const surface = z.enum(['light', 'subtle', 'tint', 'navy']);
+
+    // Section blocks (docs/content-model.md → "Blocks")
+    const textBlock = z.object({
+      type: z.literal('text'),
+      id: z.string().optional(),
+      title: z.string().optional(),
+      paragraphs: z.array(z.string().min(1)).min(1),
+      picture: picture.optional(),
+      surface: surface.default('light'),
     });
 
-    const iconItem = z.object({
-      icon: reference('icons'),
+    const featuresBlock = z.object({
+      type: z.literal('features'),
+      id: z.string().optional(),
+      title: z.string().optional(),
+      intro: z.string().optional(),
+      columns: z.union([z.literal(2), z.literal(3)]).default(3),
+      surface: surface.default('light'),
+      picture: picture.optional(),
+      items: z
+        .array(
+          z
+            .object({
+              icon: reference('icons').optional(),
+              title: z.string().optional(),
+              body: z.string().optional(),
+              /** Whole item is upcoming ("בקרוב"). */
+              soon: z.boolean().default(false),
+              /** Upcoming addition to an available item. */
+              soonNote: z.string().optional(),
+            })
+            .refine((i) => i.title || i.body, 'An item needs a title or a body'),
+        )
+        .min(1),
+    });
+
+    const namesBlock = z.object({
+      type: z.literal('names'),
+      id: z.string().optional(),
       title: z.string().min(1),
-      body: z.string().min(1),
+      names: z.array(z.string().min(1)).min(1),
+      /** Trailing text after the list, e.g. "ועוד". */
+      more: z.string().optional(),
+      surface: surface.default('subtle'),
     });
 
-    /** A picture with its alt text. Alt is required: empty string only for purely decorative pictures. */
-    const picture = z.object({
-      src: image(),
-      alt: z.string(),
+    const linksBlock = z.object({
+      type: z.literal('links'),
+      id: z.string().optional(),
+      title: z.string().optional(),
+      surface: surface.default('light'),
+      items: z
+        .array(
+          z.object({
+            icon: reference('icons').optional(),
+            title: z.string().min(1),
+            body: z.string().min(1),
+            href: z.string().min(1),
+          }),
+        )
+        .min(1),
     });
+
+    /**
+     * HubSpot lead form, loaded only after marketing-cookie consent. Without `hubspot`, the block shows
+     * a placeholder listing `fields`.
+     */
+    const leadFormBlock = z.object({
+      type: z.literal('leadForm'),
+      id: z.string().optional(),
+      hubspot: z
+        .object({
+          portalId: z.string().regex(/^\d+$/),
+          formId: z.uuid(),
+          region: z.string().regex(/^[a-z]{2}\d$/).default('na1'),
+        })
+        .optional(),
+      fields: z.array(z.string().min(1)).default([]),
+    });
+
+    const block = z.discriminatedUnion('type', [textBlock, featuresBlock, namesBlock, linksBlock, leadFormBlock]);
 
     return z.object({
       seo: z.object({
         title: z.string().min(1).max(60),
         description: z.string().min(1).max(155),
       }),
-      hero: z.object({
-        titleStrong: z.string().min(1),
-        titleRest: z.string().min(1),
-        lead: z.string().min(1),
-        points: z.array(z.string().min(1)).max(4).default([]),
-        primaryCta: link,
-        secondaryCta: link.optional(),
-        picture: picture.optional(),
-      }),
-      pillars: z.object({
-        title: z.string().min(1),
-        intro: z.string().optional(),
-        items: z.array(iconItem).length(3),
-      }),
-      results: z.object({
-        title: z.string().min(1),
-        items: z.array(z.string().min(1)).min(3).max(8),
-      }),
-      spotlight: z.object({
-        eyebrow: z.string().min(1),
-        title: z.string().min(1),
-        body: z.string().min(1),
-        points: z.array(z.string().min(1)).min(2).max(5),
-        picture: picture.optional(),
-      }),
-      ai: z.object({
-        badge: z.string().optional(),
-        title: z.string().min(1),
-        body: z.string().min(1),
-        items: z.array(iconItem).min(2).max(4),
-        picture: picture.optional(),
-      }),
-      story: z.object({
-        eyebrow: z.string().min(1),
-        title: z.string().min(1),
-        body: z.string().min(1),
-        points: z.array(z.string().min(1)).min(2).max(4),
-        quote: z.object({
-          text: z.string().min(1),
-          name: z.string().min(1),
-          role: z.string().min(1),
-        }),
-        href: z.string().optional(),
-      }),
-      audiences: z.object({
-        title: z.string().min(1),
-        items: z
-          .array(
-            z.object({
-              icon: reference('icons').optional(),
-              title: z.string().min(1),
-              body: z.string().min(1),
-              href: z.string().optional(),
-            }),
-          )
-          .min(2)
-          .max(4),
-      }),
-      customers: z.object({
-        title: z.string().min(1),
-        stats: z
-          .array(z.object({ value: z.string().min(1), label: z.string().min(1) }))
-          .min(2)
-          .max(4),
-        logos: z
-          .array(z.object({ name: z.string().min(1), src: z.string().optional() }))
-          .max(24)
-          .default([]),
-      }),
-      news: z.object({
-        title: z.string().min(1),
-        items: z
-          .array(
-            z.object({
-              date: z.coerce.date(),
-              title: z.string().min(1),
-              summary: z.string().min(1),
-              href: z.string().optional(),
-            }),
-          )
-          .min(1)
-          .max(3),
-      }),
-      cta: z.object({
-        title: z.string().min(1),
-        body: z.string().min(1),
-        button: link,
-      }),
+      /** Home only: the big hero with the slanted yellow panel. */
+      hero: z
+        .object({
+          titleStrong: z.string().min(1),
+          titleRest: z.string().min(1),
+          lead: z.string().min(1),
+          primaryCta: link,
+          secondaryCta: link.optional(),
+          picture: picture.optional(),
+        })
+        .optional(),
+      /** Internal pages: the page header. */
+      header: z
+        .object({
+          eyebrow: z.string().optional(),
+          title: z.string().min(1),
+          intro: z.array(z.string().min(1)).default([]),
+          picture: picture.optional(),
+        })
+        .optional(),
+      sections: z.array(block).default([]),
+      /** Show the shared lead banner at the bottom (off on the contact page itself). */
+      leadCta: z.boolean().default(true),
     });
   },
 });
 
-export const collections = { icons, home };
+// ---------- Shared content per locale: src/content/shared/<locale>.yaml ----------
+const shared = defineCollection({
+  loader: glob({ pattern: '*.yaml', base: './src/content/shared' }),
+  schema: z.object({
+    leadCta: z.object({
+      title: z.string().min(1),
+      body: z.string().min(1),
+      button: z.object({ label: z.string().min(1), href: z.string().min(1) }),
+    }),
+    footerAbout: z.string().min(1),
+  }),
+});
+
+export const collections = { icons, pages, shared };

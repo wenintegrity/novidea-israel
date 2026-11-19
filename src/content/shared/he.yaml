@@ -1,0 +1,12 @@
+# Shared Hebrew content. Source: "תוכן לדף אתר NOVIDEA בעברית".
+
+# Lead banner at the bottom of every page except /contact (section "פתיחת ליד")
+leadCta:
+  title: "מוכנים להוביל את הסוכנות לעידן הבא?"
+  body: "הצטרפו לסוכנויות המובילות בישראל שמנהלות את תיק הלקוחות שלהם וצומחות בנובידאה. השאירו פרטים והצוות שלנו יחזור אליכם לשיחת היכרות והדגמה."
+  button:
+    label: "השאירו פרטים"
+    href: "/contact"
+
+# Footer blurb (from "כותרת ראשית")
+footerAbout: "נובידאה - פלטפורמת הענן המובילה לניהול סוכנויות ובתי סוכן."

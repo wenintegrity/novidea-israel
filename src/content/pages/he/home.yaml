@@ -1,0 +1,66 @@
+# Home page (/). Source for all text: "תוכן לדף אתר NOVIDEA בעברית" (Novidea, 2026).
+# Model: docs/content-model.md
+
+seo:
+  title: "נובידאה | פלטפורמת הענן לניהול סוכנויות ובתי סוכן"
+  description: "כל עולם הביטוח הישראלי. מערכת אחת אחודה. אינסוף אפשרויות צמיחה. פלטפורמת ענן מונחת נתונים לסוכנויות ולבתי סוכן."
+
+hero:
+  # Source: כותרת ראשית + מסרים נוספים
+  titleStrong: "נובידאה"
+  titleRest: "פלטפורמת הענן המובילה לניהול סוכנויות ובתי סוכן"
+  lead: "כל עולם הביטוח הישראלי. מערכת אחת אחודה. אינסוף אפשרויות צמיחה."
+  primaryCta:
+    label: "השאירו פרטים"
+    href: "/contact"
+  secondaryCta:
+    label: "למה נובידאה?"
+    href: "/why-novidea"
+  picture:
+    src: "../../../assets/images/hero-empower-your-people.png"
+    alt: "אשת מקצוע מחייכת במשרד מודרני, עם פסי המותג הצהובים של נובידאה"
+
+sections:
+  # Source: טקסט מקוצר
+  - type: text
+    id: overview
+    surface: subtle
+    paragraphs:
+      - "נובידאה מובילה את המהפכה הדיגיטלית בשוק הביטוח עם פלטפורמת ענן (InsurTech) מונחת נתונים וזוכת פרסים בינלאומיים. הפלטפורמה מאיצה צמיחה, רווחיות ויעילות תפעולית עבור סוכנויות וברוקרים באמצעות כלים אנליטיים ותובנות עסקיות בזמן אמת."
+      - "עם בסיס CRM חזק כחלק מטכנולוגיית Salesforce, הפלטפורמה מהווה מערכת ליבה לסוכנות, ומאפשרת לשים את הלקוח במרכז, ולחבר את כל תהליכי העבודה בסוכנות."
+      - "מתיאום פגישות, מכירות, הפקה, פרודוקציה וניהול שירות ועד ניהול תביעות וחידושים לשמירה על שירות ללקוח ברמה הגבוהה ביותר."
+    picture:
+      src: "../../../assets/images/product-dashboards.png"
+      alt: "לוחות מחוונים של מערכת נובידאה על מסך מחשב"
+
+  # Source: טקסט מקוצר (last line)
+  # TODO(verify): customer logos (SVG) for מבטח סימון, קלי and אמנון גור, if marketing wants logos instead of names.
+  - type: names
+    id: customers
+    title: "הפלטפורמה שמובילה את הסוכנויות ובתי הסוכן הגדולים בישראל"
+    names:
+      - "מבטח סימון"
+      - "קלי"
+      - "אמנון גור"
+    more: "ועוד"
+
+  # Links to the internal pages. Titles and summaries are taken from each page's own content.
+  - type: links
+    id: explore
+    items:
+      - icon: puzzle
+        title: "הבעיה והפתרון"
+        body: "נפרדים מעבודה עם ריבוי מערכות ומצווארי בקבוק תפעוליים."
+        href: "/solution"
+      - icon: product-module
+        title: "יכולות ליבה: מקצה לקצה"
+        body: "ניהול מסע לקוח, תפעול, שירות ו-BPM מתקדם, דשבורדים, BI וקבלת החלטות."
+        href: "/capabilities"
+      - icon: certified
+        title: "למה נובידאה?"
+        body: "Cloud-Native אמיתי, תשתית CRM מהחזקות בעולם, אבטחת מידע ופרטיות ללא פשרות וחדשנות מונעת בינה מלאכותית."
+        href: "/why-novidea"
+      - icon: office-building
+        title: "המטה כאן בישראל"
+        body: "יחד איתכם בכל שלב."
+        href: "/israel"

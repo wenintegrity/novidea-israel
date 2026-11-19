@@ -1,0 +1,118 @@
+---
+// HubSpot lead form (docs/design-system.md §10.22). Logic: src/scripts/hubspot-form.ts
+//
+// States (data-state on the slot):
+//   consent: marketing cookies not allowed yet → notice + button that allows them and loads the form
+//   loading: HubSpot script loading
+//   ready:   HubSpot renders the form into #hubspot-form-target
+//   error:   the script couldn't load (offline, blocked)
+// Without JavaScript, a <noscript> message explains the form needs it.
+// Without `hubspot` settings, the block shows a placeholder listing the required fields.
+import { useTranslations } from '../../i18n/utils';
+import type { Locale } from '../../i18n/ui';
+
+interface Props {
+  locale: Locale;
+  id?: string;
+  hubspot?: { portalId: string; formId: string; region: string };
+  fields: string[];
+}
+
+const { locale, id, hubspot, fields } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<section id={id} tabindex={id ? '-1' : undefined} class="section surface-light" aria-labelledby="lead-form-title">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-lg-8">
+        <h2 id="lead-form-title" class="visually-hidden">{t('leadForm.title')}</h2>
+        {
+          hubspot ? (
+            <div
+              id="hubspot-form"
+              class="lead-form"
+              data-hubspot-form
+              data-portal-id={hubspot.portalId}
+              data-form-id={hubspot.formId}
+              data-region={hubspot.region}
+              data-state="consent"
+            >
+              <div class="lead-form__notice" data-when="consent">
+                <p>{t('leadForm.consentNeeded')}</p>
+                <div class="d-flex flex-wrap gap-2">
+                  <button type="button" class="btn btn-primary" data-hubspot-consent>
+                    {t('leadForm.consentButton')}
+                  </button>
+                  <button type="button" class="btn btn-outline-primary" data-consent-open>
+                    {t('consent.dialogTitle')}
+                  </button>
+                </div>
+              </div>
+              <p class="lead-form__notice" data-when="loading" role="status" hidden>
+                {t('leadForm.loading')}
+              </p>
+              <p class="lead-form__notice lead-form__notice--error" data-when="error" role="alert" hidden>
+                {t('leadForm.error')}
+              </p>
+              <div id="hubspot-form-target" class="lead-form__target" data-hubspot-target />
+              <noscript>
+                <p class="lead-form__notice">{t('leadForm.noscript')}</p>
+              </noscript>
+            </div>
+          ) : (
+            <div id="hubspot-form" class="lead-form lead-form--placeholder">
+              <p class="h3">{t('leadForm.placeholderTitle')}</p>
+              <p class="text-secondary-nv">{t('leadForm.placeholderNote')}</p>
+              <ul class="mb-0">
+                {fields.map((field) => (
+                  <li>{field}</li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Bundled once; does nothing on pages without a [data-hubspot-form] slot.
+  import '../../scripts/hubspot-form';
+</script>
+
+<style>
+  .lead-form__notice {
+    padding: var(--space-6);
+    background-color: var(--color-navy-50);
+    border-inline-start: 4px solid var(--color-yellow);
+  }
+
+  .lead-form__notice p:last-of-type {
+    margin-block-end: var(--space-4);
+  }
+
+  .lead-form__notice--error {
+    border-inline-start-color: var(--color-red-700);
+  }
+
+  /* Hide the notice slot once the form is showing */
+  [data-state='ready'] .lead-form__notice {
+    display: none;
+  }
+
+  .lead-form__target:empty {
+    display: none;
+  }
+
+  .lead-form--placeholder {
+    padding: var(--space-8);
+    border: 2px dashed var(--color-grey-700);
+    background-color: var(--color-navy-50);
+  }
+
+  li + li {
+    margin-block-start: var(--space-2);
+  }
+</style>

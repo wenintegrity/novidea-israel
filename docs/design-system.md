@@ -539,6 +539,45 @@ The red panel from Novidea's 2023 and 2025 ads: a title and a checklist of the a
 - Slanted inline-end edge (`--slant`) from md up, mirrored in RTL (§8.3). No slant on mobile.
 - Grid: 1 column on mobile, 2 from sm, 3 from lg. Items are weight 600.
 
+### 10.19 Page header (internal pages)
+
+**Anatomy:** optional eyebrow (the section name) · `h1` · intro paragraphs (`--text-body-lg`) · optional picture.
+
+- Surface: `subtle`. Text on 6 columns at the inline-start and the picture on 5 columns at the inline-end (offset 1) from lg up; text on 9 columns when there's no picture. Stacked below lg.
+- Load entrance like the hero: the text rises in, staggered. The picture loads eagerly (it's the LCP element).
+
+### 10.20 Page link cards
+
+**Anatomy:** brand icon (64 px) · title (a link to the page) · one-line summary · arrow (`icon-directional`, mirrored in RTL).
+
+- White cards with a thin navy-200 border and a 4 px yellow top border. Grid: 1 column on mobile, 2 on tablet, 4 on desktop.
+- The whole card is one link (stretched `::after`). Hover: `--shadow-md`, lift 4 px, and the arrow nudges toward the inline-end. Focus ring around the whole card.
+- Wrapped in a `<nav>` named "עוד על נובידאה" when the block has no title.
+
+### 10.21 "Coming soon" label
+
+A small yellow label with navy text ("בקרוב", 12.12:1). Above the title when the whole feature is upcoming; inline before the note when only an extra part is upcoming (`soonNote`).
+
+### 10.22 Lead form (HubSpot)
+
+`/contact` embeds HubSpot form `05171e84-3123-41fc-81e0-3f8626cb3574` (portal `2799426`, region `na1`), configured in `src/content/pages/he/contact.yaml` and loaded by `src/scripts/hubspot-form.ts`. Same embed as HubSpot's snippet (`forms/embed/v2.js` + `hbspt.forms.create`), but without inline script, so a strict CSP stays possible.
+
+- **Consent first:** HubSpot sets cookies, so the script loads only after marketing consent (§10.23). Until then the slot shows a notice with **"אישור עוגיות שיווק והצגת הטופס"** (grants marketing consent and loads the form) and a link to the cookie settings.
+- States on `#hubspot-form` (`data-state`): `consent` → `loading` → `ready`, or `error` if the script is blocked (role="alert" message). `<noscript>` explains the form needs JavaScript.
+- Without the `hubspot` settings, the block falls back to a placeholder listing the required fields.
+- **HubSpot owns the form's markup and styling.** In HubSpot, set Hebrew labels and error messages, keep visible labels (not placeholders only), and check keyboard access and 3:1 field borders (§10.11). The CSP must allow `js.hsforms.net`, `forms.hsforms.com` and HubSpot's related domains.
+
+### 10.23 Cookie consent
+
+`src/components/ConsentBanner.astro` (markup) and `src/scripts/consent.ts` (logic).
+
+- **Banner** on the first visit: navy, fixed to the bottom, placed right after the skip link in the DOM so keyboard users reach it first. **"אישור הכל" and "רק עוגיות הכרחיות" have the same style and size** (no nudging), plus "הגדרות". It doesn't steal focus.
+- **Settings dialog** (native `<dialog>`: focus trap, Escape closes, focus returns): necessary (always on, disabled switch), analytics, marketing and forms. Reopened from **"הגדרות עוגיות"** in the footer.
+- **Storage:** `localStorage["nv-consent"]` = `{ v, analytics, marketing, at }`. Raise `VERSION` in `consent.ts` to ask everyone again after a policy change.
+- **Gating:** third-party scripts are added inert (`<script type="text/plain" data-consent="marketing" data-src="…">`) or via `window.nvConsent.whenGranted('marketing', fn)`, and run only once that category is granted. Without JavaScript nothing third-party loads.
+- **Withdrawal:** turning a category off deletes its known cookies (HubSpot `__hs*`, `hubspotutk`; analytics `_ga*`) and reloads the page, so already-running scripts stop.
+- **Pending:** legal review of the wording (`TODO(verify)` in `src/i18n/ui.ts`) and a link to the privacy policy once `/privacy` exists.
+
 ---
 
 ## 11. Token reference

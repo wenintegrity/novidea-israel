@@ -1,25 +1,31 @@
-// Primary navigation. Spec: docs/sitemap.md → "Navigation". While only the home page exists,
-// items point at home-page sections so there are no dead links.
+// Primary navigation. Spec: docs/sitemap.md → "Navigation".
 import type { Locale, UiKey } from '../i18n/ui';
 
 export interface NavItem {
   key: UiKey;
-  anchor: string;
+  /** Slug of the page (src/content/pages/<locale>/<slug>.yaml) */
+  slug: string;
 }
 
 export const primaryNav: NavItem[] = [
-  { key: 'nav.platform', anchor: 'platform' },
-  { key: 'nav.ai', anchor: 'ai' },
-  { key: 'nav.audiences', anchor: 'audiences' },
-  { key: 'nav.news', anchor: 'news' },
+  { key: 'nav.solution', slug: 'solution' },
+  { key: 'nav.capabilities', slug: 'capabilities' },
+  { key: 'nav.why', slug: 'why-novidea' },
+  { key: 'nav.israel', slug: 'israel' },
 ];
 
-export const ctaAnchor = 'contact';
+export const ctaNav: NavItem = { key: 'nav.cta', slug: 'contact' };
 
 export function homePath(locale: Locale): string {
   return locale === 'he' ? '/' : `/${locale}/`;
 }
 
-export function sectionHref(locale: Locale, anchor: string): string {
-  return `${homePath(locale)}#${anchor}`;
+export function pagePath(locale: Locale, slug: string): string {
+  return slug === 'home' ? homePath(locale) : `${homePath(locale)}${slug}`;
+}
+
+/** True when `pathname` is the page `slug` (ignores a trailing slash). */
+export function isCurrent(pathname: string, locale: Locale, slug: string): boolean {
+  const clean = (p: string) => (p.length > 1 ? p.replace(/\/$/, '') : p);
+  return clean(pathname) === clean(pagePath(locale, slug));
 }

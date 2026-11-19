@@ -1,0 +1,34 @@
+---
+// Renders a page's section blocks in order (docs/content-model.md → Blocks).
+import type { CollectionEntry } from 'astro:content';
+import type { Locale } from '../../i18n/ui';
+import TextBlock from './TextBlock.astro';
+import FeaturesBlock from './FeaturesBlock.astro';
+import NamesBlock from './NamesBlock.astro';
+import LinksBlock from './LinksBlock.astro';
+import LeadForm from './LeadForm.astro';
+
+interface Props {
+  locale: Locale;
+  blocks: CollectionEntry<'pages'>['data']['sections'];
+}
+
+const { locale, blocks } = Astro.props;
+---
+
+{
+  blocks.map((block) => {
+    switch (block.type) {
+      case 'text':
+        return <TextBlock {...block} />;
+      case 'features':
+        return <FeaturesBlock locale={locale} {...block} />;
+      case 'names':
+        return <NamesBlock {...block} />;
+      case 'links':
+        return <LinksBlock locale={locale} {...block} />;
+      case 'leadForm':
+        return <LeadForm locale={locale} {...block} />;
+    }
+  })
+}

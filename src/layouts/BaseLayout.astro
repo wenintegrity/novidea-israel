@@ -2,10 +2,12 @@
 // Page shell: <html lang/dir> from the locale, Bootstrap 5.3.9 from the CDN (RTL or LTR build),
 // then the Novidea brand layer. See docs/decisions/0001-bootstrap-5-via-cdn.md.
 import '@fontsource-variable/rubik';
+import { getEntry } from 'astro:content';
 import '../styles/tokens.css';
 import '../styles/bootstrap-brand.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import ConsentBanner from '../components/ConsentBanner.astro';
 import { bootstrapCss, bootstrapJs, cdnOrigin } from '../config/cdn';
 import { getDir, useTranslations } from '../i18n/utils';
 import type { Locale } from '../i18n/ui';
@@ -22,6 +24,8 @@ const { locale, title, description, alternateHref } = Astro.props;
 const dir = getDir(locale);
 const t = useTranslations(locale);
 const css = bootstrapCss[dir];
+const shared = await getEntry('shared', locale);
+if (!shared) throw new Error(`Missing content: src/content/shared/${locale}.yaml`);
 ---
 
 <!doctype html>
@@ -40,11 +44,12 @@ const css = bootstrapCss[dir];
   </head>
   <body>
     <a class="skip-link" href="#main">{t('skip.main')}</a>
+    <ConsentBanner locale={locale} />
     <Header locale={locale} alternateHref={alternateHref} />
     <main id="main" tabindex="-1">
       <slot />
     </main>
-    <Footer locale={locale} />
+    <Footer locale={locale} about={shared.data.footerAbout} />
     <script>
       import '../scripts/animate-on-scroll';
     </script>

@@ -85,6 +85,36 @@ a:hover { text-decoration-thickness: 2px; }
 .navbar-toggler:focus,
 .btn-close:focus { box-shadow: none; }
 
+/* ---------- Form controls (design-system.md §10.11) ---------- */
+/* Field and switch borders need 3:1 (grey-700 = 6.29:1); focus is a solid navy ring, not Bootstrap's glow. */
+.form-control,
+.form-select,
+.form-check-input {
+  border-color: var(--color-grey-700);
+}
+.form-check-input:checked {
+  background-color: var(--color-navy);
+  border-color: var(--color-navy);
+}
+.form-control:focus,
+.form-select:focus,
+.form-check-input:focus {
+  border-color: var(--color-navy);
+  box-shadow: none;
+}
+.form-control:focus-visible,
+.form-select:focus-visible,
+.form-check-input:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+.form-check-input:disabled {
+  opacity: 0.7;
+}
+.form-check-input:disabled ~ .form-check-label {
+  opacity: 1; /* keep the "always on" label readable */
+}
+
 /* ---------- Buttons (design-system.md §10.4) ---------- */
 .btn {
   --bs-btn-padding-y: 0.75rem;
@@ -240,6 +270,10 @@ a:hover { text-decoration-thickness: 2px; }
 .skip-link:focus { transform: none; color: var(--color-white); }
 
 /* ---------- Motion (design-system.md §6.1) ---------- */
+/* Safety net: entrance transforms must never create a horizontal scrollbar.
+   `clip` (not `hidden`) keeps the sticky header working. */
+body { overflow-x: clip; }
+
 /* Entrance keyframes, used by CSS-only entrances (the hero). Scroll entrances use src/scripts/animate-on-scroll.ts. */
 @keyframes nv-enter-up {
   from { opacity: 0; transform: translateY(1rem); }

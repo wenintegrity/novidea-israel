@@ -1,0 +1,31 @@
+# /contact. Source: "תוכן לדף אתר NOVIDEA בעברית", section "פתיחת ליד".
+# The form is HubSpot's (configured below). It loads only after the visitor allows marketing cookies;
+# until then the page shows a short notice with a button that grants that consent and loads the form.
+
+seo:
+  title: "השאירו פרטים | נובידאה"
+  description: "מוכנים להוביל את הסוכנות לעידן הבא? השאירו פרטים והצוות שלנו יחזור אליכם לשיחת היכרות והדגמה."
+
+header:
+  title: "מוכנים להוביל את הסוכנות לעידן הבא?"
+  intro:
+    - "הצטרפו לסוכנויות המובילות בישראל שמנהלות את תיק הלקוחות שלהם וצומחות בנובידאה. השאירו פרטים והצוות שלנו יחזור אליכם לשיחת היכרות והדגמה."
+
+leadCta: false
+
+sections:
+  - type: leadForm
+    id: lead-form
+    hubspot:
+      portalId: "2799426"
+      formId: "05171e84-3123-41fc-81e0-3f8626cb3574"
+      region: "na1"
+    # Fields the HubSpot form should have (from the content document), for reference; shown only if
+    # the hubspot settings above are removed. "100+" is isolated as LTR.
+    fields:
+      - "שם מלא"
+      - "שם הסוכנות / בית הסוכן"
+      - "תפקיד (מנכ\"ל / סמנכ\"ל תפעול / מנהל מערכות מידע / אחר)"
+      - "דוא\"ל עסקי"
+      - "טלפון"
+      - "גודל הסוכנות (10-30 משתמשים / 30-100 משתמשים / ⁦100+⁩ משתמשים)"

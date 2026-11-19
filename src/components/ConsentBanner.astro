@@ -1,0 +1,184 @@
+---
+// Cookie consent banner + settings dialog (docs/design-system.md §10.23). Logic: src/scripts/consent.ts
+// The banner is hidden in the HTML and shown by the script only to visitors who haven't decided yet.
+// It sits right after the skip link, so keyboard users reach it first.
+import { useTranslations } from '../i18n/utils';
+import type { Locale } from '../i18n/ui';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const categories = [
+  { id: 'analytics', title: t('consent.analytics'), desc: t('consent.analyticsDesc') },
+  { id: 'marketing', title: t('consent.marketing'), desc: t('consent.marketingDesc') },
+];
+---
+
+<div id="consent-banner" class="consent-banner surface-navy" role="region" aria-labelledby="consent-title" hidden>
+  <div class="container">
+    <div class="consent-banner__inner">
+      <div class="consent-banner__text">
+        <p id="consent-title" class="consent-banner__title">{t('consent.title')}</p>
+        <p class="text-sm-nv mb-0">{t('consent.body')}</p>
+      </div>
+      <div class="consent-banner__actions">
+        {/* Accept and reject are equally prominent (same style, same size) */}
+        <button type="button" class="btn btn-on-dark btn-sm" data-consent-action="accept">
+          {t('consent.acceptAll')}
+        </button>
+        <button type="button" class="btn btn-on-dark btn-sm" data-consent-action="reject">
+          {t('consent.rejectAll')}
+        </button>
+        <button type="button" class="btn btn-outline-on-dark btn-sm" data-consent-open>
+          {t('consent.settings')}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<dialog id="consent-dialog" class="consent-dialog" aria-labelledby="consent-dialog-title">
+  <form id="consent-form" method="dialog">
+    <div class="consent-dialog__head">
+      <h2 id="consent-dialog-title" class="h3 mb-0">{t('consent.dialogTitle')}</h2>
+      <button type="button" class="btn-close" aria-label={t('consent.close')} data-consent-close></button>
+    </div>
+
+    <ul class="list-unstyled consent-options">
+      <li class="consent-option">
+        <div class="form-check form-switch">
+          <input class="form-check-input" type="checkbox" role="switch" id="consent-necessary" checked disabled />
+          <label class="form-check-label" for="consent-necessary">
+            {t('consent.necessary')} <span class="consent-option__state">({t('consent.alwaysOn')})</span>
+          </label>
+        </div>
+        <p class="text-sm-nv text-secondary-nv mb-0">{t('consent.necessaryDesc')}</p>
+      </li>
+      {
+        categories.map((c) => (
+          <li class="consent-option">
+            <div class="form-check form-switch">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                role="switch"
+                id={`consent-${c.id}`}
+                name={c.id}
+                aria-describedby={`consent-${c.id}-desc`}
+              />
+              <label class="form-check-label" for={`consent-${c.id}`}>
+                {c.title}
+              </label>
+            </div>
+            <p id={`consent-${c.id}-desc`} class="text-sm-nv text-secondary-nv mb-0">
+              {c.desc}
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="consent-dialog__actions">
+      <button type="submit" class="btn btn-primary">{t('consent.save')}</button>
+      <button type="button" class="btn btn-outline-primary" data-consent-action="accept">
+        {t('consent.acceptAll')}
+      </button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+  import '../scripts/consent';
+</script>
+
+<style>
+  .consent-banner {
+    position: fixed;
+    inset-inline: 0;
+    inset-block-end: 0;
+    z-index: 1035; /* above the sticky header (1020), below Bootstrap's offcanvas (1045) */
+    padding-block: var(--space-4);
+    box-shadow: 0 -4px 16px rgb(16 19 56 / 0.25);
+  }
+
+  .consent-banner__inner {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .consent-banner__title {
+    margin-block-end: var(--space-1);
+    font-weight: 700;
+  }
+
+  .consent-banner__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  @media (min-width: 992px) {
+    .consent-banner__inner {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .consent-banner__actions {
+      flex-wrap: nowrap;
+      flex-shrink: 0;
+    }
+  }
+
+  .consent-dialog {
+    inline-size: min(100% - 2 * var(--space-4), 36rem);
+    padding: var(--space-6);
+    border: 0;
+    color: var(--color-navy);
+    background-color: var(--color-white);
+    box-shadow: var(--shadow-md);
+    --focus-ring: var(--color-navy);
+  }
+
+  .consent-dialog::backdrop {
+    background-color: rgb(16 19 56 / 0.6);
+  }
+
+  .consent-dialog__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-block-end: var(--space-6);
+  }
+
+  .consent-options {
+    display: grid;
+    gap: var(--space-4);
+    margin-block-end: var(--space-6);
+  }
+
+  .consent-option {
+    padding-block-end: var(--space-4);
+    border-block-end: var(--border-thin) solid var(--color-navy-200);
+  }
+
+  .consent-option .form-check-label {
+    font-weight: 600;
+  }
+
+  .consent-option__state {
+    font-weight: 400;
+    color: var(--text-secondary);
+  }
+
+  .consent-dialog__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+</style>

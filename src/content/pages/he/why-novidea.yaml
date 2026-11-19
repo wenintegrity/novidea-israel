@@ -1,0 +1,32 @@
+# /why-novidea. Source: "תוכן לדף אתר NOVIDEA בעברית", section "למה נובידאה?" (table: advantage → what it means).
+
+seo:
+  title: "למה נובידאה? | נובידאה"
+  description: "Cloud-Native אמיתי, מוצר גלובלי על תשתית ה-CRM מהחזקות בעולם, אבטחת מידע ופרטיות ללא פשרות (ISO, SOC2) וחדשנות מונעת AI."
+
+header:
+  title: "למה נובידאה?"
+  intro:
+    - "מה זה אומר עבור הסוכנות שלך?"
+  picture:
+    src: "../../../assets/images/why-confident.png"
+    alt: "מנהל מחייך עומד בזרועות שלובות במשרד"
+
+sections:
+  - type: features
+    id: advantages
+    columns: 2
+    surface: light
+    items:
+      - icon: cloud-scale
+        title: "Cloud-Native אמיתי"
+        body: "נגישות מלאה מכל מקום ומכל מכשיר, ללא שרתים מקומיים, עם עדכוני גרסה שוטפים ואפס זמני השבתה."
+      - icon: cloud-network
+        title: "מוצר גלובלי המבוסס על תשתית ה-CRM מהחזקות בעולם"
+        body: "עוצמת ה-CRM הגמיש והמתקדם בעולם, שעבר התאמה עמוקה לצרכים המדויקים של שוק הביטוח הישראלי."
+      - icon: cloud-security
+        title: "אבטחת מידע ופרטיות ללא פשרות"
+        body: "עמידה בתקני האבטחה הבינלאומיים והמקומיים המחמירים ביותר: ISO, SOC2, ותקנות הגנת הפרטיות."
+      - icon: smart-ai
+        title: "חדשנות מונעת בינה מלאכותית (AI)"
+        body: "אוטומציות, קיצור זמני תפעול והפקת תובנות עסקיות מבוססות נתונים."

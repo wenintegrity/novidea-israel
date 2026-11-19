@@ -3,7 +3,7 @@
 // Below lg the nav opens as a panel from the inline-end side; from lg up it's inline.
 import Icon from './Icon.astro';
 import Logo from './Logo.astro';
-import { ctaAnchor, homePath, primaryNav, sectionHref } from '../config/nav';
+import { ctaNav, homePath, isCurrent, pagePath, primaryNav } from '../config/nav';
 import { useTranslations } from '../i18n/utils';
 import type { Locale } from '../i18n/ui';
 
@@ -15,6 +15,7 @@ interface Props {
 const { locale, alternateHref } = Astro.props;
 const t = useTranslations(locale);
 const otherLocale = locale === 'he' ? 'en' : 'he';
+const path = Astro.url.pathname;
 ---
 
 <header class="site-header sticky-top">
@@ -53,13 +54,20 @@ const otherLocale = locale === 'he' ? 'en' : 'he';
         <div class="offcanvas-body">
           <ul class="navbar-nav">
             {
-              primaryNav.map((item) => (
-                <li class="nav-item">
-                  <a class="nav-link" href={sectionHref(locale, item.anchor)} data-nav-section>
-                    {t(item.key)}
-                  </a>
-                </li>
-              ))
+              primaryNav.map((item) => {
+                const current = isCurrent(path, locale, item.slug);
+                return (
+                  <li class="nav-item">
+                    <a
+                      class:list={['nav-link', { active: current }]}
+                      href={pagePath(locale, item.slug)}
+                      aria-current={current ? 'page' : undefined}
+                    >
+                      {t(item.key)}
+                    </a>
+                  </li>
+                );
+              })
             }
           </ul>
           <div class="site-nav__actions">
@@ -70,8 +78,12 @@ const otherLocale = locale === 'he' ? 'en' : 'he';
                 </a>
               )
             }
-            <a class="btn btn-accent btn-sm site-nav__cta" href={sectionHref(locale, ctaAnchor)} data-nav-section>
-              {t('nav.cta')}
+            <a
+              class="btn btn-accent btn-sm site-nav__cta"
+              href={pagePath(locale, ctaNav.slug)}
+              aria-current={isCurrent(path, locale, ctaNav.slug) ? 'page' : undefined}
+            >
+              {t(ctaNav.key)}
             </a>
           </div>
         </div>
@@ -79,38 +91,6 @@ const otherLocale = locale === 'he' ? 'en' : 'he';
     </div>
   </nav>
 </header>
-
-<script>
-  // Section links inside the open mobile panel: close the panel first, then move to the section
-  // and put focus there. Bootstrap's own dismiss trigger blocks link navigation, so it isn't used.
-  type OffcanvasInstance = { hide(): void };
-  type BootstrapGlobal = { Offcanvas: { getInstance(el: Element): OffcanvasInstance | null } };
-
-  const panel = document.getElementById('site-nav');
-  panel?.querySelectorAll<HTMLAnchorElement>('a[data-nav-section]').forEach((link) => {
-    link.addEventListener('click', (event) => {
-      const bs = (window as unknown as { bootstrap?: BootstrapGlobal }).bootstrap;
-      const instance = bs?.Offcanvas.getInstance(panel);
-      if (!instance || !panel.classList.contains('show')) return; // desktop: normal link
-
-      const hash = new URL(link.href).hash;
-      if (!hash || new URL(link.href).pathname !== window.location.pathname) return;
-
-      event.preventDefault();
-      panel.addEventListener(
-        'hidden.bs.offcanvas',
-        () => {
-          history.pushState(null, '', hash);
-          const target = document.getElementById(hash.slice(1));
-          target?.focus({ preventScroll: true });
-          target?.scrollIntoView();
-        },
-        { once: true },
-      );
-      instance.hide();
-    });
-  });
-</script>
 
 <style>
   .site-header {
@@ -149,10 +129,15 @@ const otherLocale = locale === 'he' ? 'en' : 'he';
     min-block-size: 2.75rem;
   }
 
-  .nav-link:hover {
+  .nav-link:hover,
+  .nav-link[aria-current='page'] {
     text-decoration: underline;
     text-decoration-thickness: 2px;
     text-underline-offset: 0.35em;
+  }
+
+  .nav-link[aria-current='page'] {
+    font-weight: 700;
   }
 
   .site-nav__actions {

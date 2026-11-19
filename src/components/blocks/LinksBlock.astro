@@ -1,0 +1,110 @@
+---
+// Page link cards (docs/design-system.md §10.20). Each card is one link (stretched ::after):
+// icon, title, short summary, arrow. 1 column on mobile, 2 on tablet, 4 on desktop.
+import BrandIcon from '../BrandIcon.astro';
+import Icon from '../Icon.astro';
+import { useTranslations } from '../../i18n/utils';
+import type { Locale } from '../../i18n/ui';
+
+interface Props {
+  locale: Locale;
+  id?: string;
+  title?: string;
+  surface: 'light' | 'subtle' | 'tint' | 'navy';
+  items: { icon?: { id: string }; title: string; body: string; href: string }[];
+}
+
+const { locale, id, title, surface, items } = Astro.props;
+const t = useTranslations(locale);
+const headingId = `${id ?? 'links'}-title`;
+const CardHeading = title ? 'h3' : 'h2';
+---
+
+<nav
+  id={id}
+  class:list={['section', `surface-${surface}`]}
+  aria-labelledby={title ? headingId : undefined}
+  aria-label={title ? undefined : t('links.label')}
+>
+  <div class="container">
+    {
+      title && (
+        <header class="section-header" data-animate="fade-up">
+          <h2 id={headingId}>{title}</h2>
+        </header>
+      )
+    }
+    <ul class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-3 list-unstyled mb-0" data-animate-children="fade-up">
+      {
+        items.map((item) => (
+          <li class="col">
+            <div class="link-card">
+              {item.icon && <BrandIcon id={item.icon.id} variant="light" size="xl" />}
+              <CardHeading class="h4 link-card__title">
+                <a class="stretched-link" href={item.href}>
+                  {item.title}
+                </a>
+              </CardHeading>
+              <p class="text-secondary-nv mb-0">{item.body}</p>
+              <Icon name="arrow" class="link-card__arrow" />
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</nav>
+
+<style>
+  .link-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    block-size: 100%;
+    padding: var(--space-6);
+    background-color: var(--color-white);
+    border: var(--border-thin) solid var(--color-navy-200);
+    border-block-start: 4px solid var(--color-yellow);
+    transition:
+      box-shadow var(--duration-base) var(--ease-out),
+      transform var(--duration-base) var(--ease-out);
+  }
+
+  .link-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-4px);
+  }
+
+  .link-card:focus-within {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  .link-card__title {
+    margin: 0;
+  }
+
+  .link-card__title a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .link-card__title a:focus-visible {
+    outline: none;
+  }
+
+  .link-card :global(.link-card__arrow) {
+    margin-block-start: auto;
+    transition: transform var(--duration-base) var(--ease-out);
+  }
+
+  /* Arrow nudges toward the inline-end; the RTL mirror comes from .icon-directional */
+  .link-card:hover :global(.link-card__arrow) {
+    transform: translateX(4px);
+  }
+
+  .link-card:hover :global(.link-card__arrow:dir(rtl)) {
+    transform: scaleX(-1) translateX(4px);
+  }
+</style>

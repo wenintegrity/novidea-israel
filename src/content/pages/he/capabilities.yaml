@@ -1,0 +1,57 @@
+# /capabilities. Source: "תוכן לדף אתר NOVIDEA בעברית", section "יכולות ליבה: מקצה לקצה".
+# "360°" is wrapped in Unicode LTR isolates (⁦…⁩) so the degree sign stays after the number in RTL.
+
+seo:
+  title: "יכולות ליבה: מקצה לקצה | נובידאה"
+  description: "ניהול מסע לקוח מליד ועד פוליסה, תמונת לקוח 360° עם תובנות AI, BPM מתקדם, משרד ללא נייר, דשבורדים ו-BI בזמן אמת."
+
+header:
+  title: "יכולות ליבה: מקצה לקצה"
+  picture:
+    src: "../../../assets/images/agent-at-laptop.png"
+    alt: "איש מקצוע מחייך עובד מול מחשב נייד"
+
+sections:
+  - type: features
+    id: customer-journey
+    title: "ניהול מסע לקוח"
+    columns: 2
+    surface: light
+    items:
+      - icon: fast-track
+        title: "מליד ועד פוליסה"
+        body: "תהליך מובנה מתיאום הפגישה, הזנקת הר הביטוח וטרום ייעוץ לטובת הכנת הפגישה ללקוח וכן קליטת התוצרים מהסימולטור לאחר המכירה. קליטת נתוני מסלקה וממשקי פרט, ועד להצעת מחיר והפקה."
+      - icon: ai-brain
+        title: "תמונת לקוח ⁦360°⁩ עם תובנות AI"
+        body: "ניתוח עמוק של תיק הלקוח ובני המשפחה, זיהוי חוסרים ביטוחיים, והמלצות חכמות להרחבת כיסויים."
+
+  - type: features
+    id: operations
+    title: "תפעול, שירות ו-BPM מתקדם"
+    columns: 3
+    surface: subtle
+    items:
+      - icon: process-cycle
+        title: "ניהול תהליכי עבודה (BPM)"
+        body: "מימוש אוטומטי של תהליכי שירות, תביעות וחידושים עם הגדרת SLA ומשימות מובנות לצוות תוך מתן כלים למנהלים לבקרה וניתוב עומסים."
+      - icon: document-automation
+        title: "משרד ללא נייר (Paperless Office)"
+        body: "תיוק מסמכים חכם, חתימות דיגיטליות, והפקה אוטומטית של מכתבים, הצעות וטפסים מותאמים אישית באמצעות מנוע Docomotion המובנה."
+      - icon: support-agent
+        title: "טיפול בפניות שירות"
+        # TODO(verify): "מנגנון מוצרי מלא" as written in the source; confirm the intended wording.
+        body: "מנגנון מוצרי מלא של Mail to Case מאפשר להעניק ללקוח חווית שירות מהירה תוך ניטור מלא."
+
+  - type: features
+    id: dashboards
+    title: "דשבורדים, BI וקבלת החלטות"
+    columns: 2
+    surface: light
+    items:
+      - icon: dashboard
+        title: "דשבורדים ודוחות עסקיים בזמן אמת"
+        # TODO(verify): the source reads "בזמן אמת על בסיס, שניתן לבנות..." and seems to be missing a word after "על בסיס".
+        body: "דשבורדים ודוחות שניתן לבנות עצמאית, ללא צורך בפיתוח או ידע טכנולוגי."
+      - icon: analytics-search
+        title: "מעקב על נתוני פרודוקציה"
+        body: "יכולת לבצע בקרות על נתוני הפרודוקציה ביחס למדווח במערכת לטובת טיפול וייעול רווחיות."

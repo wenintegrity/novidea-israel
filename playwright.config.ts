@@ -10,6 +10,22 @@ export default defineConfig({
     // Scroll animations off by default, so screenshots and axe see the final state.
     // Tests that check animation opt back in with test.use({ reducedMotion: 'no-preference' }).
     reducedMotion: 'reduce',
+    // A visitor who already chose "necessary only", so the consent banner doesn't cover the page.
+    // tests/e2e/consent.spec.ts starts from an empty state instead.
+    storageState: {
+      cookies: [],
+      origins: [
+        {
+          origin: 'http://localhost:4321',
+          localStorage: [
+            {
+              name: 'nv-consent',
+              value: JSON.stringify({ v: 1, analytics: false, marketing: false, at: '2026-01-01T00:00:00.000Z' }),
+            },
+          ],
+        },
+      ],
+    },
   },
   webServer: {
     command: 'npm run preview',

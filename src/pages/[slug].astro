@@ -1,0 +1,26 @@
+---
+// Hebrew internal pages (/<slug>). One page per src/content/pages/he/<slug>.yaml (except home).
+import { getCollection, getEntry } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/blocks/PageHeader.astro';
+import Blocks from '../components/blocks/Blocks.astro';
+import LeadCta from '../components/blocks/LeadCta.astro';
+
+export async function getStaticPaths() {
+  const pages = await getCollection('pages', (p) => p.id.startsWith('he/') && p.id !== 'he/home');
+  return pages.map((page) => ({ params: { slug: page.id.slice('he/'.length) }, props: { page } }));
+}
+
+const { page } = Astro.props;
+const locale = 'he' as const;
+const shared = await getEntry('shared', locale);
+if (!shared) throw new Error(`Missing content: src/content/shared/${locale}.yaml`);
+const { seo, header, sections, leadCta } = page.data;
+if (!header) throw new Error(`Missing header: src/content/pages/${page.id}.yaml`);
+---
+
+<BaseLayout locale={locale} title={seo.title} description={seo.description}>
+  <PageHeader {...header} />
+  <Blocks locale={locale} blocks={sections} />
+  {leadCta && <LeadCta {...shared.data.leadCta} />}
+</BaseLayout>
