@@ -100,7 +100,7 @@ const path = Astro.url.pathname;
     border-block-end: var(--border-thin) solid var(--color-navy-200);
   }
 
-  /* Scroll progress: a 4 px yellow line over the header's bottom border that fills as the page
+  /* Scroll progress: a 4 px brand-red line over the header's bottom border that fills as the page
      scrolls. Scroll-driven animation (no JavaScript); browsers without support and visitors who
      prefer reduced motion don't see it. It grows in the reading direction: transform-origin has no
      logical form, so RTL gets its own (design-system.md §8.3). */
@@ -116,7 +116,7 @@ const path = Astro.url.pathname;
         inset-inline: 0;
         inset-block-end: calc(-1 * var(--border-thin));
         block-size: 4px;
-        background-color: var(--color-yellow);
+        background-color: var(--color-red);
         transform: scaleX(0);
         transform-origin: 0 50%;
         /* Longhands on purpose: the CSS minifier folds a shorthand plus animation-timeline into one

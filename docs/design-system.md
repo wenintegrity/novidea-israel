@@ -558,6 +558,8 @@ A smaller version of the home hero (§10.6), so internal pages share its look.
 - **Below lg:** media on top, the panel below it, full width, no slant.
 - **Media:** the page picture, loaded eagerly with high priority (it's the LCP element). Without a picture (`/contact`, `/privacy`), a navy block with the stripe motif (§7.2), at least 16 rem high; it's decorative, so it's hidden below lg.
 - Load entrance like the hero: the panel's text rises in, staggered.
+- **Height:** next to a picture, the panel is at least 25 rem high on desktop (12 rem below lg), text centred vertically, so a page with a one-line title (/capabilities, /why-novidea) matches the others. Without a picture it fits its content.
+- **Red line:** a 4 px brand-red border along the panel's bottom edge (decorative; on desktop it ends at the slant). Red is still pending confirmation (§3.1).
 
 ### 10.20 Page link cards
 
@@ -619,7 +621,7 @@ A small yellow label with navy text ("בקרוב", 12.12:1). Above the title whe
 
 ### 10.26 Scroll progress
 
-A 4 px yellow line on the header's bottom edge that fills as the page scrolls, in the reading direction (from the right in Hebrew). Inside the sticky header, so it needs no z-index of its own.
+A 4 px brand-red line on the header's bottom edge that fills as the page scrolls, in the reading direction (from the right in Hebrew). Inside the sticky header, so it needs no z-index of its own.
 
 - **CSS only:** a scroll-driven animation (`animation-timeline: scroll(root block)`), no JavaScript. Browsers without support don't show it.
 - Decorative (`aria-hidden`). Hidden for `prefers-reduced-motion: reduce` and in print. Empty on pages too short to scroll.

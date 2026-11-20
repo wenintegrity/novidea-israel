@@ -16,7 +16,7 @@ interface Props {
 const { title, intro, picture } = Astro.props;
 ---
 
-<section class="page-header" aria-labelledby="page-title">
+<section class:list={['page-header', { 'page-header--picture': picture }]} aria-labelledby="page-title">
   <div class="container">
     <div class="page-header__grid">
       {
@@ -69,8 +69,19 @@ const { title, intro, picture } = Astro.props;
     overflow: hidden;
   }
 
+  /* A brand-red line along the panel's bottom edge (decorative; follows the slant on desktop) */
   .page-header__panel {
     padding: var(--space-8) var(--space-6);
+    border-block-end: 4px solid var(--color-red);
+  }
+
+  /* Next to a picture, the panel keeps a minimum height so pages with a one-line title or intro
+     match the others; its text is centred vertically */
+  .page-header--picture .page-header__panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-block-size: 12rem;
   }
 
   /* Load entrance like the home hero: the panel's content rises in, staggered */
@@ -115,6 +126,10 @@ const { title, intro, picture } = Astro.props;
       display: block;
       align-self: stretch;
       min-block-size: 16rem;
+    }
+
+    .page-header--picture .page-header__panel {
+      min-block-size: 25rem;
     }
 
     .page-header__panel {
