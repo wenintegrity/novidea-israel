@@ -2,7 +2,7 @@
 // drawn with `currentColor` strokes. Content illustrations come from the brand icon library in
 // src/assets/icons/ instead (see BrandIcon.astro).
 
-export const iconNames = ['arrow', 'check', 'menu'] as const;
+export const iconNames = ['arrow', 'check', 'menu', 'play'] as const;
 
 export type IconName = (typeof iconNames)[number];
 
@@ -12,5 +12,7 @@ export const directionalIcons: ReadonlySet<IconName> = new Set<IconName>(['arrow
 export const iconPaths: Record<IconName, string> = {
   arrow: '<path d="M5 12h14"/><path d="m13 6 6 6-6 6"/>',
   check: '<path d="M20 6 9 17l-5-5"/>',
+  /** Media control: never mirrored (design-system.md §8.1). */
+  play: '<path d="M6 3.5v17L20 12z"/>',
   menu: '<path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/>',
 };

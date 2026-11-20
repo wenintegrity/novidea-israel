@@ -205,6 +205,14 @@ test.describe('content details', () => {
     }
   });
 
+  test('home shows the video placeholder until a video file is added', async ({ page }) => {
+    await page.goto('/');
+    const placeholder = page.locator('#overview .video--placeholder');
+    await expect(placeholder).toBeVisible();
+    await expect(placeholder).toContainText('הסרטון יעלה בקרוב');
+    await expect(page.locator('#overview video')).toHaveCount(0);
+  });
+
   test('solution page marks upcoming features as "בקרוב"', async ({ page }) => {
     await page.goto('/solution');
     await expect(page.locator('.badge-soon').first()).toHaveText('בקרוב');

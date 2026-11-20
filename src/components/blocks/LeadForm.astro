@@ -22,11 +22,12 @@ const { locale, id, hubspot, fields } = Astro.props;
 const t = useTranslations(locale);
 ---
 
-<section id={id} tabindex={id ? '-1' : undefined} class="section surface-light" aria-labelledby="lead-form-title">
+<section id={id} tabindex={id ? '-1' : undefined} class="section surface-subtle" aria-labelledby="lead-form-title">
   <div class="container">
     <div class="row">
-      <div class="col-12 col-lg-8">
-        <h2 id="lead-form-title" class="visually-hidden">{t('leadForm.title')}</h2>
+      <div class="col-12 col-lg-10 col-xl-8 mx-auto">
+        <div class="lead-card" data-animate="fade-up">
+        <h2 id="lead-form-title" class="title-accent">{t('leadForm.title')}</h2>
         {
           hubspot ? (
             <div
@@ -36,6 +37,7 @@ const t = useTranslations(locale);
               data-portal-id={hubspot.portalId}
               data-form-id={hubspot.formId}
               data-region={hubspot.region}
+              data-submit-label={t('nav.cta')}
               data-state="consent"
             >
               <div class="lead-form__notice" data-when="consent">
@@ -72,6 +74,7 @@ const t = useTranslations(locale);
             </div>
           )
         }
+        </div>
       </div>
     </div>
   </div>
@@ -83,6 +86,24 @@ const t = useTranslations(locale);
 </script>
 
 <style>
+  /* White card on the subtle surface, with the yellow top edge of the page link cards (§10.20) */
+  .lead-card {
+    padding: var(--space-8) var(--space-6);
+    background-color: var(--color-white);
+    border-block-start: 4px solid var(--color-yellow);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .lead-card h2 {
+    margin-block-end: var(--space-8);
+  }
+
+  @media (min-width: 768px) {
+    .lead-card {
+      padding: var(--space-12);
+    }
+  }
+
   .lead-form__notice {
     padding: var(--space-6);
     background-color: var(--color-navy-50);

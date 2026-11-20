@@ -27,7 +27,7 @@ Every block has `type` and an optional `id` (becomes the section anchor). `surfa
 
 | `type` | Fields | Component |
 |---|---|---|
-| `text` | `title` (optional), `paragraphs[]`, `picture` (optional), `surface` (default light) | `TextBlock.astro` |
+| `text` | `title` (optional), `paragraphs[]`, `picture` **or** `video` (optional), `surface` (default light). `video`: `title` (accessible name), `file` (in `src/assets/videos/`; leave out for the "coming soon" placeholder), `captions` (.vtt), `poster` (image) | `TextBlock.astro` |
 | `features` | `title`, `intro` (optional), `columns` 2 or 3, `surface`, `picture` (optional), `items[]`: `{icon, title, body, soon, soonNote}`. An item needs a title or a body. `soon: true` labels the whole item "בקרוב"; `soonNote` adds an upcoming extra to an available item | `FeaturesBlock.astro` |
 | `names` | `title`, `names[]`: each a plain name, or `{name, logo}` where `logo` points into `src/assets/logos/customers/` and `name` becomes the alt text; `more` (e.g. "ועוד"), `surface` (default subtle) | `NamesBlock.astro` |
 | `links` | `title` (optional), `items[]`: `{icon, title, body, href}`, `surface` | `LinksBlock.astro` |

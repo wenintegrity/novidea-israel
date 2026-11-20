@@ -59,14 +59,35 @@ const pages = defineCollection({
     const surface = z.enum(['light', 'subtle', 'tint', 'navy']);
 
     // Section blocks (docs/content-model.md → "Blocks")
-    const textBlock = z.object({
-      type: z.literal('text'),
-      id: z.string().optional(),
-      title: z.string().optional(),
-      paragraphs: z.array(z.string().min(1)).min(1),
-      picture: picture.optional(),
-      surface: surface.default('light'),
+    /** A video in src/assets/videos/. Without `file`, a "coming soon" placeholder shows instead. */
+    const video = z.object({
+      /** File name in src/assets/videos/, e.g. "novidea-overview.mp4" (mp4 or webm). */
+      file: z
+        .string()
+        .regex(/^[\w.-]+\.(mp4|webm)$/, 'A file name in src/assets/videos/ ending in .mp4 or .webm')
+        .optional(),
+      /** The video's accessible name. */
+      title: z.string().min(1),
+      /** Captions (WebVTT) in src/assets/videos/. Required by WCAG 1.2.2 for any video with speech. */
+      captions: z
+        .string()
+        .regex(/^[\w.-]+\.vtt$/, 'A file name in src/assets/videos/ ending in .vtt')
+        .optional(),
+      /** Still image shown before playback. */
+      poster: image().optional(),
     });
+
+    const textBlock = z
+      .object({
+        type: z.literal('text'),
+        id: z.string().optional(),
+        title: z.string().optional(),
+        paragraphs: z.array(z.string().min(1)).min(1),
+        picture: picture.optional(),
+        video: video.optional(),
+        surface: surface.default('light'),
+      })
+      .refine((b) => !(b.picture && b.video), 'A text block takes a picture or a video, not both');
 
     const featuresBlock = z.object({
       type: z.literal('features'),

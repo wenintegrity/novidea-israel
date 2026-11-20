@@ -1,17 +1,23 @@
 ---
-// Text block (docs/content-model.md → Blocks): optional title, paragraphs, optional picture.
+// Text block (docs/content-model.md → Blocks): optional title, paragraphs, and an optional picture
+// or video beside them.
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
+import Video from '../Video.astro';
+import type { Locale } from '../../i18n/ui';
 
 interface Props {
+  locale: Locale;
   id?: string;
   title?: string;
   paragraphs: string[];
   picture?: { src: ImageMetadata; alt: string };
+  video?: { file?: string; title: string; captions?: string; poster?: ImageMetadata };
   surface: 'light' | 'subtle' | 'tint' | 'navy';
 }
 
-const { id, title, paragraphs, picture, surface } = Astro.props;
+const { locale, id, title, paragraphs, picture, video, surface } = Astro.props;
+const media = Boolean(picture || video);
 const headingId = id ? `${id}-title` : undefined;
 ---
 
@@ -23,7 +29,7 @@ const headingId = id ? `${id}-title` : undefined;
 >
   <div class="container">
     <div class="row gy-5 align-items-center">
-      <div class:list={['col-12', { 'col-lg-6': picture, 'col-lg-9': !picture }]} data-animate="fade-up">
+      <div class:list={['col-12', { 'col-lg-6': media, 'col-lg-9': !media }]} data-animate="fade-up">
         {title && <h2 id={headingId} class="title-accent">{title}</h2>}
         {paragraphs.map((p, i) => <p class:list={{ 'lead-nv': i === 0 }}>{p}</p>)}
       </div>
@@ -41,6 +47,13 @@ const headingId = id ? `${id}-title` : undefined;
           </div>
         )
       }
+      {
+        video && (
+          <div class="col-12 col-lg-5 offset-lg-1" data-animate="fade-end" data-animate-delay="0.1">
+            <Video locale={locale} {...video} />
+          </div>
+        )
+      }
     </div>
   </div>
 </section>
@@ -55,10 +68,5 @@ const headingId = id ? `${id}-title` : undefined;
     inline-size: 100%;
     block-size: auto;
     box-shadow: var(--shadow-md);
-  }
-
-  /* On navy the picture's own navy background merges with the section: no shadow, no visible edge */
-  .surface-navy .text-block__picture {
-    box-shadow: none;
   }
 </style>

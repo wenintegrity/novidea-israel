@@ -22,17 +22,21 @@ hero:
 
 sections:
   # Source: טקסט מקוצר
-  # Navy, so the product picture's own navy background (#0f1238) blends into the section.
   - type: text
     id: overview
-    surface: navy
+    surface: subtle
     paragraphs:
       - "נובידאה מובילה את המהפכה הדיגיטלית בשוק הביטוח עם פלטפורמת ענן (InsurTech) מונחת נתונים וזוכת פרסים בינלאומיים. הפלטפורמה מאיצה צמיחה, רווחיות ויעילות תפעולית עבור סוכנויות וברוקרים באמצעות כלים אנליטיים ותובנות עסקיות בזמן אמת."
       - "עם בסיס CRM חזק כחלק מטכנולוגיית Salesforce, הפלטפורמה מהווה מערכת ליבה לסוכנות, ומאפשרת לשים את הלקוח במרכז, ולחבר את כל תהליכי העבודה בסוכנות."
       - "מתיאום פגישות, מכירות, הפקה, פרודוקציה וניהול שירות ועד ניהול תביעות וחידושים לשמירה על שירות ללקוח ברמה הגבוהה ביותר."
-    picture:
-      src: "../../../assets/images/product-dashboards.png"
-      alt: "לוחות מחוונים של מערכת נובידאה על מסך מחשב"
+    # Video: until `file` is set, a "הסרטון יעלה בקרוב" placeholder shows. To add the video, put it in
+    # src/assets/videos/ and set `file` (and `captions` for its .vtt file if it has speech).
+    # See src/assets/videos/README.md.
+    video:
+      # file: "novidea-overview.mp4"
+      # captions: "novidea-overview.he.vtt"
+      # TODO(verify): video title, once the video is chosen.
+      title: "סרטון היכרות עם נובידאה"
 
   # Source: טקסט מקוצר (last line)
   # Logos supplied by Novidea on 20/11/2026 (src/assets/logos/customers/). The name is the logo's alt text.

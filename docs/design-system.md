@@ -578,7 +578,9 @@ A small yellow label with navy text ("בקרוב", 12.12:1). Above the title whe
 - **Consent first:** HubSpot sets cookies, so the script loads only after marketing consent (§10.23). Until then the slot shows a notice with **"אישור עוגיות שיווק והצגת הטופס"** (grants marketing consent and loads the form) and a link to the cookie settings.
 - States on `#hubspot-form` (`data-state`): `consent` → `loading` → `ready`, or `error` if the script is blocked (role="alert" message). `<noscript>` explains the form needs JavaScript.
 - Without the `hubspot` settings, the block falls back to a placeholder listing the required fields.
-- **HubSpot owns the form's markup and styling.** In HubSpot, set Hebrew labels and error messages, keep visible labels (not placeholders only), and check keyboard access and 3:1 field borders (§10.11). The CSP must allow `js.hsforms.net`, `forms.hsforms.com` and HubSpot's related domains.
+- **Layout:** the form sits in a white card (4 px yellow top edge, `--shadow-sm`) on the `subtle` surface, 8 of 12 columns centred on desktop, with a visible `h2` "השאירו פרטים" and the title accent (§7.6).
+- **Styling inside HubSpot's iframe:** HubSpot draws the form in a same-origin iframe, so site CSS can't reach it (CSS pasted into the site's stylesheets has no effect). Once the form is in the iframe, `hubspot-form.ts` sets the iframe's `lang` and `dir` from the page (so the form flows RTL without `float` or `text-align: right` hacks), copies the site's `@font-face` rules for Rubik, and adds the brand rules: navy labels, 3:1 grey-700 field borders, navy focus ring, red-700 errors, and a navy primary button. Email and phone inputs get `dir="ltr"`. It replaces HubSpot's English "Submit" with "השאירו פרטים" (`nav.cta`), and keeps the iframe as tall as its content (errors add height).
+- **HubSpot still owns the fields, labels and messages.** In HubSpot, set the fields from the content document, the form language to Hebrew (error messages), and keep visible labels. If HubSpot ever serves the form cross-origin, the script leaves HubSpot's own styling in place. The CSP must allow `js.hsforms.net`, `forms.hsforms.com` and HubSpot's related domains, and inline styles (HubSpot injects them too).
 
 ### 10.23 Cookie consent
 
@@ -592,6 +594,16 @@ A small yellow label with navy text ("בקרוב", 12.12:1). Above the title whe
 - **Pending:** legal review of the wording (`TODO(verify)` in `src/i18n/ui.ts`) and a link to the privacy policy once `/privacy` exists.
 
 ---
+
+### 10.24 Video
+
+**Anatomy:** a 16:9 video with native controls (`src/components/Video.astro`), used in a text block's media column in place of a picture.
+
+- **Source:** a file in `src/assets/videos/` (MP4 or WebM, under about 20 MB), bundled with a hashed URL. `preload="metadata"`, `playsinline`, no autoplay. Optional poster image.
+- **Accessibility:** an accessible name (`title`), and captions (WebVTT `<track>`) for any video with speech (WCAG 1.2.2). A download link is the fallback text.
+- **Placeholder:** without a file, a navy 16:9 panel with a yellow play circle, the stripe motif in a corner, and "הסרטון יעלה בקרוב". It isn't a button: nothing happens on click. The layout stays the same when the video arrives.
+- **RTL:** media controls and the play triangle are never mirrored (§8.1).
+- **YouTube later:** embed from `youtube-nocookie.com`, loaded only after marketing consent like the HubSpot form (§10.22), with the same consent notice until then. Add the domains to the CSP.
 
 ## 11. Token reference
 

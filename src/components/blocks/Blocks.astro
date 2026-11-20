@@ -21,7 +21,7 @@ const { locale, blocks } = Astro.props;
   blocks.map((block) => {
     switch (block.type) {
       case 'text':
-        return <TextBlock {...block} />;
+        return <TextBlock locale={locale} {...block} />;
       case 'features':
         return <FeaturesBlock locale={locale} {...block} />;
       case 'names':

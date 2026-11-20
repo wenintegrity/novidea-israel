@@ -30,8 +30,15 @@ To find every content placeholder: `grep -rn "TODO(verify)" src` and look for hi
 The site embeds form `05171e84-3123-41fc-81e0-3f8626cb3574` (portal 2799426) on `/contact`, after marketing-cookie consent.
 
 - [ ] **Fields to match the content document:** שם מלא · שם הסוכנות / בית הסוכן · תפקיד (מנכ"ל / סמנכ"ל תפעול / מנהל מערכות מידע / אחר) · דוא"ל עסקי · טלפון · גודל הסוכנות (10-30 / 30-100 / 100+ משתמשים). The form currently has first name, last name, company, email and phone, without role or agency size.
-- [ ] **Submit button:** "השאירו פרטים" in Hebrew and in the site's navy (currently "Submit", orange).
-- [ ] **Hebrew error messages** and a quick keyboard / screen-reader check of the form.
+- [x] **Right-to-left layout and brand styling:** done by the site (`hubspot-form.ts` styles the form inside HubSpot's iframe), including the navy "השאירו פרטים" button. CSS pasted into the site wouldn't reach the iframe.
+- [ ] **Form language: Hebrew** in HubSpot's form settings, so error messages are in Hebrew (they're English now, e.g. "Please complete this required field.").
+- [ ] **Keyboard and screen-reader check** of the form.
+
+## 3a. Home page video
+
+- [ ] **The video file:** put it in `src/assets/videos/` and set `file` in [home.yaml](src/content/pages/he/home.yaml) (see `src/assets/videos/README.md`). Until then the section shows a "הסרטון יעלה בקרוב" placeholder.
+- [ ] **Captions** (.vtt) if the video has speech (required by IS 5568 / WCAG 1.2.2), and the video's **title** (`TODO(verify)` in home.yaml).
+- [ ] **If it moves to YouTube:** load it only after marketing consent, like the HubSpot form (design-system.md §10.24).
 
 ## 4. Technical (no input needed)
 

@@ -1,0 +1,120 @@
+---
+// Video (docs/design-system.md §10.25). Plays a file from src/assets/videos/ with native controls.
+// Without a file it shows a "coming soon" placeholder of the same size, so the layout doesn't change
+// when the video arrives. Media controls are never mirrored in RTL.
+import { getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Icon from './Icon.astro';
+import StripeMotif from './StripeMotif.astro';
+import { useTranslations } from '../i18n/utils';
+import type { Locale } from '../i18n/ui';
+
+interface Props {
+  locale: Locale;
+  file?: string;
+  title: string;
+  captions?: string;
+  poster?: ImageMetadata;
+}
+
+const { locale, file, title, captions, poster } = Astro.props;
+const t = useTranslations(locale);
+
+// Bundled as hashed asset URLs; only files a page uses end up in the build.
+const files = import.meta.glob<string>('../assets/videos/*.{mp4,webm,vtt}', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+});
+const url = (name: string) => {
+  const found = files[`../assets/videos/${name}`];
+  if (!found) throw new Error(`Video file "${name}" not found. Put it in src/assets/videos/.`);
+  return found;
+};
+
+const src = file ? url(file) : undefined;
+const type = file?.endsWith('.webm') ? 'video/webm' : 'video/mp4';
+const captionsSrc = captions ? url(captions) : undefined;
+const posterSrc = poster ? (await getImage({ src: poster, width: 1280, format: 'webp' })).src : undefined;
+---
+
+{
+  src ? (
+    <video class="video" controls preload="metadata" playsinline poster={posterSrc} aria-label={title}>
+      <source src={src} type={type} />
+      {captionsSrc && <track kind="captions" src={captionsSrc} srclang={locale} label={t('video.captions')} default />}
+      <p>
+        {t('video.unsupported')} <a href={src}>{t('video.download')}</a>
+      </p>
+    </video>
+  ) : (
+    <div class="video video--placeholder surface-navy">
+      <StripeMotif />
+      <div class="video__content">
+        <span class="video__play">
+          <Icon name="play" />
+        </span>
+        <p class="video__soon mb-0">
+          <span class="visually-hidden">{title}: </span>
+          {t('video.soon')}
+        </p>
+      </div>
+    </div>
+  )
+}
+
+<style>
+  .video {
+    display: block;
+    inline-size: 100%;
+    aspect-ratio: 16 / 9;
+    background-color: var(--color-navy);
+    box-shadow: var(--shadow-md);
+  }
+
+  .video--placeholder {
+    position: relative;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+
+  /* Small stripes in the inline-end bottom corner, clear of the text */
+  .video--placeholder :global(.stripe-motif) {
+    inset-block: auto 6%;
+    inset-inline-end: 4%;
+    block-size: 50%;
+    opacity: 0.5;
+  }
+
+  .video__content {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: var(--space-4);
+    text-align: center;
+  }
+
+  .video__play {
+    display: grid;
+    place-items: center;
+    inline-size: 4.5rem;
+    block-size: 4.5rem;
+    border-radius: var(--radius-full);
+    background-color: var(--color-yellow);
+    color: var(--color-navy);
+  }
+
+  .video__play :global(.icon) {
+    inline-size: 2rem;
+    block-size: 2rem;
+    fill: currentColor;
+    /* Optical centring: a play triangle looks off-centre when its box is centred. Physical on
+       purpose: the triangle always points right, in both directions (design-system.md §8.3). */
+    margin-left: 0.25rem;
+  }
+
+  .video__soon {
+    font-weight: 500;
+  }
+</style>
