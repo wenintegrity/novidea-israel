@@ -54,7 +54,9 @@ const headingId = id ? `${id}-title` : undefined;
       {
         video && (
           <div class="col-12 col-lg-7" data-animate="fade-end" data-animate-delay="0.1">
-            <Video locale={locale} {...video} />
+            <div class="text-block__video">
+              <Video locale={locale} {...video} />
+            </div>
           </div>
         )
       }
@@ -65,6 +67,14 @@ const headingId = id ? `${id}-title` : undefined;
 <style>
   p:last-child {
     margin-block-end: 0;
+  }
+
+  /* Desktop: the player fills 88% of its column, aligned to the page edge (inline-end) */
+  @media (min-width: 992px) {
+    .text-block__video {
+      max-inline-size: 88%;
+      margin-inline-start: auto;
+    }
   }
 
   .text-block__picture {
