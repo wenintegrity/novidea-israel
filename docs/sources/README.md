@@ -9,3 +9,4 @@ Text copies of the documents the site's content is built from. Every claim on th
 | [pr-customer-conference-2026-07-07.he.md](pr-customer-conference-2026-07-07.he.md) | Press release: customer conference in Israel, AI capabilities | 07/07/2026 |
 | [customer-quotes.md](customer-quotes.md) | Customer quotes (Israeli customers, English originals) | 2026 |
 | [video-narration.he.md](video-narration.he.md) | Narration of the earlier video edit (from its captions) | 20/11/2026 |
+| [office-location.he.md](office-location.he.md) | Office location in Israel (Infinity Park, Ra'anana) | 20/11/2026 |

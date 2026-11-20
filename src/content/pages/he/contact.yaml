@@ -33,3 +33,13 @@ sections:
       - "דוא״ל עסקי"
       - "טלפון"
       - "גודל הסוכנות (10-30 משתמשים / 30-100 משתמשים / ⁦100+⁩ משתמשים)"
+
+  # Office location. Source: docs/sources/office-location.he.md (owner, 20/11/2026).
+  - type: location
+    id: office
+    title: "המשרדים שלנו"
+    place: "מגדל אינפיניטי פארק, קומה 23"
+    address: "רחוב הפנינה 8, רעננה"
+    directions: "על גבול רעננה–כפר סבא, סמוך למחלף רעננה דרום (כביש 4, כביש 531 ודרך השרון)."
+    mapQuery: "מגדל אינפיניטי פארק, הפנינה 8, רעננה"
+    surface: light

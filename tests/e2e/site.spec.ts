@@ -1,7 +1,8 @@
 import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
-const pages = [
+// `noindex` pages (campaign landing pages) have no canonical and aren't in sitemap.xml
+const pages: { path: string; name: string; noindex?: boolean }[] = [
   { path: '/', name: 'home' },
   { path: '/solution', name: 'solution' },
   { path: '/capabilities', name: 'capabilities' },
@@ -9,6 +10,7 @@ const pages = [
   { path: '/israel', name: 'israel' },
   { path: '/contact', name: 'contact' },
   { path: '/privacy', name: 'privacy' },
+  { path: '/platform', name: 'platform (landing)', noindex: true },
 ];
 
 const viewports = [
@@ -292,7 +294,7 @@ test('favicons are linked and served', async ({ page, request }) => {
 // SEO (docs/seo.md §5). The test build has no SITE_URL and ALLOW_INDEXING is off, like the
 // temporary vercel.app address: site = the preview origin, and every page is noindex.
 test.describe('SEO', () => {
-  for (const pg of pages) {
+  for (const pg of pages.filter((p) => !p.noindex)) {
     test(`${pg.name}: canonical, noindex, link preview and structured data`, async ({ page, request }) => {
       await page.goto(pg.path);
       const origin = new URL(page.url()).origin;
@@ -323,7 +325,7 @@ test.describe('SEO', () => {
     const res = await request.get('/sitemap.xml');
     expect(res.ok()).toBe(true);
     const locs = [...(await res.text()).matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => new URL(m[1]).pathname);
-    expect(locs.sort()).toEqual(pages.map((p) => p.path).sort());
+    expect(locs.sort()).toEqual(pages.filter((p) => !p.noindex).map((p) => p.path).sort());
   });
 
   test('unknown URLs get the Hebrew 404 page, noindex, with links back', async ({ page }) => {
@@ -334,4 +336,41 @@ test.describe('SEO', () => {
     await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
     await expect(page.locator('main a[href="/"]')).toBeVisible();
   });
+});
+
+test.describe('landing page /platform', () => {
+  test('hero, sections, video and form on one page; out of search', async ({ page }) => {
+    await page.goto('/platform');
+    await expect(page.locator('h1')).toContainText('מערכת אחת');
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex');
+    await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
+    for (const id of ['problem', 'single-source-of-truth', 'platform', 'why', 'video', 'customers', 'customer-quotes', 'lead-form']) {
+      await expect(page.locator(`#${id}`)).toHaveCount(1);
+    }
+    // Hero buttons jump to the form and the video on the same page
+    await expect(page.locator('.hero').getByRole('link', { name: 'השאירו פרטים' })).toHaveAttribute('href', '#lead-form');
+    await expect(page.getByRole('link', { name: 'צפו בסרטון' })).toHaveAttribute('href', '#video');
+    await expect(page.locator('#video video source')).toHaveAttribute('type', 'video/mp4');
+    // The form is on the page, with the closing heading, so no lead banner linking away to /contact
+    await expect(page.locator('#lead-form-title')).toHaveText('מוכנים להוביל את הסוכנות לעידן הבא?');
+    await expect(page.locator('#lead-cta-title')).toHaveCount(0);
+  });
+
+  test('is not in the header menu, but the footer links to it', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.locator('header a[href="/platform"]')).toHaveCount(0);
+    await expect(page.locator('footer').getByRole('link', { name: 'הפלטפורמה במבט אחד' })).toHaveAttribute('href', '/platform');
+  });
+});
+
+test('contact page shows the office location with map links in a new window', async ({ page }) => {
+  await page.goto('/contact');
+  const office = page.locator('#office');
+  await expect(office.locator('address')).toContainText('רחוב הפנינה 8, רעננה');
+  for (const [name, host] of [['ניווט ב-Waze', 'waze.com'], ['פתיחה ב-Google Maps', 'www.google.com']]) {
+    const link = office.getByRole('link', { name: new RegExp(name) });
+    await expect(link).toHaveAttribute('target', '_blank');
+    await expect(link).toHaveAttribute('rel', /noopener/);
+    expect(new URL((await link.getAttribute('href'))!).host).toBe(host);
+  }
 });

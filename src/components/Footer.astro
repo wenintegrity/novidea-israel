@@ -1,7 +1,7 @@
 ---
 // Footer (docs/design-system.md §10.13), navy surface.
 import Logo from './Logo.astro';
-import { ctaNav, homePath, pagePath, primaryNav } from '../config/nav';
+import { ctaNav, footerExtraNav, homePath, pagePath, primaryNav } from '../config/nav';
 import { useTranslations } from '../i18n/utils';
 import type { Locale, UiKey } from '../i18n/ui';
 
@@ -15,7 +15,7 @@ const t = useTranslations(locale);
 const year = new Date().getFullYear();
 const links: { key: UiKey; href: string }[] = [
   { key: 'nav.homeShort', href: homePath(locale) },
-  ...[...primaryNav, ctaNav].map((item) => ({ key: item.key, href: pagePath(locale, item.slug) })),
+  ...[...primaryNav, ...footerExtraNav, ctaNav].map((item) => ({ key: item.key, href: pagePath(locale, item.slug) })),
 ];
 ---
 

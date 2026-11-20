@@ -1,0 +1,100 @@
+---
+// Office location (docs/content-model.md → Blocks): building, address, directions, and buttons that
+// open Waze or Google Maps. Plain links, no embedded map, so no third-party cookies or scripts.
+import BrandIcon from '../BrandIcon.astro';
+import { useTranslations } from '../../i18n/utils';
+import type { Locale } from '../../i18n/ui';
+
+interface Props {
+  locale: Locale;
+  id?: string;
+  title: string;
+  place: string;
+  address: string;
+  directions?: string;
+  mapQuery: string;
+  surface: 'light' | 'subtle' | 'tint' | 'navy';
+}
+
+const { locale, id = 'location', title, place, address, directions, mapQuery, surface } = Astro.props;
+const t = useTranslations(locale);
+const headingId = `${id}-title`;
+const q = encodeURIComponent(mapQuery);
+const waze = `https://waze.com/ul?q=${q}&navigate=yes`;
+const maps = `https://www.google.com/maps/search/?api=1&query=${q}`;
+const iconVariant = surface === 'navy' ? 'dark' : 'light';
+---
+
+<section id={id} tabindex="-1" class:list={['section', `surface-${surface}`]} aria-labelledby={headingId}>
+  <div class="container">
+    <header class="section-header" data-animate="fade-up">
+      <h2 id={headingId} class="title-accent">{title}</h2>
+    </header>
+    <div class="location-card" data-animate="fade-up">
+      <BrandIcon id="office-building" variant={iconVariant} size="xl" class="location-card__icon" />
+      <div class="location-card__body">
+        <address class="mb-0">
+          <strong class="location-card__place">{place}</strong>
+          <span class="location-card__address">{address}</span>
+        </address>
+        {directions && <p class="location-card__directions">{directions}</p>}
+        <div class="location-card__actions">
+          <a class="btn btn-primary" href={waze} target="_blank" rel="noopener noreferrer">
+            {t('location.waze')} <span class="visually-hidden">{t('location.newWindow')}</span>
+          </a>
+          <a class="btn btn-outline-primary" href={maps} target="_blank" rel="noopener noreferrer">
+            {t('location.maps')} <span class="visually-hidden">{t('location.newWindow')}</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .location-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    max-inline-size: 48rem;
+    padding: var(--space-8) var(--space-6);
+    background-color: var(--color-navy-50);
+    border-inline-start: 4px solid var(--color-yellow);
+    border-radius: var(--radius-sm);
+  }
+
+  .surface-subtle .location-card {
+    background-color: var(--color-white);
+  }
+
+  address {
+    display: grid;
+    gap: var(--space-1);
+    font-style: normal;
+  }
+
+  .location-card__place {
+    font-size: var(--text-h4);
+    font-weight: 700;
+  }
+
+  .location-card__directions {
+    margin-block: var(--space-4) 0;
+    color: var(--text-secondary);
+  }
+
+  .location-card__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-block-start: var(--space-6);
+  }
+
+  @media (min-width: 768px) {
+    .location-card {
+      flex-direction: row;
+      align-items: flex-start;
+      padding: var(--space-10);
+    }
+  }
+</style>

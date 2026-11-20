@@ -14,11 +14,14 @@ import type { Locale } from '../../i18n/ui';
 interface Props {
   locale: Locale;
   id?: string;
+  /** Card heading (defaults to "השאירו פרטים") and an optional intro paragraph */
+  title?: string;
+  intro?: string;
   hubspot?: { portalId: string; formId: string; region: string };
   fields: string[];
 }
 
-const { locale, id, hubspot, fields } = Astro.props;
+const { locale, id, title, intro, hubspot, fields } = Astro.props;
 const t = useTranslations(locale);
 ---
 
@@ -27,7 +30,8 @@ const t = useTranslations(locale);
     <div class="row">
       <div class="col-12 col-lg-10 col-xl-8 mx-auto">
         <div class="lead-card" data-animate="fade-up">
-        <h2 id="lead-form-title" class="title-accent">{t('leadForm.title')}</h2>
+        <h2 id="lead-form-title" class="title-accent">{title ?? t('leadForm.title')}</h2>
+        {intro && <p class="lead-card__intro">{intro}</p>}
         {
           hubspot ? (
             <div
@@ -96,6 +100,10 @@ const t = useTranslations(locale);
 
   .lead-card h2 {
     margin-block-end: var(--space-8);
+  }
+
+  .lead-card__intro {
+    margin-block: calc(-1 * var(--space-4)) var(--space-8);
   }
 
   @media (min-width: 768px) {

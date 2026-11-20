@@ -16,6 +16,9 @@ export const primaryNav: NavItem[] = [
 
 export const ctaNav: NavItem = { key: 'nav.cta', slug: 'contact' };
 
+/** Footer-only links: pages that aren't in the header menu (the /platform landing page). */
+export const footerExtraNav: NavItem[] = [{ key: 'nav.platform', slug: 'platform' }];
+
 export function homePath(locale: Locale): string {
   return locale === 'he' ? '/' : `/${locale}/`;
 }

@@ -1,0 +1,153 @@
+# /platform: campaign landing page, the whole site on one page (problem → solution → product → proof → form).
+# Copy from docs/marketing/landing-page.he.md (Marketing agent, approved by the owner 20/11/2026).
+# Facts only from docs/sources/ and content already on the site. Not in the menu; noindex so it doesn't
+# compete with the home page in search (docs/seo.md). Campaign links point here, e.g. /platform?utm_source=linkedin
+
+seo:
+  title: "מערכת לניהול סוכנויות ביטוח ובתי סוכן | נובידאה"
+  description: "פלטפורמת ענן אחת לכל פעילות הסוכנות: לידים, מכירות, מסלקה, הר הביטוח, פרודוקציה, שירות, תביעות וחידושים. השאירו פרטים לשיחת היכרות והדגמה."
+  noindex: true
+
+hero:
+  titleStrong: "מערכת אחת"
+  titleRest: "לכל פעילות הסוכנות"
+  lead: "פלטפורמת ענן מונחית נתונים על בסיס Salesforce, לסוכנויות ביטוח ובתי סוכן: מהליד הראשון ועד פוליסה, שירות, תביעות וחידושים."
+  primaryCta:
+    label: "השאירו פרטים"
+    href: "#lead-form"
+  secondaryCta:
+    label: "צפו בסרטון"
+    href: "#video"
+  picture:
+    src: "../../../assets/images/landing-hero.png"
+    alt: "איש מקצוע מחייך בודק את הטלפון ליד מחשב נייד"
+
+sections:
+  # The problem (content document, "הבעיה והפתרון")
+  - type: features
+    id: problem
+    title: "עשרות מסכים, אקסלים ומערכות שלא מדברות זו עם זו"
+    intro: "במשך שנים, סוכנויות ובתי סוכן בישראל עובדים בין פורטלים של יצרנים, קובצי אקסל ומערכות Legacy שאינן מתקשרות ביניהן."
+    columns: 3
+    surface: light
+    items:
+      - icon: time-automation
+        title: "עומס תפעולי"
+        body: "אותו מידע מוזן שוב ושוב, במקומות שונים."
+      - icon: information
+        title: "מידע שהולך לאיבוד"
+        body: "אין תמונה אחת ומלאה של הלקוח."
+      - icon: growth-chart
+        title: "קושי לצמוח"
+        body: "הצוות עסוק בתפעול במקום בלקוחות."
+
+  # The solution
+  - type: text
+    id: single-source-of-truth
+    surface: navy
+    title: "Single Source of Truth – מקור אמת אחד לכל הסוכנות"
+    paragraphs:
+      - "נובידאה מרכזת את כל פעילות הסוכנות בפלטפורמה אחת: פנסיה, אלמנטרי, פיננסים ופרט. מניהול הליד הראשון ועד קליטת הפרודוקציה, ניהול התביעה והשירות. בזכות Open API, המערכת מתחברת בקלות לכל כלי, פורטל או ממשק."
+
+  # The product (content document, "הבעיה והפתרון" modules and "יכולות ליבה")
+  - type: features
+    id: platform
+    title: "מה תמצאו בפלטפורמה"
+    columns: 3
+    surface: subtle
+    items:
+      - icon: fast-track
+        title: "מליד ועד פוליסה"
+        body: "תהליך מובנה מתיאום הפגישה, דרך הר הביטוח וטרום הייעוץ, ועד הצעת מחיר והפקה."
+      - icon: database
+        title: "מסלקה פנסיונית והר הביטוח"
+        body: "חיבור ישיר למסלקה הפנסיונית ולהר הביטוח, כולל העתקי פוליסות."
+      - icon: data-filter
+        title: "קליטת פרודוקציה"
+        body: "מנוע גמיש לקליטת קובצי פרודוקציה מהיצרנים בישראל."
+        soonNote: "הורדה וקליטה אוטומטית מאתרי חברות הביטוח."
+      - icon: ai-brain
+        title: "תמונת לקוח ⁦360°⁩ עם תובנות AI"
+        body: "ניתוח תיק הלקוח ובני המשפחה, זיהוי חוסרים ביטוחיים והמלצות להרחבת כיסויים."
+      - icon: process-cycle
+        title: "תהליכי עבודה אוטומטיים"
+        body: "שירות, תביעות וחידושים עם SLA, משימות לצוות וכלי בקרה למנהלים. משרד ללא נייר עם חתימות דיגיטליות."
+      - icon: dashboard
+        title: "דשבורדים ו-BI בזמן אמת"
+        body: "דשבורדים ודוחות שבונים לבד, בלי פיתוח, ובקרה על נתוני הפרודוקציה."
+
+  # Why Novidea (content document, "למה נובידאה?" and "המטה כאן בישראל")
+  - type: features
+    id: why
+    title: "למה סוכנויות בוחרות בנובידאה"
+    columns: 2
+    surface: light
+    items:
+      - icon: cloud-scale
+        title: "Cloud-Native אמיתי"
+        body: "גישה מכל מקום ומכל מכשיר, בלי שרתים מקומיים, עם עדכוני גרסה שוטפים."
+      - icon: cloud-network
+        title: "על תשתית Salesforce"
+        body: "ה-CRM מהחזקות בעולם, מותאם לשוק הביטוח הישראלי."
+      - icon: cloud-security
+        title: "אבטחת מידע ופרטיות"
+        body: "עמידה בתקני ISO ו-SOC 2 ובתקנות הגנת הפרטיות."
+      - icon: office-building
+        title: "צוות כאן בישראל"
+        body: "פיתוח, הטמעה ותמיכה טכנית בעברית, משלב האפיון ועד העבודה השוטפת."
+
+  # The video (same file as the home page)
+  - type: text
+    id: video
+    surface: subtle
+    title: "הכירו את נובידאה"
+    paragraphs:
+      - "סרטון קצר על הפלטפורמה: איך נובידאה מחברת את כל פעילות הסוכנות למערכת אחת."
+    video:
+      file: "Novidea-Hebrew-Israel.mp4"
+      title: "הכירו את נובידאה"
+      poster: "../../../assets/images/video-poster.png"
+
+  # Proof: customer logos (as on the home page)
+  - type: names
+    id: customers
+    title: "הפלטפורמה שמובילה את הסוכנויות ובתי הסוכן הגדולים בישראל"
+    surface: light
+    names:
+      - name: "מבטח סימון"
+        logo: "../../../assets/logos/customers/mivtach-simon.png"
+      - name: "קלי"
+        logo: "../../../assets/logos/customers/kali.png"
+      - name: "אמנון גור"
+        logo: "../../../assets/logos/customers/gur.png"
+    more: "ועוד"
+
+  # Proof: two customer quotes, as on /why-novidea.
+  # TODO(verify): Hebrew translations approved by Novidea marketing / each customer (Open tasks §2a).
+  - type: quotes
+    id: customer-quotes
+    title: "מה אומרים הלקוחות שלנו בישראל"
+    surface: navy
+    items:
+      - quote: "הפלטפורמה של נובידאה אפשרה לנו לייעל את ניהול מחזור חיי הפוליסה, ולקבל שקיפות ושליטה חסרות תקדים, בזמן אמת, על כל היבט בעסק שלנו. זה פתרון הוליסטי… שמאפשר לנו להתחרות בסביבה דינמית ומשתנה, ולהצמיח את העסק."
+        name: "שי סימקין, ACII"
+        role: "Managing Director"
+        company: "Howden Israel"
+      - quote: "לפלטפורמה של נובידאה הייתה השפעה עצומה על העסק שלנו. היא מאפשרת לנו לייעל את ניהול הפוליסות, את המעקב אחר התביעות ואת תהליכי העבודה הפיננסיים. היא חסכה לנו זמן ומאמץ, כי היא נותנת לנו תמונת ⁦360°⁩ אמיתית של העסק בזמן אמת, וזה עוזר לנו להגדיל את השורה התחתונה."
+        name: "גבי גרנט"
+        role: "CFO"
+        company: "Marsh Israel"
+
+  # The form, on the page itself (same HubSpot form as /contact; loads after marketing-cookie consent)
+  - type: leadForm
+    id: lead-form
+    # Closing text from the content document ("פתיחת ליד"), as on /contact and the lead banner
+    title: "מוכנים להוביל את הסוכנות לעידן הבא?"
+    intro: "הצטרפו לסוכנויות המובילות בישראל שמנהלות את תיק הלקוחות שלהן וצומחות בנובידאה. השאירו פרטים והצוות שלנו יחזור אליכם לשיחת היכרות והדגמה."
+    hubspot:
+      portalId: "2799426"
+      formId: "05171e84-3123-41fc-81e0-3f8626cb3574"
+      region: "na1"
+    fields: []
+
+leadCta: false

@@ -151,6 +151,10 @@ const pages = defineCollection({
     const leadFormBlock = z.object({
       type: z.literal('leadForm'),
       id: z.string().optional(),
+      /** Card heading; defaults to "השאירו פרטים" (ui.ts leadForm.title). */
+      title: z.string().optional(),
+      /** Text under the heading, before the form. */
+      intro: z.string().optional(),
       hubspot: z
         .object({
           portalId: z.string().regex(/^\d+$/),
@@ -204,6 +208,21 @@ const pages = defineCollection({
         .min(2),
     });
 
+    /**
+     * Office location: building, address, directions and links that open Waze / Google Maps (plain
+     * links, no embedded map, so no third-party cookies). `mapQuery` is the search text for the maps.
+     */
+    const locationBlock = z.object({
+      type: z.literal('location'),
+      id: z.string().optional(),
+      title: z.string().min(1),
+      place: z.string().min(1),
+      address: z.string().min(1),
+      directions: z.string().optional(),
+      mapQuery: z.string().min(1),
+      surface: surface.default('light'),
+    });
+
     const block = z.discriminatedUnion('type', [
       textBlock,
       featuresBlock,
@@ -212,14 +231,17 @@ const pages = defineCollection({
       leadFormBlock,
       proseBlock,
       quotesBlock,
+      locationBlock,
     ]);
 
     return z.object({
       seo: z.object({
         title: z.string().min(1).max(60),
         description: z.string().min(1).max(155),
+        /** Keep the page out of search results and sitemap.xml (campaign pages, docs/seo.md). */
+        noindex: z.boolean().default(false),
       }),
-      /** Home only: the big hero with the slanted yellow panel. */
+      /** Home and landing pages: the big hero with the slanted yellow panel. Other pages use `header`. */
       hero: z
         .object({
           titleStrong: z.string().min(1),
