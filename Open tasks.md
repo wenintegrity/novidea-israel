@@ -25,6 +25,13 @@ To find every content placeholder: `grep -rn "TODO(verify)" src` and look for hi
 - [ ] **Customer logos: permission and quality.** Confirm written permission to show the מבטח סימון, קלי and GUR logos (design-system.md §10.10). The מבטח סימון and kali files are low resolution and look soft on high-density screens; ask for SVG or larger PNGs.
 - [ ] **Brand details:** confirm the brand red (`#ED4443` vs RGB 234/68/67), approve Rubik as the Hebrew typeface, and confirm the 2022 brand book is still current.
 
+## 2a. Customer quotes (/why-novidea)
+
+- [ ] **Approve the Hebrew translations** of the four quotes (Howden Israel, Marsh Israel, Leaderim, Mivtach Simon) with Novidea marketing or each customer. Translated quotes must stay faithful to the original ([why-novidea.yaml](src/content/pages/he/why-novidea.yaml)).
+- [ ] **Mivtach Simon quote:** not marked "on website" in the source document; confirm it may be published.
+- [ ] **Job titles in Hebrew:** they're in English as in the source. Hebrew titles are gendered, so confirm each person's Hebrew title if you want them translated.
+- [ ] **Hebrew spelling of names** (שי סימקין, גבי גרנט, יהודה שביט, אילנית חזן) and whether Howden and Marsh should appear in Hebrew.
+
 ## 3. HubSpot form (in HubSpot, not in the site code)
 
 The site embeds form `05171e84-3123-41fc-81e0-3f8626cb3574` (portal 2799426) on `/contact`, after marketing-cookie consent.

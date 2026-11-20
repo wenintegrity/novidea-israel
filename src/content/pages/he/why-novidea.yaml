@@ -30,3 +30,31 @@ sections:
       - icon: smart-ai
         title: "חדשנות מונעת בינה מלאכותית (AI)"
         body: "אוטומציות, קיצור זמני תפעול והפקת תובנות עסקיות מבוססות נתונים."
+
+  # Source: "Customer quotes" (Novidea), the Israeli customers only. Translated from English into
+  # Hebrew for this site. Howden, Marsh and Leaderim are marked "on website: yes" in the source;
+  # Mivtach Simon isn't marked.
+  # TODO(verify): Hebrew translations approved by Novidea marketing / each customer (quotes must stay
+  # faithful to the original); Mivtach Simon quote cleared for the website. Job titles are kept in
+  # English as in the source: Hebrew titles are gendered, so confirm each person's Hebrew title first.
+  - type: quotes
+    id: customer-quotes
+    title: "מה אומרים הלקוחות שלנו בישראל"
+    surface: navy
+    items:
+      - quote: "הפלטפורמה של נובידאה אפשרה לנו לייעל את ניהול מחזור החיים של הפוליסה, ולקבל נראות ושליטה חסרות תקדים, בזמן אמת, על כל היבט בעסק שלנו. זה פתרון הוליסטי… שמאפשר לנו להתחרות בסביבה דינמית שמשתנה כל הזמן, ולהצמיח את העסק."
+        name: "שי סימקין, ACII"
+        role: "Managing Director"
+        company: "Howden Israel"
+      - quote: "לפלטפורמה של נובידאה הייתה השפעה עצומה על העסק שלנו. היא מאפשרת לנו לייעל את ניהול הפוליסות, את המעקב אחר התביעות ואת תהליכי העבודה הפיננסיים. היא חסכה לנו זמן ומאמץ, כי היא נותנת לנו תמונת \u2066360°\u2069 אמיתית של העסק בזמן אמת, וזה עוזר לנו לשפר את השורה התחתונה."
+        name: "גבי גרנט"
+        role: "CFO"
+        company: "Marsh Israel"
+      - quote: "נובידאה היא טכנולוגיה חדשנית שמעצימה את העסק שלנו. זו פלטפורמה חזקה ויציבה, שנותנת לנו את הגמישות ואת יכולת הגדילה שחיפשנו. תגובה לשינויים בשוק, השקת קווי עסקים חדשים או התאמה לשינויי רגולציה הפכו למשימות פשוטות עם נובידאה, וזה מפתח להצלחה העסקית שלנו."
+        name: "יהודה שביט"
+        role: "Director and Head of Innovation"
+        company: "לידרים"
+      - quote: "אנחנו שמחים לחזק ולהעמיק את שיתוף הפעולה עם נובידאה. הפלטפורמה המתקדמת שלה מאפשרת לנו לקדם טרנספורמציה דיגיטלית מלאה של כל מערכות הארגון, באופן שמותאם בדיוק לצרכים שלנו. עם נובידאה נשפר את היעילות ואת התהליכים התפעוליים בכל הארגון."
+        name: "אילנית חזן"
+        role: "Chief Information Officer"
+        company: "מבטח סימון"

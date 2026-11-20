@@ -180,6 +180,30 @@ const pages = defineCollection({
         .min(1),
     });
 
+    /**
+     * Customer quotes carousel. Quotes are verbatim (or an approved translation) from a published
+     * source; quotation marks are added by CSS, so don't type them in `quote`.
+     */
+    const quotesBlock = z.object({
+      type: z.literal('quotes'),
+      id: z.string().optional(),
+      title: z.string().min(1),
+      surface: surface.default('navy'),
+      items: z
+        .array(
+          z.object({
+            quote: z
+              .string()
+              .min(1)
+              .refine((q) => !/^["“”״]|["“”״]$/.test(q.trim()), 'Leave out the quotation marks (CSS adds them)'),
+            name: z.string().min(1),
+            role: z.string().min(1),
+            company: z.string().min(1),
+          }),
+        )
+        .min(2),
+    });
+
     const block = z.discriminatedUnion('type', [
       textBlock,
       featuresBlock,
@@ -187,6 +211,7 @@ const pages = defineCollection({
       linksBlock,
       leadFormBlock,
       proseBlock,
+      quotesBlock,
     ]);
 
     return z.object({

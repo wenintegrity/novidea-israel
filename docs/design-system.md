@@ -605,6 +605,18 @@ A small yellow label with navy text ("בקרוב", 12.12:1). Above the title whe
 - **RTL:** media controls and the play triangle are never mirrored (§8.1).
 - **YouTube later:** embed from `youtube-nocookie.com`, loaded only after marketing consent like the HubSpot form (§10.22), with the same consent notice until then. Add the domains to the CSP.
 
+### 10.25 Quote carousel
+
+**Anatomy:** section title (`h2` with the title accent) · one customer quote at a time (`<figure>`: yellow decorative quote mark, `<blockquote>` at `--text-h4`, `<figcaption>` with the name in bold and "role · company" in secondary text, a 4 px yellow bar at its inline-start) · controls: previous arrow, dots, next arrow (`src/components/blocks/QuotesBlock.astro`).
+
+- Surface: `navy` by default. Text up to 56 rem wide, aligned to the inline-start.
+- **Bootstrap carousel** (data API), cross-fade. **No autoplay**, so nothing moves unless the visitor asks (WCAG 2.2.2); keyboard arrows work when the carousel has focus.
+- All slides share one grid cell, so the carousel is as tall as the longest quote and the page doesn't jump between slides.
+- **Accessibility:** the carousel has `aria-roledescription="קרוסלה"` and the section title as its name; each slide is a group "ציטוט n מתוך 4"; slide changes are announced politely (`aria-live`). Arrow buttons are 48 px with Hebrew names; dots are 24 px targets named "ציטוט n מתוך 4: <name>", with `aria-current` on the active one. Only the active slide is visible to assistive technology.
+- **RTL:** "previous" is at the inline-start and points back (right in Hebrew), "next" points forward. The first dot is at the inline-start.
+- Role and company are each wrapped in `<bdi>` and joined with a middle dot, so English titles and Hebrew company names don't reorder.
+- Quotation marks come from CSS `quotes` (straight in Hebrew). Quotes are verbatim, or a translation approved by the customer or Novidea marketing.
+
 ## 11. Token reference
 
 **`src/styles/tokens.css` is the source of truth.** It defines every token named in this document (colors, fonts, type scale, line-heights, spacing, shape, motion, icon sizes), the Hebrew overrides under `:root:lang(he)`, and the values that change at Bootstrap's md (768 px) and lg (992 px) breakpoints (`--section-pad`, `--slant`, `--header-height`).

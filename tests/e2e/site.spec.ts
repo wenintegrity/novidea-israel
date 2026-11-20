@@ -213,6 +213,23 @@ test.describe('content details', () => {
     await expect(page.locator('#overview video')).toHaveCount(0);
   });
 
+  test('why-novidea: customer quotes carousel moves with the buttons and dots', async ({ page }) => {
+    await page.goto('/why-novidea');
+    const carousel = page.locator('#customer-quotes .carousel');
+    await expect(carousel.locator('.carousel-item')).toHaveCount(4);
+    const activeName = carousel.locator('.carousel-item.active .quote__name');
+    await expect(activeName).toHaveText('שי סימקין, ACII');
+    await carousel.getByRole('button', { name: 'הציטוט הבא' }).click();
+    await expect(activeName).toHaveText('גבי גרנט');
+    await carousel.getByRole('button', { name: /ציטוט 4 מתוך 4/ }).click();
+    await expect(activeName).toHaveText('אילנית חזן');
+    await expect(carousel.locator('[data-bs-slide-to="3"]')).toHaveAttribute('aria-current', 'true');
+    await carousel.getByRole('button', { name: 'הציטוט הקודם' }).click();
+    await expect(activeName).toHaveText('יהודה שביט');
+    // Only the active slide is visible (the others are hidden from assistive technology too)
+    await expect(carousel.locator('.carousel-item:not(.active)').first()).toBeHidden();
+  });
+
   test('solution page marks upcoming features as "בקרוב"', async ({ page }) => {
     await page.goto('/solution');
     await expect(page.locator('.badge-soon').first()).toHaveText('בקרוב');

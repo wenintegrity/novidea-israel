@@ -32,6 +32,7 @@ Every block has `type` and an optional `id` (becomes the section anchor). `surfa
 | `names` | `title`, `names[]`: each a plain name, or `{name, logo}` where `logo` points into `src/assets/logos/customers/` and `name` becomes the alt text; `more` (e.g. "ועוד"), `surface` (default subtle) | `NamesBlock.astro` |
 | `links` | `title` (optional), `items[]`: `{icon, title, body, href}`, `surface` | `LinksBlock.astro` |
 | `leadForm` | `hubspot {portalId, formId, region}` (optional), `fields[]` (shown only without `hubspot`) | `LeadForm.astro` |
+| `quotes` | `title`, `surface` (default navy), `items[]` (at least 2): `{quote, name, role, company}`. No quotation marks in `quote` (CSS adds them; the build rejects them) | `QuotesBlock.astro` |
 | `prose` | `sections[]`: `{title, paragraphs[], bullets[], after[]}`. Long-form text for legal pages. Inline links `[label](href)`; `[label](#cookie-settings)` opens the cookie settings; `[לעדכון: …]` is highlighted as a placeholder | `ProseBlock.astro` |
 
 **Heading order:** a block's `title` is an `h2` and its items are `h3`. Without a block title, items become `h2`, so headings never skip a level.
