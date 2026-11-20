@@ -36,6 +36,10 @@ if (!shared) throw new Error(`Missing content: src/content/shared/${locale}.yaml
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="theme-color" content="#101338" />
+    {/* Favicons from src/assets/brand/novidea-mark-favicon.png (files in public/) */}
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
+    <link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="preconnect" href={cdnOrigin} crossorigin="anonymous" />
     {/* Bootstrap first, so the brand layer (bundled by Astro, injected after this) overrides it. */}
     <link rel="stylesheet" href={css.href} integrity={css.integrity} crossorigin="anonymous" />

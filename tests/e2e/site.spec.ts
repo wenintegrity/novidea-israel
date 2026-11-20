@@ -279,3 +279,12 @@ test('scroll progress is hidden for visitors who prefer reduced motion', async (
   await page.goto('/solution');
   await expect(page.locator('.scroll-progress')).toBeHidden();
 });
+
+test('favicons are linked and served', async ({ page, request }) => {
+  await page.goto('/');
+  for (const sel of ['link[rel="icon"][href="/favicon.ico"]', 'link[rel="icon"][href="/icon-192.png"]', 'link[rel="apple-touch-icon"]']) {
+    const href = await page.locator(sel).getAttribute('href');
+    const res = await request.get(href!);
+    expect(res.ok(), href!).toBe(true);
+  }
+});

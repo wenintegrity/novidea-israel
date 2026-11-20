@@ -54,7 +54,7 @@ The video is on the home page (`src/assets/videos/Novidea-Hebrew-Israel.mp4`, 78
 ## 4. Technical (no input needed)
 
 - [ ] **Security headers** in `vercel.json`: Content-Security-Policy (allowing only jsDelivr and HubSpot's domains), HSTS, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy` (AGENTS.md §4.6).
-- [ ] **SEO basics:** `robots.txt`, `sitemap.xml`, canonical URLs, link-preview tags (Open Graph) with a share image, favicon (currently missing), Organization structured data.
+- [ ] **SEO basics:** `robots.txt`, `sitemap.xml`, canonical URLs, link-preview tags (Open Graph) with a share image, Organization structured data. (Favicon done 20/11/2026.)
 - [ ] **Hebrew 404 page.**
 - [ ] **Performance audit** with Lighthouse against the AGENTS.md budget (Performance ≥ 90, Accessibility = 100, SEO = 100, Best Practices ≥ 95).
 - [ ] **CI on GitHub:** build and run the Playwright tests on every push and pull request; protect `main`; add Dependabot or Renovate.
