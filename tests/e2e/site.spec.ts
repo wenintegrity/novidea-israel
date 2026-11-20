@@ -214,14 +214,6 @@ test.describe('content details', () => {
     await expect(video).toHaveAttribute('poster', /\.webp$/);
     await expect(video).not.toHaveAttribute('autoplay', /.*/);
     await expect(video.locator('source')).toHaveAttribute('type', 'video/mp4');
-    const track = video.locator('track');
-    await expect(track).toHaveAttribute('kind', 'captions');
-    await expect(track).toHaveAttribute('srclang', 'he');
-    await expect(track).toHaveAttribute('default', '');
-    // The captions file is served and is WebVTT
-    const vtt = await page.request.get((await track.getAttribute('src'))!);
-    expect(vtt.ok()).toBe(true);
-    expect((await vtt.text()).startsWith('WEBVTT')).toBe(true);
     await expect(page.locator('#overview .video--placeholder')).toHaveCount(0);
   });
 

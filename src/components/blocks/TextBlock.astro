@@ -28,8 +28,12 @@ const headingId = id ? `${id}-title` : undefined;
   aria-labelledby={title ? headingId : undefined}
 >
   <div class="container">
-    <div class="row gy-5 align-items-center">
-      <div class:list={['col-12', { 'col-lg-6': media, 'col-lg-9': !media }]} data-animate="fade-up">
+    {/* A video gets 7 of 12 columns (text 5) so the player is large enough to watch; a picture gets 5 */}
+    <div class:list={['row gy-5 align-items-center', { 'gx-lg-5': video }]}>
+      <div
+        class:list={['col-12', { 'col-lg-5': video, 'col-lg-6': picture, 'col-lg-9': !media }]}
+        data-animate="fade-up"
+      >
         {title && <h2 id={headingId} class="title-accent">{title}</h2>}
         {paragraphs.map((p, i) => <p class:list={{ 'lead-nv': i === 0 }}>{p}</p>)}
       </div>
@@ -49,7 +53,7 @@ const headingId = id ? `${id}-title` : undefined;
       }
       {
         video && (
-          <div class="col-12 col-lg-5 offset-lg-1" data-animate="fade-end" data-animate-delay="0.1">
+          <div class="col-12 col-lg-7" data-animate="fade-end" data-animate-delay="0.1">
             <Video locale={locale} {...video} />
           </div>
         )

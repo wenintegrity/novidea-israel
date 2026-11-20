@@ -29,12 +29,11 @@ sections:
       - "נובידאה מובילה את המהפכה הדיגיטלית בשוק הביטוח עם פלטפורמת ענן (InsurTech) מונחת נתונים וזוכת פרסים בינלאומיים. הפלטפורמה מאיצה צמיחה, רווחיות ויעילות תפעולית עבור סוכנויות וברוקרים באמצעות כלים אנליטיים ותובנות עסקיות בזמן אמת."
       - "עם בסיס CRM חזק כחלק מטכנולוגיית Salesforce, הפלטפורמה מהווה מערכת ליבה לסוכנות, ומאפשרת לשים את הלקוח במרכז, ולחבר את כל תהליכי העבודה בסוכנות."
       - "מתיאום פגישות, מכירות, הפקה, פרודוקציה וניהול שירות ועד ניהול תביעות וחידושים לשמירה על שירות ללקוח ברמה הגבוהה ביותר."
-    # Video: src/assets/videos/Novidea-Hebrew.mp4 (79 s, 720p, 39 MB). Hebrew captions of the narration
-    # in Novidea-Hebrew.he.vtt (supplied by Novidea, on by default; IS 5568 / WCAG 1.2.2).
-    # Poster: the "Built on Salesforce" frame at 0:17. Title from the video's opening line.
+    # Video: src/assets/videos/Novidea-Hebrew-Israel.mp4 (78.5 s, 720p, 39 MB). No captions, at the
+    # owner's request (20/11/2026). Poster: the closing "Novidea" frame.
+    # TODO(verify): if the video has narration, captions are required (IS 5568 / WCAG 1.2.2).
     video:
-      file: "Novidea-Hebrew.mp4"
-      captions: "Novidea-Hebrew.he.vtt"
+      file: "Novidea-Hebrew-Israel.mp4"
       title: "הכירו את נובידאה"
       poster: "../../../assets/images/video-poster.png"
 

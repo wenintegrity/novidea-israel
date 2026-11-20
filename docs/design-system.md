@@ -597,7 +597,7 @@ A small yellow label with navy text ("בקרוב", 12.12:1). Above the title whe
 
 ### 10.24 Video
 
-**Anatomy:** a 16:9 video with native controls (`src/components/Video.astro`), used in a text block's media column in place of a picture.
+**Anatomy:** a 16:9 video with native controls (`src/components/Video.astro`), used in a text block's media column in place of a picture. In a text block, a video gets 7 of 12 columns on desktop (text 5, `gx-lg-5` gutter) so it's large enough to watch; a picture gets 5.
 
 - **Source:** a file in `src/assets/videos/` (MP4 or WebM, under about 20 MB), bundled with a hashed URL. `preload="metadata"`, `playsinline`, no autoplay. Optional poster image.
 - **Accessibility:** an accessible name (`title`), and captions (WebVTT `<track>`) for any video with speech (WCAG 1.2.2). A download link is the fallback text.
