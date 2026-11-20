@@ -31,7 +31,7 @@ const jsonLd = seo.noindex ? [] : breadcrumbJsonLd(Astro.site!, t('nav.homeShort
 ---
 
 <BaseLayout locale={locale} title={seo.title} description={seo.description} noindex={seo.noindex} jsonLd={jsonLd}>
-  {hero ? <Hero {...hero} points={[]} /> : header && <PageHeader {...header} />}
+  {hero ? <Hero {...hero} points={[]} redLine /> : header && <PageHeader {...header} />}
   <Blocks locale={locale} blocks={sections} />
   {leadCta && <LeadCta {...shared.data.leadCta} />}
 </BaseLayout>

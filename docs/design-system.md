@@ -563,6 +563,7 @@ A smaller version of the home hero (§10.6), so internal pages share its look.
 - Load entrance like the hero: the panel's text rises in, staggered.
 - **Height:** next to a picture, the panel is at least 25 rem high on desktop (12 rem below lg), text centred vertically, so a page with a one-line title (/capabilities, /why-novidea) matches the others. Without a picture it fits its content.
 - **Red line:** a 4 px brand-red border along the panel's bottom edge (decorative; on desktop it ends at the slant). Red is still pending confirmation (§3.1).
+- The same red line is on the hero of landing pages that use the home-style hero (`/platform`, `redLine` on `Hero.astro`); the home page hero has none.
 
 ### 10.20 Page link cards
 
