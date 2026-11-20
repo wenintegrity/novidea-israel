@@ -26,7 +26,7 @@ const links: { key: UiKey; href: string }[] = [
         <a href={homePath(locale)} aria-label={t('nav.home')} class="footer-brand">
           <Logo variant="dark" decorative />
         </a>
-        <p class="text-secondary-nv text-sm-nv measure mt-3 mb-0">{about}</p>
+        <p class="footer-about mt-4 mb-0">{about}</p>
       </div>
       <nav class="col-12 col-md-8 col-lg-6 offset-lg-1" aria-labelledby="footer-nav-title">
         <h2 class="h4" id="footer-nav-title">{t('footer.navTitle')}</h2>
@@ -59,6 +59,13 @@ const links: { key: UiKey; href: string }[] = [
 <style>
   .site-footer {
     padding-block: var(--space-16) var(--space-8);
+  }
+
+  /* Company description: body size for readability, navy-muted (10.32:1 on navy) */
+  .footer-about {
+    max-inline-size: 30rem;
+    color: var(--color-navy-muted);
+    line-height: var(--leading-body);
   }
 
   .footer-brand {

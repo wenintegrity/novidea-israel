@@ -8,5 +8,7 @@ leadCta:
     label: "השאירו פרטים"
     href: "/contact"
 
-# Footer blurb (from "כותרת ראשית")
-footerAbout: "נובידאה - פלטפורמת הענן המובילה לניהול סוכנויות ובתי סוכן."
+# Footer blurb. Built only from the content document: "כותרת ראשית" (leading cloud platform),
+# "טקסט מקוצר" (Salesforce; service, claims, renewals), /capabilities ("מליד ועד פוליסה"),
+# /solution (one platform for the whole agency) and /israel (global company, HQ and R&D in Israel).
+footerAbout: "נובידאה היא פלטפורמת הענן המובילה לניהול סוכנויות ובתי סוכן, על בסיס Salesforce: מהליד הראשון ועד פוליסה, שירות, תביעות וחידושים, במערכת אחת. חברה גלובלית שהמטה ומרכז הפיתוח שלה כאן בישראל."
