@@ -37,6 +37,8 @@ Stack changes go through an Architecture Decision Record (ADR) in `docs/decision
 │   ├── design-system.md      ← owned by Design agent
 │   ├── glossary-he.md        ← owned by Content agent (Hebrew terminology)
 │   ├── seo.md                ← owned by SEO agent (keywords, technical SEO, domain move)
+│   ├── marketing/            ← owned by Marketing agent (campaigns, landing pages, social, email)
+│   ├── sources/              ← source documents (content document, press releases, quotes)
 │   └── decisions/            ← ADRs
 ├── src/
 │   ├── pages/                ← routes (he at root, en under /en)
@@ -51,7 +53,7 @@ Stack changes go through an Architecture Decision Record (ADR) in `docs/decision
 
 ---
 
-## 3. The six agents
+## 3. The seven agents
 
 Each role below has a matching subagent in `.claude/agents/`. A role **owns** certain files: other agents may propose changes to them, but the owner makes or approves the change.
 
@@ -70,6 +72,7 @@ Each role below has a matching subagent in `.claude/agents/`. A role **owns** ce
 3. **Code** implements pages from the structure spec, content files, and design tokens.
 4. **Testing** verifies the result and blocks the merge if quality gates fail.
 5. **SEO** audits the site and feeds search requirements into Structure, Content, Code and Testing through `docs/seo.md`.
+6. **Marketing** drafts campaigns, landing pages, social posts, emails and case studies in `docs/marketing/`; site copy goes through Content.
 
 Each handoff is a file in the repo, not a chat message. If it isn't written down, the next agent can't rely on it.
 
@@ -158,7 +161,7 @@ Each handoff is a file in the repo, not a chat message. If it isn't written down
 
 **Responsibilities**
 - **Localize, don't translate.** Rewrite novidea.com messaging for Israeli readers: shorter sentences, a direct tone, and local examples.
-- Keep a **Hebrew insurance glossary** (`docs/glossary-he.md`) and use it consistently, for example: insurer → מבטח / חברת ביטוח, agency → סוכנות ביטוח, underwriting → חיתום, claims → תביעות, policy → פוליסה, renewal → חידוש. Product and brand names stay in English (Novidea, Salesforce).
+- Keep a **Hebrew insurance glossary** (`docs/glossary-he.md`) and use it consistently, for example: insurer → מבטח / חברת ביטוח, agency → סוכנות ביטוח, underwriting → חיתום, claims → תביעות, policy → פוליסה, renewal → חידוש. Product and third-party brand names stay in English (Salesforce, Open API). **Exception: our own brand is written "נובידאה" in Hebrew running text** (owner's decision, 20/11/2026); "Novidea" stays in the logo, in English text and inside Latin-script names.
 - Use gender-inclusive or neutral Hebrew where possible (for example plural forms or infinitives in calls to action: "לתיאום הדגמה" rather than "תאם הדגמה").
 - Make **no unverified claims.** Every customer name, statistic, certification or regulatory statement needs a source (novidea.com, a published case study, or written approval from Novidea marketing). Mark anything unverified `TODO(verify)`. It must not ship.
 - Write SEO copy (title ≤ 60 characters, description ≤ 155 characters) for each page, following the Structure agent's metadata plan.
@@ -182,6 +185,21 @@ Each handoff is a file in the repo, not a chat message. If it isn't written down
 - Hand SEO checks to Testing for CI.
 
 **Done when:** every page has a keyword target and metadata in `docs/seo.md`, the technical checklist is implemented by its owners, and the domain-move plan is ready.
+
+---
+
+### 3.7 Marketing agent: `marketing`
+
+**Purpose:** marketing for the Israeli market: positioning and messaging, campaign and landing pages, LinkedIn and social posts, email campaigns, case studies, competitive briefs and campaign reporting.
+
+**Owns:** `docs/marketing/`. Uses the marketing skills (`marketing:draft-content`, `content-creation`, `brand-review`, `campaign-plan`, `competitive-brief`, `email-sequence`, `performance-report`).
+
+**Responsibilities**
+- Draft campaign material in the site voice and glossary terms, with every claim traced to `docs/sources/`, novidea.com or Novidea marketing's written approval (§3.5).
+- Hand site copy to Content, new pages to Structure, visuals to Design, campaign-page indexing to SEO, and builds to Code.
+- Respect consent and privacy: tracking only after cookie consent, opt-in and unsubscribe for email (§4.4).
+
+**Done when:** each draft lists its sources and open ⚠ items, and has been handed to the owning agent for publishing.
 
 ---
 
@@ -230,6 +248,7 @@ The subagents live in `.claude/agents/`. Ask for them by role, for example:
 - "Use the **content** agent to write the Hebrew homepage hero."
 - "Use the **testing** agent to run the a11y and RTL checks on the solutions pages."
 - "Use the **seo** agent to audit the site and update the SEO plan."
+- "Use the **marketing** agent to draft a LinkedIn post about the Colmobil announcement."
 
 Rules for agents:
 1. Stay within your owned files. Propose changes to other areas rather than making them.

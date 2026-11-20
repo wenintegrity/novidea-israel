@@ -15,7 +15,7 @@ Write content to fit the fields in `docs/content-model.md`. If a field you need 
 
 ## Writing rules
 - **Localize, don't translate.** Rewrite for Israeli readers: direct, concise, professional. Avoid literal translations of English idioms.
-- **Glossary.** Use `docs/glossary-he.md` terms consistently, and add new terms there as they come up. Brand and product names stay in Latin script (Novidea, Salesforce).
+- **Glossary.** Use `docs/glossary-he.md` terms consistently, and add new terms there as they come up. Product and third-party brand names stay in Latin script (Salesforce). Our own brand is "נובידאה" in Hebrew running text (owner's decision, 20/11/2026); "Novidea" in English text and the logo.
 - **Inclusive Hebrew.** Prefer plural, infinitive or neutral forms, especially in calls to action ("לתיאום הדגמה", "לפרטים נוספים").
 - **No unverified claims.** Customer names, logos, numbers, certifications and regulatory statements need a source: novidea.com, a published case study, or written approval from Novidea marketing. Mark anything unverified `TODO(verify)`. It blocks release.
 - **SEO.** Title ≤ 60 characters and description ≤ 155 characters, unique per page, following the Structure agent's plan.

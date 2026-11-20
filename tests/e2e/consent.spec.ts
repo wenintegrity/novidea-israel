@@ -21,7 +21,7 @@ test('first visit shows the banner, with equal accept and reject buttons', async
   await page.goto('/');
   const banner = page.getByRole('region', { name: 'האתר משתמש בעוגיות' });
   await expect(banner).toBeVisible();
-  const accept = banner.getByRole('button', { name: 'אישור הכל' });
+  const accept = banner.getByRole('button', { name: 'אישור הכול' });
   const reject = banner.getByRole('button', { name: 'רק עוגיות הכרחיות' });
   await expect(accept).toBeVisible();
   await expect(reject).toBeVisible();
@@ -71,7 +71,7 @@ test('"necessary only": banner closes, choice persists, marketing scripts never 
 test('"accept all" runs waiting marketing scripts', async ({ page }) => {
   await page.goto('/');
   await addGatedScript(page);
-  await page.getByRole('button', { name: 'אישור הכל' }).first().click();
+  await page.getByRole('button', { name: 'אישור הכול' }).first().click();
   await expect(page.locator('#consent-banner')).toBeHidden();
   expect(await stored(page)).toMatchObject({ analytics: true, marketing: true });
   expect(await page.evaluate(() => (window as unknown as { __marketingRan?: boolean }).__marketingRan)).toBe(true);
@@ -99,7 +99,7 @@ test('settings: choose per category, save, reopen from the footer, Escape closes
 
 test('withdrawing marketing consent deletes HubSpot cookies', async ({ page }) => {
   await page.goto('/');
-  await page.getByRole('button', { name: 'אישור הכל' }).first().click();
+  await page.getByRole('button', { name: 'אישור הכול' }).first().click();
   await page.evaluate(() => {
     document.cookie = 'hubspotutk=test; path=/';
     document.cookie = '__hstc=test; path=/';
