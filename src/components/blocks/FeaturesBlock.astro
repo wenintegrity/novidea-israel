@@ -6,6 +6,7 @@
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import BrandIcon from '../BrandIcon.astro';
+import Icon from '../Icon.astro';
 import { useTranslations } from '../../i18n/utils';
 import type { Locale } from '../../i18n/ui';
 
@@ -79,12 +80,21 @@ const iconVariant = surface === 'navy' ? 'dark' : 'light';
           <li class="col">
             <div class="feature-card">
               {item.icon && <BrandIcon id={item.icon.id} variant={iconVariant} size="xl" class="feature-icon" />}
-              {item.soon && <span class="badge-soon">{t('badge.soon')}</span>}
+              {item.soon && (
+                <span class="badge-soon">
+                  <Icon name="rocket" class="badge-soon__icon" />
+                  {t('badge.soon')}
+                </span>
+              )}
               {item.title && <ItemHeading class="h4 feature__title">{item.title}</ItemHeading>}
               {item.body && <p class="feature__body mb-0">{item.body}</p>}
               {item.soonNote && (
                 <p class="feature__soon mb-0">
-                  <span class="badge-soon">{t('badge.soon')}</span> {item.soonNote}
+                  <span class="badge-soon">
+                    <Icon name="rocket" class="badge-soon__icon" />
+                    {t('badge.soon')}
+                  </span>{' '}
+                  {item.soonNote}
                 </p>
               )}
             </div>
@@ -175,6 +185,8 @@ const iconVariant = surface === 'navy' ? 'dark' : 'light';
     transform: scale(1.08);
   }
 
+  /* "בקרוב" label with a small rocket (Bootstrap Icons). The icon is 1em, set inline the way Bootstrap
+     sets icons in text (vertical-align -0.125em), so neither the label nor its line changes size. */
   .badge-soon {
     display: inline-block;
     margin-block-end: var(--space-2);
@@ -184,6 +196,14 @@ const iconVariant = surface === 'navy' ? 'dark' : 'light';
     font-size: var(--text-xs);
     font-weight: 600;
     line-height: 1.8;
+  }
+
+  .badge-soon :global(.badge-soon__icon) {
+    display: inline-block;
+    inline-size: 1em;
+    block-size: 1em;
+    margin-inline-end: 0.3em;
+    vertical-align: -0.125em;
   }
 
   .feature__soon {

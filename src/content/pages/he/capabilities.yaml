@@ -8,8 +8,8 @@ seo:
 header:
   title: "יכולות ליבה: מקצה לקצה"
   picture:
-    src: "../../../assets/images/agent-at-laptop.png"
-    alt: "איש מקצוע מחייך עובד מול מחשב נייד"
+    src: "../../../assets/images/capabilities-team.png"
+    alt: "צוות בפגישת עבודה סביב שולחן, ובמרכז אישה מחייכת"
 
 sections:
   - type: features

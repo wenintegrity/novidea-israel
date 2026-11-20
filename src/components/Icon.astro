@@ -1,5 +1,5 @@
 ---
-import { directionalIcons, iconPaths, type IconName } from './icons';
+import { directionalIcons, filledIcons, iconPaths, type IconName } from './icons';
 
 interface Props {
   name: IconName;
@@ -9,6 +9,7 @@ interface Props {
 }
 
 const { name, label, class: className } = Astro.props;
+const filled = filledIcons.has(name);
 const classes = ['icon', directionalIcons.has(name) && 'icon-directional', className]
   .filter(Boolean)
   .join(' ');
@@ -16,12 +17,12 @@ const classes = ['icon', directionalIcons.has(name) && 'icon-directional', class
 
 <svg
   class={classes}
-  viewBox="0 0 24 24"
-  fill="none"
-  stroke="currentColor"
-  stroke-width="1.75"
-  stroke-linecap="round"
-  stroke-linejoin="round"
+  viewBox={filled ? '0 0 16 16' : '0 0 24 24'}
+  fill={filled ? 'currentColor' : 'none'}
+  stroke={filled ? undefined : 'currentColor'}
+  stroke-width={filled ? undefined : '1.75'}
+  stroke-linecap={filled ? undefined : 'round'}
+  stroke-linejoin={filled ? undefined : 'round'}
   focusable="false"
   role={label ? 'img' : undefined}
   aria-label={label}

@@ -236,7 +236,15 @@ test.describe('content details', () => {
 
   test('solution page marks upcoming features as "בקרוב"', async ({ page }) => {
     await page.goto('/solution');
-    await expect(page.locator('.badge-soon').first()).toHaveText('בקרוב');
+    const badge = page.locator('.badge-soon').first();
+    await expect(badge).toHaveText('בקרוב');
+    // The rocket icon is decorative and doesn't change the label's height (one text line)
+    await expect(badge.locator('svg.icon')).toHaveAttribute('aria-hidden', 'true');
+    const { height, fontSize } = await badge.evaluate((el) => ({
+      height: el.getBoundingClientRect().height,
+      fontSize: parseFloat(getComputedStyle(el).fontSize),
+    }));
+    expect(height).toBeCloseTo(fontSize * 1.8, 0);
   });
 
   test('"360°" keeps the degree sign after the number in RTL', async ({ page }) => {

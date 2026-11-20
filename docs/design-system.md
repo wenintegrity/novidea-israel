@@ -291,7 +291,7 @@ Audience and solution blocks use flat tiles in sky, red, navy and yellow, each w
 - **Sizes:** 32, 48 or 64 px (`size="md"`, `"lg"`, `"xl"`). Feature items and audience tiles use 64 px.
 - Icons sit next to text that says the same thing, so they're decorative (`alt=""`).
 
-**UI icons** (chevrons, menu, close, external link, check, error, social) use a single line set that matches the brand's stroke weight. Lucide (MIT licence) at stroke width 1.75, inlined as SVG, is the default. Decorative icons get `aria-hidden="true"`. Icon-only buttons get an accessible name from `src/i18n/`.
+**UI icons** (chevrons, menu, close, external link, check, error, social) use a single line set that matches the brand's stroke weight. Lucide (MIT licence) at stroke width 1.75, inlined as SVG, is the default. A few filled icons come from Bootstrap Icons (MIT, 16×16, `filledIcons` in `src/components/icons.ts`), currently the "בקרוב" rocket. Decorative icons get `aria-hidden="true"`. Icon-only buttons get an accessible name from `src/i18n/`.
 
 ### 7.5 Photography
 
@@ -571,7 +571,7 @@ A smaller version of the home hero (§10.6), so internal pages share its look.
 
 ### 10.21 "Coming soon" label
 
-A small yellow label with navy text ("בקרוב", 12.12:1). Above the title when the whole feature is upcoming; inline before the note when only an extra part is upcoming (`soonNote`).
+A small yellow label with navy text ("בקרוב", 12.12:1), led by a small rocket (Bootstrap Icons "rocket-takeoff-fill", 1em, decorative, mirrored in RTL so it flies in the reading direction). The icon is set inline with `vertical-align: -0.125em`, so the label and its line keep their height. Above the title when the whole feature is upcoming; inline before the note when only an extra part is upcoming (`soonNote`).
 
 ### 10.22 Lead form (HubSpot)
 
