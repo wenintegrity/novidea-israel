@@ -1,0 +1,60 @@
+---
+// Hebrew 404 page (docs/seo.md §5). Vercel serves it for any unknown URL with status 404.
+// Always noindex. Links back to the home page and the main pages.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { ctaNav, homePath, pagePath, primaryNav } from '../config/nav';
+import { useTranslations } from '../i18n/utils';
+
+const locale = 'he' as const;
+const t = useTranslations(locale);
+const links = [...primaryNav, ctaNav];
+---
+
+<BaseLayout
+  locale={locale}
+  title={`${t('notFound.title')} | ${t('site.name')}`}
+  description={t('notFound.description')}
+  noindex
+>
+  <section class="section surface-subtle not-found" aria-labelledby="page-title">
+    <div class="container">
+      <div class="measure">
+        <h1 id="page-title" class="title-accent">{t('notFound.title')}</h1>
+        <p>{t('notFound.body')}</p>
+        <ul class="not-found__links list-unstyled">
+          {
+            links.map((item) => (
+              <li>
+                <a href={pagePath(locale, item.slug)}>{t(item.key)}</a>
+              </li>
+            ))
+          }
+        </ul>
+        <a class="btn btn-primary" href={homePath(locale)}>{t('notFound.home')}</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found {
+    min-block-size: 60vh;
+  }
+
+  h1 {
+    margin-block-end: var(--space-8);
+  }
+
+  .not-found__links {
+    display: grid;
+    gap: var(--space-2);
+    margin-block: var(--space-6) var(--space-8);
+  }
+
+  .not-found__links a {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 2.75rem;
+    font-weight: 500;
+  }
+</style>

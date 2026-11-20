@@ -2,9 +2,10 @@
 # The form is HubSpot's (configured below). It loads only after the visitor allows marketing cookies;
 # until then the page shows a short notice with a button that grants that consent and loads the form.
 
+# SEO title and description: docs/seo.md §4.1 (approved 20/11/2026).
 seo:
-  title: "השאירו פרטים | נובידאה"
-  description: "מוכנים להוביל את הסוכנות לעידן הבא? השאירו פרטים והצוות שלנו יחזור אליכם לשיחת היכרות והדגמה."
+  title: "תיאום הדגמה למערכת לסוכנויות ביטוח | נובידאה"
+  description: "השאירו פרטים לשיחת היכרות והדגמה של נובידאה, מערכת הענן לניהול סוכנויות ביטוח ובתי סוכן. הצוות שלנו יחזור אליכם."
 
 header:
   title: "מוכנים להוביל את הסוכנות לעידן הבא?"

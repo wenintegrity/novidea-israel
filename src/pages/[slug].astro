@@ -5,6 +5,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/blocks/PageHeader.astro';
 import Blocks from '../components/blocks/Blocks.astro';
 import LeadCta from '../components/blocks/LeadCta.astro';
+import { primaryNav, ctaNav, pagePath } from '../config/nav';
+import { breadcrumbJsonLd } from '../config/seo';
+import { useTranslations } from '../i18n/utils';
 
 export async function getStaticPaths() {
   const pages = await getCollection('pages', (p) => p.id.startsWith('he/') && p.id !== 'he/home');
@@ -17,9 +20,15 @@ const shared = await getEntry('shared', locale);
 if (!shared) throw new Error(`Missing content: src/content/shared/${locale}.yaml`);
 const { seo, header, sections, leadCta } = page.data;
 if (!header) throw new Error(`Missing header: src/content/pages/${page.id}.yaml`);
+
+// Breadcrumb name: the page's menu label when it has one, otherwise its h1
+const t = useTranslations(locale);
+const slug = page.id.slice('he/'.length);
+const navItem = [...primaryNav, ctaNav].find((item) => item.slug === slug);
+const jsonLd = breadcrumbJsonLd(Astro.site!, t('nav.homeShort'), navItem ? t(navItem.key) : header.title, pagePath(locale, slug));
 ---
 
-<BaseLayout locale={locale} title={seo.title} description={seo.description}>
+<BaseLayout locale={locale} title={seo.title} description={seo.description} jsonLd={jsonLd}>
   <PageHeader {...header} />
   <Blocks locale={locale} blocks={sections} />
   {leadCta && <LeadCta {...shared.data.leadCta} />}

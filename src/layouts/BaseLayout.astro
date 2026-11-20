@@ -3,6 +3,7 @@
 // then the Novidea brand layer. See docs/decisions/0001-bootstrap-5-via-cdn.md.
 import '@fontsource-variable/rubik';
 import { getEntry } from 'astro:content';
+import { ALLOW_INDEXING } from 'astro:env/server';
 import '../styles/tokens.css';
 import '../styles/bootstrap-brand.css';
 import Header from '../components/Header.astro';
@@ -18,9 +19,20 @@ interface Props {
   description: string;
   /** URL of this page in the other locale. Omit when there's no counterpart yet. */
   alternateHref?: string;
+  /** Keep this page out of search results even when indexing is on (e.g. the 404 page). */
+  noindex?: boolean;
+  /** Structured data (schema.org JSON-LD) for this page. */
+  jsonLd?: Record<string, unknown>[];
 }
 
-const { locale, title, description, alternateHref } = Astro.props;
+const { locale, title, description, alternateHref, noindex = false, jsonLd = [] } = Astro.props;
+
+// SEO (docs/seo.md §5). Absolute URLs come from `site` (astro.config.mjs), never a hard-coded domain.
+// While ALLOW_INDEXING is off (the temporary vercel.app address), every page is noindex.
+const robots = !ALLOW_INDEXING || noindex ? 'noindex' : undefined;
+const path = Astro.url.pathname.replace(/\/(index\.html)?$/, '') || '/';
+const canonical = noindex ? undefined : new URL(path, Astro.site).href;
+const shareImage = new URL('/og/novidea-share.jpg', Astro.site).href;
 const dir = getDir(locale);
 const t = useTranslations(locale);
 const css = bootstrapCss[dir];
@@ -35,6 +47,26 @@ if (!shared) throw new Error(`Missing content: src/content/shared/${locale}.yaml
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {robots && <meta name="robots" content={robots} />}
+    {canonical && <link rel="canonical" href={canonical} />}
+    {/* Link previews (WhatsApp, LinkedIn, Facebook, X) */}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={t('site.name')} />
+    <meta property="og:locale" content={locale === 'he' ? 'he_IL' : 'en_GB'} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    <meta property="og:image" content={shareImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={t('site.shareImageAlt')} />
+    <meta name="twitter:card" content="summary_large_image" />
+    {/* "<" escaped so text can never close the script element */}
+    {
+      jsonLd.map((data) => (
+        <script is:inline type="application/ld+json" set:html={JSON.stringify(data).replace(/</g, '\\u003c')} />
+      ))
+    }
     <meta name="theme-color" content="#101338" />
     {/* Favicons from src/assets/brand/novidea-mark-favicon.png (files in public/) */}
     <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />

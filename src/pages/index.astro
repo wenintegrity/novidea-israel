@@ -5,7 +5,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/home/Hero.astro';
 import Blocks from '../components/blocks/Blocks.astro';
 import LeadCta from '../components/blocks/LeadCta.astro';
-import { getLocale } from '../i18n/utils';
+import { getLocale, useTranslations } from '../i18n/utils';
+import { homeJsonLd } from '../config/seo';
 
 const locale = getLocale(Astro.currentLocale);
 const page = await getEntry('pages', `${locale}/home`);
@@ -13,9 +14,11 @@ const shared = await getEntry('shared', locale);
 if (!page?.data.hero) throw new Error(`Missing hero: src/content/pages/${locale}/home.yaml`);
 if (!shared) throw new Error(`Missing content: src/content/shared/${locale}.yaml`);
 const { seo, hero, sections, leadCta } = page.data;
+const t = useTranslations(locale);
+const jsonLd = homeJsonLd(Astro.site!, t('site.name'), locale === 'he' ? 'he-IL' : 'en');
 ---
 
-<BaseLayout locale={locale} title={seo.title} description={seo.description}>
+<BaseLayout locale={locale} title={seo.title} description={seo.description} jsonLd={jsonLd}>
   <Hero {...hero} points={[]} />
   <Blocks locale={locale} blocks={sections} />
   {leadCta && <LeadCta {...shared.data.leadCta} />}

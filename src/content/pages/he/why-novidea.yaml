@@ -1,8 +1,9 @@
 # /why-novidea. Source: "תוכן לדף אתר NOVIDEA בעברית", section "למה נובידאה?" (table: advantage → what it means).
 
+# SEO title and description: docs/seo.md §4.1 (approved 20/11/2026).
 seo:
-  title: "למה נובידאה? | נובידאה"
-  description: "Cloud-Native אמיתי, מוצר גלובלי על תשתית ה-CRM מהחזקות בעולם, אבטחת מידע ופרטיות ללא פשרות (ISO, SOC2) וחדשנות מונעת AI."
+  title: "למה נובידאה? CRM בענן, אבטחת מידע ו-AI | נובידאה"
+  description: "Cloud-Native אמיתי על תשתית CRM מהחזקות בעולם, אבטחת מידע (ISO, SOC2) וחדשנות מבוססת AI. וגם: מה אומרים לקוחות נובידאה בישראל."
 
 header:
   title: "למה נובידאה?"

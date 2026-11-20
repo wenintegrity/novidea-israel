@@ -16,6 +16,8 @@ npm run test:e2e     # Playwright: RTL, responsive, accessibility (needs a build
 npm run icons        # prepare and check the brand icon library
 ```
 
+**Settings** (Vercel environment variables, or a local `.env`; see [.env.example](.env.example)): `SITE_URL` is the site's address (empty = the Vercel URL), and `ALLOW_INDEXING` lets search engines index the site. It stays `false` until the final domain is live ([docs/seo.md](docs/seo.md) §6).
+
 ## Adding icons and pictures
 
 - **Icons:** put `<name>.png` (navy lines) and `<name>.on-dark.png` (white lines) in [src/assets/icons/](src/assets/icons/), add Hebrew and English names in [icons.yaml](src/assets/icons/icons.yaml), run `npm run icons`, and restart the dev server. Use them in content as `icon: <name>`.

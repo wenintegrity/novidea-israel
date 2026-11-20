@@ -1,9 +1,10 @@
 # /capabilities. Source: "תוכן לדף אתר NOVIDEA בעברית", section "יכולות ליבה: מקצה לקצה".
 # "360°" is wrapped in Unicode LTR isolates (⁦…⁩) so the degree sign stays after the number in RTL.
 
+# SEO title and description: docs/seo.md §4.1 (approved 20/11/2026).
 seo:
-  title: "יכולות ליבה: מקצה לקצה | נובידאה"
-  description: "ניהול מסע לקוח מליד ועד פוליסה, תמונת לקוח 360° עם תובנות AI, BPM מתקדם, משרד ללא נייר, דשבורדים ו-BI בזמן אמת."
+  title: "יכולות המערכת: מליד ועד פוליסה, BPM ו-BI | נובידאה"
+  description: "ניהול מסע לקוח מליד ועד פוליסה, תמונת לקוח 360° עם תובנות AI, ניהול תהליכים (BPM), משרד ללא נייר ודשבורדים בזמן אמת לסוכנות הביטוח."
 
 header:
   title: "יכולות ליבה: מקצה לקצה"

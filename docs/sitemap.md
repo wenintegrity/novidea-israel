@@ -19,7 +19,7 @@ Hebrew pages are served at the root, English pages under `/en/`. Slugs are Engli
 | Blog | `/blog` | | | Planned |
 | Privacy policy | `/privacy` | `pages/he/privacy.yaml` | (drafted, not in the content document) | **Built**, draft: placeholders and legal review pending |
 | Accessibility statement (הצהרת נגישות) | `/accessibility` | draft in `docs/drafts/accessibility.he.yaml` | (drafted, not in the content document) | **Removed** from the site on 20/11/2026 at the owner's request. **Required by law before launch** (regulation 35) |
-| 404 | `/404` | | | Planned |
+| 404 | any unknown URL | `src/pages/404.astro` | | **Built**, Hebrew, `noindex` |
 
 English versions (`/en/…`) are planned; there are no English pages yet.
 
@@ -37,6 +37,6 @@ Hidden until English pages exist, so it never links to a 404.
 
 ## SEO per page
 
-Every page has a unique `<title>` (≤ 60 characters) and meta description (≤ 155 characters), enforced by the content schema. Still to add once the domain is set: canonical URL, `hreflang` pairs, `sitemap.xml`, and Organization structured data on the home page.
+Every page has a unique `<title>` (≤ 60 characters) and meta description (≤ 155 characters), enforced by the content schema; the wording follows docs/seo.md §4.1. Every page also has a canonical URL (no trailing slash), link-preview tags with a default share image, and structured data (Organization + WebSite on home, BreadcrumbList on internal pages). `robots.txt` and `sitemap.xml` are generated. `hreflang` pairs come with the English pages. Full plan: docs/seo.md.
 
-**Production:** https://novidea-israel.vercel.app/ (Vercel, deployed from `wenintegrity/novidea-israel`, branch `main`). A custom domain isn't set yet; `astro.config.mjs` → `site` needs it.
+**Production:** https://novidea-israel.vercel.app/ (Vercel, deployed from `wenintegrity/novidea-israel`, branch `main`). **This address is temporary and kept out of search engines** (`noindex`). All absolute URLs come from one setting: `SITE_URL` (falls back to the Vercel URL). At launch set `SITE_URL` and `ALLOW_INDEXING=true` (docs/seo.md §6).

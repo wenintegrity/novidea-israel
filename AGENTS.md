@@ -36,6 +36,7 @@ Stack changes go through an Architecture Decision Record (ADR) in `docs/decision
 │   ├── content-model.md      ← owned by Structure agent
 │   ├── design-system.md      ← owned by Design agent
 │   ├── glossary-he.md        ← owned by Content agent (Hebrew terminology)
+│   ├── seo.md                ← owned by SEO agent (keywords, technical SEO, domain move)
 │   └── decisions/            ← ADRs
 ├── src/
 │   ├── pages/                ← routes (he at root, en under /en)
@@ -50,7 +51,7 @@ Stack changes go through an Architecture Decision Record (ADR) in `docs/decision
 
 ---
 
-## 3. The five agents
+## 3. The six agents
 
 Each role below has a matching subagent in `.claude/agents/`. A role **owns** certain files: other agents may propose changes to them, but the owner makes or approves the change.
 
@@ -60,12 +61,15 @@ Each role below has a matching subagent in `.claude/agents/`. A role **owns** ce
  Structure ──► Content ──┐
      │                   ├──► Code ──► Testing ──► PR review ──► merge
      └──────► Design ────┘
+        ▲        ▲          ▲
+        └── SEO ─┴──────────┘   (advises Structure, Content and Code; owns the SEO plan)
 ```
 
 1. **Structure** defines what pages exist, their URLs, and what each page contains.
 2. **Content** and **Design** work in parallel from that spec.
 3. **Code** implements pages from the structure spec, content files, and design tokens.
 4. **Testing** verifies the result and blocks the merge if quality gates fail.
+5. **SEO** audits the site and feeds search requirements into Structure, Content, Code and Testing through `docs/seo.md`.
 
 Each handoff is a file in the repo, not a chat message. If it isn't written down, the next agent can't rely on it.
 
@@ -164,6 +168,23 @@ Each handoff is a file in the repo, not a chat message. If it isn't written down
 
 ---
 
+### 3.6 SEO agent: `seo`
+
+**Purpose:** search visibility in Israel: Hebrew keywords, on-page SEO, technical SEO, and the move from the temporary URL to the final domain.
+
+**Owns:** `docs/seo.md` (keyword map, technical SEO checklist, domain-move plan, measurement). Uses the `marketing:seo-audit` skill.
+
+**Responsibilities**
+- Audit the live site and the build for search: indexing, titles and descriptions, headings, internal links, structured data, link previews, Core Web Vitals.
+- Keep a Hebrew keyword map per page and hand titles, descriptions and copy changes to Content (no unverified claims, §3.5).
+- Define technical SEO for Code and Structure: `robots.txt`, `sitemap.xml`, canonical and `hreflang` tags built from a single `site` setting (never a hard-coded domain), JSON-LD, Open Graph, 404.
+- **The current URL (`novidea-israel.vercel.app`) is temporary.** Keep temporary and preview hosts out of search indexes, and own the launch checklist for the final domain (301 redirects, Search Console, sitemap submission).
+- Hand SEO checks to Testing for CI.
+
+**Done when:** every page has a keyword target and metadata in `docs/seo.md`, the technical checklist is implemented by its owners, and the domain-move plan is ready.
+
+---
+
 ## 4. Cross-cutting best practices
 
 ### 4.1 Git and pull requests
@@ -208,6 +229,7 @@ The subagents live in `.claude/agents/`. Ask for them by role, for example:
 - "Use the **structure-architect** agent to draft the sitemap from novidea.com."
 - "Use the **content** agent to write the Hebrew homepage hero."
 - "Use the **testing** agent to run the a11y and RTL checks on the solutions pages."
+- "Use the **seo** agent to audit the site and update the SEO plan."
 
 Rules for agents:
 1. Stay within your owned files. Propose changes to other areas rather than making them.

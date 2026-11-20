@@ -288,3 +288,50 @@ test('favicons are linked and served', async ({ page, request }) => {
     expect(res.ok(), href!).toBe(true);
   }
 });
+
+// SEO (docs/seo.md §5). The test build has no SITE_URL and ALLOW_INDEXING is off, like the
+// temporary vercel.app address: site = the preview origin, and every page is noindex.
+test.describe('SEO', () => {
+  for (const pg of pages) {
+    test(`${pg.name}: canonical, noindex, link preview and structured data`, async ({ page, request }) => {
+      await page.goto(pg.path);
+      const origin = new URL(page.url()).origin;
+      await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', origin + pg.path);
+      await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex');
+      await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', await page.title());
+      await expect(page.locator('meta[property="og:url"]')).toHaveAttribute('content', origin + pg.path);
+      const image = await page.locator('meta[property="og:image"]').getAttribute('content');
+      expect(image).toMatch(/^https?:\/\//);
+      expect((await request.get(image!)).ok()).toBe(true);
+      const types = await page
+        .locator('script[type="application/ld+json"]')
+        .evaluateAll((els) => els.map((el) => JSON.parse(el.textContent ?? '{}')['@type']));
+      expect(types).toEqual(pg.path === '/' ? ['Organization', 'WebSite'] : ['BreadcrumbList']);
+    });
+  }
+
+  test('robots.txt allows crawling and has no Sitemap line while indexing is off', async ({ request }) => {
+    const res = await request.get('/robots.txt');
+    expect(res.ok()).toBe(true);
+    const body = await res.text();
+    expect(body).toContain('User-agent: *');
+    expect(body).not.toMatch(/^Disallow: \/\s*$/m);
+    expect(body).not.toContain('Sitemap:');
+  });
+
+  test('sitemap.xml lists every page, and only pages', async ({ request }) => {
+    const res = await request.get('/sitemap.xml');
+    expect(res.ok()).toBe(true);
+    const locs = [...(await res.text()).matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => new URL(m[1]).pathname);
+    expect(locs.sort()).toEqual(pages.map((p) => p.path).sort());
+  });
+
+  test('unknown URLs get the Hebrew 404 page, noindex, with links back', async ({ page }) => {
+    const res = await page.goto('/no-such-page');
+    expect(res?.status()).toBe(404);
+    await expect(page.locator('h1')).toHaveText('העמוד לא נמצא');
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex');
+    await expect(page.locator('link[rel="canonical"]')).toHaveCount(0);
+    await expect(page.locator('main a[href="/"]')).toBeVisible();
+  });
+});

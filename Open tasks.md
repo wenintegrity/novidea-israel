@@ -54,15 +54,16 @@ The video is on the home page (`src/assets/videos/Novidea-Hebrew-Israel.mp4`, 78
 ## 4. Technical (no input needed)
 
 - [ ] **Security headers** in `vercel.json`: Content-Security-Policy (allowing only jsDelivr and HubSpot's domains), HSTS, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy` (AGENTS.md §4.6).
-- [ ] **SEO basics:** `robots.txt`, `sitemap.xml`, canonical URLs, link-preview tags (Open Graph) with a share image, Organization structured data. (Favicon done 20/11/2026.)
-- [ ] **Hebrew 404 page.**
+- [x] **SEO basics** (20/11/2026, docs/seo.md): `noindex` on the temporary address (page tag + `X-Robots-Tag` for `*.vercel.app`), one site-URL setting (`SITE_URL`, `ALLOW_INDEXING`, see `.env.example`), canonical URLs, no trailing-slash or `/index.html` duplicates, `robots.txt`, `sitemap.xml`, link previews with a share image (`public/og/novidea-share.jpg`), structured data (Organization, WebSite, BreadcrumbList), Hebrew 404 page, new titles and descriptions, favicon.
+- [ ] **SEO at launch:** follow docs/seo.md §6: set `SITE_URL` and `ALLOW_INDEXING=true` in Vercel Production, redirect `vercel.app` to the final domain, verify Search Console and Bing, submit the sitemap.
+- [ ] **SEO, still open:** "להמשך קריאה" links between pages, Lighthouse run, approval of the share image, and Novidea's answers to docs/seo.md §9 (domain, social profiles, office details, certifications, video).
 - [ ] **Performance audit** with Lighthouse against the AGENTS.md budget (Performance ≥ 90, Accessibility = 100, SEO = 100, Best Practices ≥ 95).
 - [ ] **CI on GitHub:** build and run the Playwright tests on every push and pull request; protect `main`; add Dependabot or Renovate.
 - [ ] **Build size:** unused icon originals (about 2 MB) are copied into the build. Visitors don't download them; clean up if deploy size matters.
 
 ## 5. Decisions needed
 
-- [ ] **Custom domain** for the site. Needed for canonical URLs, `sitemap.xml`, `hreflang` and Google Search Console (`site` in `astro.config.mjs`).
+- [ ] **Custom domain** for the site. Everything is built from one setting, so launch is: set `SITE_URL` and `ALLOW_INDEXING=true` in Vercel (docs/seo.md §6).
 - [ ] **Old repo** `wenintegrity/novidea-israel-minisite` (not the deploy source; still a local remote named `minisite`): archive or delete.
 - [ ] **Duplicate picture files** in `src/assets/brand/`: `Group 1013.png`, `Group 1013 2.png` and `Group 1274.png` are identical; keep one.
 
