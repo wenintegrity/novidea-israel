@@ -58,11 +58,14 @@ h4, .h4 { font-size: var(--text-h4); line-height: var(--leading-h4); font-weight
 .text-sm-nv { font-size: var(--text-sm); line-height: var(--leading-sm); }
 .text-secondary-nv { color: var(--text-secondary); }
 .measure { max-inline-size: var(--measure); }
-.eyebrow {
+/* Short yellow bar under a page or section title (design-system.md §7.6). Decorative. */
+.title-accent::after {
+  content: "";
   display: block;
-  font-size: var(--text-sm);
-  font-weight: 500;
-  margin-block-end: var(--space-2);
+  inline-size: 3.5rem;
+  block-size: 0.3125rem;
+  margin-block-start: var(--space-4);
+  background-color: var(--color-yellow);
 }
 
 a { text-underline-offset: 0.2em; }

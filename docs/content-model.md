@@ -17,7 +17,7 @@ The schemas in `src/content.config.ts` enforce this model, so a missing or inval
 | `seo.title` | yes | ≤ 60 characters, unique per page |
 | `seo.description` | yes | ≤ 155 characters |
 | `hero` | home only | `titleStrong`, `titleRest`, `lead`, `primaryCta {label, href}`, `secondaryCta` (optional), `picture {src, alt}` (optional) |
-| `header` | internal pages | `eyebrow` (optional), `title` (the page's h1), `intro[]` (paragraphs), `picture {src, alt}` (optional) |
+| `header` | internal pages | `title` (the page's h1), `intro[]` (paragraphs), `picture {src, alt}` (optional) |
 | `sections[]` | no | Blocks, rendered in order (below) |
 | `leadCta` | no | Default `true`: show the shared lead banner at the bottom. `false` on `/contact` |
 
@@ -29,7 +29,7 @@ Every block has `type` and an optional `id` (becomes the section anchor). `surfa
 |---|---|---|
 | `text` | `title` (optional), `paragraphs[]`, `picture` (optional), `surface` (default light) | `TextBlock.astro` |
 | `features` | `title`, `intro` (optional), `columns` 2 or 3, `surface`, `picture` (optional), `items[]`: `{icon, title, body, soon, soonNote}`. An item needs a title or a body. `soon: true` labels the whole item "בקרוב"; `soonNote` adds an upcoming extra to an available item | `FeaturesBlock.astro` |
-| `names` | `title`, `names[]`, `more` (e.g. "ועוד"), `surface` (default subtle) | `NamesBlock.astro` |
+| `names` | `title`, `names[]`: each a plain name, or `{name, logo}` where `logo` points into `src/assets/logos/customers/` and `name` becomes the alt text; `more` (e.g. "ועוד"), `surface` (default subtle) | `NamesBlock.astro` |
 | `links` | `title` (optional), `items[]`: `{icon, title, body, href}`, `surface` | `LinksBlock.astro` |
 | `leadForm` | `hubspot {portalId, formId, region}` (optional), `fields[]` (shown only without `hubspot`) | `LeadForm.astro` |
 | `prose` | `sections[]`: `{title, paragraphs[], bullets[], after[]}`. Long-form text for legal pages. Inline links `[label](href)`; `[label](#cookie-settings)` opens the cookie settings; `[לעדכון: …]` is highlighted as a placeholder | `ProseBlock.astro` |

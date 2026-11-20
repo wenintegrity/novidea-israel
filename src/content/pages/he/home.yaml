@@ -22,9 +22,10 @@ hero:
 
 sections:
   # Source: טקסט מקוצר
+  # Navy, so the product picture's own navy background (#0f1238) blends into the section.
   - type: text
     id: overview
-    surface: subtle
+    surface: navy
     paragraphs:
       - "נובידאה מובילה את המהפכה הדיגיטלית בשוק הביטוח עם פלטפורמת ענן (InsurTech) מונחת נתונים וזוכת פרסים בינלאומיים. הפלטפורמה מאיצה צמיחה, רווחיות ויעילות תפעולית עבור סוכנויות וברוקרים באמצעות כלים אנליטיים ותובנות עסקיות בזמן אמת."
       - "עם בסיס CRM חזק כחלק מטכנולוגיית Salesforce, הפלטפורמה מהווה מערכת ליבה לסוכנות, ומאפשרת לשים את הלקוח במרכז, ולחבר את כל תהליכי העבודה בסוכנות."
@@ -34,14 +35,17 @@ sections:
       alt: "לוחות מחוונים של מערכת נובידאה על מסך מחשב"
 
   # Source: טקסט מקוצר (last line)
-  # TODO(verify): customer logos (SVG) for מבטח סימון, קלי and אמנון גור, if marketing wants logos instead of names.
+  # Logos supplied by Novidea on 20/11/2026 (src/assets/logos/customers/). The name is the logo's alt text.
   - type: names
     id: customers
     title: "הפלטפורמה שמובילה את הסוכנויות ובתי הסוכן הגדולים בישראל"
     names:
-      - "מבטח סימון"
-      - "קלי"
-      - "אמנון גור"
+      - name: "מבטח סימון"
+        logo: "../../../assets/logos/customers/mivtach-simon.png"
+      - name: "קלי"
+        logo: "../../../assets/logos/customers/kali.png"
+      - name: "אמנון גור"
+        logo: "../../../assets/logos/customers/gur.png"
     more: "ועוד"
 
   # Links to the internal pages. Titles and summaries are taken from each page's own content.

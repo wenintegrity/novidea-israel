@@ -1,63 +1,88 @@
 ---
-// Internal page header (docs/design-system.md §10.19): eyebrow, h1, intro paragraphs, optional picture.
-// Subtle surface. Text at the inline-start, picture at the inline-end from lg up; stacked below lg.
+// Internal page header (docs/design-system.md §10.19): a smaller version of the home hero.
+// Desktop (≥ lg): media on 7 columns at the inline-start, slanted yellow panel (h1 + intro) on
+// 6 columns at the inline-end, overlapping by one column. Below lg: media above the panel.
+// Without a picture the media is a navy block with the stripe motif, hidden below lg (decorative).
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
+import StripeMotif from '../StripeMotif.astro';
 
 interface Props {
-  eyebrow?: string;
   title: string;
   intro: string[];
   picture?: { src: ImageMetadata; alt: string };
 }
 
-const { eyebrow, title, intro, picture } = Astro.props;
+const { title, intro, picture } = Astro.props;
 ---
 
-<section class="page-header surface-subtle" aria-labelledby="page-title">
+<section class="page-header" aria-labelledby="page-title">
   <div class="container">
-    <div class="row gy-5 align-items-center">
-      <div class:list={['col-12', { 'col-lg-6': picture, 'col-lg-9': !picture }]}>
-        <div class="page-header__text">
-          {eyebrow && <span class="eyebrow">{eyebrow}</span>}
-          <h1 id="page-title">{title}</h1>
-          {intro.map((p) => <p class="lead-nv">{p}</p>)}
-        </div>
-      </div>
+    <div class="page-header__grid">
       {
-        picture && (
-          <div class="col-12 col-lg-5 offset-lg-1">
+        picture ? (
+          <div class="page-header__media">
+            {/* Likely LCP element: load eagerly, high priority */}
             <Image
               src={picture.src}
               alt={picture.alt}
-              widths={[480, 720, 960]}
-              sizes="(min-width: 992px) 40vw, 100vw"
+              widths={[640, 960, 1280]}
+              sizes="(min-width: 992px) 58vw, 100vw"
               loading="eager"
               fetchpriority="high"
               class="page-header__picture"
             />
           </div>
+        ) : (
+          <div class="page-header__media page-header__media--motif surface-navy" aria-hidden="true">
+            <StripeMotif />
+          </div>
         )
       }
+
+      <div class="page-header__panel surface-yellow">
+        <h1 id="page-title">{title}</h1>
+        {intro.map((p) => <p class="lead-nv">{p}</p>)}
+      </div>
     </div>
   </div>
 </section>
 
 <style>
   .page-header {
-    padding-block: var(--space-12) var(--section-pad);
+    padding-block: var(--space-6) var(--space-12);
   }
 
-  /* Load entrance, same as the home hero */
-  .page-header__text > * {
+  .page-header__grid {
+    display: grid;
+  }
+
+  .page-header__picture {
+    display: block;
+    inline-size: 100%;
+    block-size: auto;
+  }
+
+  .page-header__media--motif {
+    display: none;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .page-header__panel {
+    padding: var(--space-8) var(--space-6);
+  }
+
+  /* Load entrance like the home hero: the panel's content rises in, staggered */
+  .page-header__panel > * {
     animation: nv-enter-up 0.7s var(--ease-out) both;
   }
 
-  .page-header__text > :nth-child(2) { animation-delay: 0.08s; }
-  .page-header__text > :nth-child(3) { animation-delay: 0.16s; }
-  .page-header__text > :nth-child(4) { animation-delay: 0.24s; }
+  .page-header__panel > :nth-child(2) { animation-delay: 0.08s; }
+  .page-header__panel > :nth-child(3) { animation-delay: 0.16s; }
+  .page-header__panel > :nth-child(4) { animation-delay: 0.24s; }
 
-  .page-header__text > :last-child {
+  .page-header__panel > :last-child {
     margin-block-end: 0;
   }
 
@@ -65,9 +90,46 @@ const { eyebrow, title, intro, picture } = Astro.props;
     margin-block-end: var(--space-4);
   }
 
-  .page-header__picture {
-    display: block;
-    inline-size: 100%;
-    block-size: auto;
+  @media (min-width: 768px) {
+    .page-header__panel {
+      padding: var(--space-10) var(--space-12);
+    }
+  }
+
+  @media (min-width: 992px) {
+    .page-header {
+      padding-block-start: var(--space-10);
+    }
+
+    .page-header__grid {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      align-items: center;
+    }
+
+    .page-header__media {
+      grid-column: 1 / span 7;
+      grid-row: 1;
+    }
+
+    .page-header__media--motif {
+      display: block;
+      align-self: stretch;
+      min-block-size: 16rem;
+    }
+
+    .page-header__panel {
+      grid-column: 7 / span 6;
+      grid-row: 1;
+      z-index: 1;
+      padding-block: var(--space-12);
+      padding-inline: calc(var(--space-12) + var(--slant)) var(--space-12);
+      /* Slanted inline-start edge, wider at the top (design-system.md §7.1).
+         clip-path has no logical form, so RTL gets its own polygon (design-system.md §8.3). */
+      clip-path: polygon(0 0, 100% 0, 100% 100%, var(--slant) 100%);
+    }
+
+    .page-header__panel:dir(rtl) {
+      clip-path: polygon(0 0, 100% 0, calc(100% - var(--slant)) 100%, 0 100%);
+    }
   }
 </style>

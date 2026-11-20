@@ -287,7 +287,7 @@ Audience and solution blocks use flat tiles in sky, red, navy and yellow, each w
 
 - **Two versions per icon:** `<id>.png` has navy lines, for white, light-grey, yellow, sky and red surfaces. `<id>.on-dark.png` has white lines, for navy. `BrandIcon` takes `variant="light"` or `"dark"`, so pick it from the surface.
 - **Names and flags:** `src/assets/icons/icons.yaml` holds the Hebrew and English names, a category, and `directional: true` for icons that point in the reading direction (`speed-horse`, `fast-track`). Those are mirrored on Hebrew pages.
-- **Adding icons:** drop both PNGs in the folder, then run `npm run icons`. It removes white backgrounds, squares and resizes to 350 px, and reports a missing twin or missing names. Restart the dev server to pick them up.
+- **Adding icons:** drop both PNGs in the folder, then run `npm run icons`. It removes white backgrounds, trims the empty margin and centres the artwork on a 350 px square at **88% fill**, so every icon looks the same size whatever margin its source file had. It also reports a missing twin or missing names. Restart the dev server to pick them up.
 - **Sizes:** 32, 48 or 64 px (`size="md"`, `"lg"`, `"xl"`). Feature items and audience tiles use 64 px.
 - Icons sit next to text that says the same thing, so they're decorative (`alt=""`).
 
@@ -306,6 +306,10 @@ The brand book shows lifestyle photography: real people at work in bright, moder
 - Don't mirror photos for RTL, since that reverses any text in them.
 
 ---
+
+### 7.6 Title accent
+
+A short yellow bar (56 × 5 px, `--space-4` below the text) under section titles in text and feature blocks (`.title-accent`). Decorative, so contrast rules don't apply. Not used on the home hero or internal page headers, which have the slanted yellow panel.
 
 ## 8. RTL and bidirectional text
 
@@ -372,11 +376,12 @@ Implemented as a Bootstrap `.navbar.navbar-expand-lg` with a responsive `.offcan
 |---|---|---|
 | Height | 64 px | 72 px |
 | Logo | 24 px high | 32 px high |
-| Nav | Behind the menu button | Inline, `--text-sm` 500, `--space-8` between items |
+| Nav | Behind the menu button | Inline, `--text-sm` 500, items padded `--space-4` with `--space-1` between them. Shifted down `--header-nav-nudge` (8 px) so the text lines up with the logo wordmark, not the logo box |
 | CTA | Inside the menu panel | Accent button, small size |
 
 - Surface: `light`. Sticky (`--z-header`). Gets `--shadow-sm` after scrolling.
-- Current page: `aria-current="page"` and a 2 px navy underline (`border-block-end`).
+- **Desktop states:** hover = navy-50 background and a 3 px sky bar at the bottom; current page (`aria-current="page"`) = yellow-50 background, a 3 px yellow bar and weight 700.
+- **Menu panel states (navy):** hover = navy-800 background; current page = yellow text, navy-800 background and a 4 px yellow bar at the inline-start.
 - **Dropdowns:** a disclosure button with `aria-expanded`. The chevron points down and doesn't mirror. Panel: white, `--shadow-md`, opens below the item and aligns to its inline-start. Opens on click and on Enter or Space, and closes on Esc or when focus leaves it. Don't open on hover only.
 - **Mobile menu:** the menu button sits at the inline-end, with a 44 px target, `aria-expanded` and `aria-controls`, and its name from i18n. The panel covers the screen on the `navy` surface, with white nav items at `--text-h4` size, the language switcher and the CTA (primary-on-dark) at the bottom. It traps focus while open, Esc closes it, and focus returns to the menu button.
 - **RTL:** the logo is on the right and the CTA on the left. Nothing inside the header mirrors except the order.
@@ -447,9 +452,10 @@ The colored tiles from the brand book (retail agencies, MGAs/MGUs, and so on). E
 
 ### 10.8 Feature item
 
-**Anatomy:** brand icon (48 px) · title (`--text-h3`) · body (`--text-body`, grey-700 on light).
+**Anatomy:** a card holding brand icon (64 px) · title (`--text-h4`) · body (`--text-body`, grey-700).
 
-- Grid: 1 column on mobile, 2 on tablet, 3 on desktop, `--space-8` gap. Icon above the text, aligned to the inline-start.
+- Grid: 1 column on mobile, 2 on tablet, 2 or 3 on desktop, `--space-6` gap. Icon above the text, aligned to the inline-start. Cards are equal height, `--space-6` padding.
+- **Row colors:** rows of cards alternate between two backgrounds so long lists are easy to scan. The pair depends on the section surface: `light` → navy-50 / yellow-50; `subtle` → white / yellow-50; `tint` → white / navy-50; `navy` → navy-800 / 10% white. The striping follows the visible rows at every breakpoint (every card on mobile, every 2 on tablet, every 2 or 3 on desktop). Grey-700 body text stays above 4.5:1 on all of them (yellow-50: 5.9:1).
 - Not interactive unless it has a link, which then follows the Text link spec.
 
 ### 10.9 Stats
@@ -466,8 +472,10 @@ Key figures, shown above the customer logos (home page "Customers" section).
 ### 10.10 Logo strip
 
 - Customer or partner logos in a row on the `light` or `subtle` surface, with a `--text-h4` title above.
-- Logos are full-color or all grey-700 (pick one per strip), max height 40 px, never mirrored. Each has alt text with the company name.
-- Wraps to 2 or 3 per row on mobile. No auto-scrolling carousel.
+- Logos are full-color or all grey-700 (pick one per strip), never mirrored. Each has alt text with the company name.
+- **Built as** `NamesBlock.astro`: white cards (navy-200 border, at least 112 px high), logo up to 72 px high and the card's width, so wide and square logos look about the same size. 4 per row from md, 2 on mobile; a dashed "ועוד" card ends the row. A customer without a logo file shows its name as text.
+- Logo files live in `src/assets/logos/customers/`, trimmed to the artwork, on white. Prefer SVG or a PNG at least 2× the display size.
+- No auto-scrolling carousel.
 - Every logo needs written permission from the company, or an existing public reference on novidea.com (Content verifies).
 
 ### 10.11 Form field and contact/demo form
@@ -500,7 +508,8 @@ Key figures, shown above the customer logos (home page "Customers" section).
 - Surface: `navy`. Text white, secondary text navy-muted, links white with underline on hover, yellow focus ring.
 - Columns: 1 on mobile (column titles can be disclosure buttons), 2 on tablet, 4 on desktop. Column titles use `--text-h4`.
 - **Contact block:** office address, email and phone (`dir="ltr"`). Content verifies the details before launch.
-- **Legal row (required):** privacy policy, **accessibility statement (הצהרת נגישות)**, cookie settings (reopens the consent dialog), copyright. `--text-xs`, navy-muted.
+- **Legal row (required):** privacy policy, **accessibility statement (הצהרת נגישות)**, cookie settings (reopens the consent dialog), copyright. `--text-xs`, navy-muted. The accessibility statement link is **temporarily removed** (20/11/2026, owner's request; draft in `docs/drafts/`). It must be back before launch.
+- Nav links in 2 columns from sm up. Link hover: yellow.
 - Social icons: 24 px icons in 44 px targets, not mirrored, each with an accessible name ("Novidea ב-LinkedIn").
 
 ### 10.14 Product spotlight
@@ -541,10 +550,14 @@ The red panel from Novidea's 2023 and 2025 ads: a title and a checklist of the a
 
 ### 10.19 Page header (internal pages)
 
-**Anatomy:** optional eyebrow (the section name) · `h1` · intro paragraphs (`--text-body-lg`) · optional picture.
+A smaller version of the home hero (§10.6), so internal pages share its look.
 
-- Surface: `subtle`. Text on 6 columns at the inline-start and the picture on 5 columns at the inline-end (offset 1) from lg up; text on 9 columns when there's no picture. Stacked below lg.
-- Load entrance like the hero: the text rises in, staggered. The picture loads eagerly (it's the LCP element).
+**Anatomy:** media · slanted yellow panel (`surface-yellow`) with the `h1` (`--text-h1`, not display size) and intro paragraphs (`--text-body-lg`). No eyebrow and no title accent: the panel is the accent, and the menu shows which page you're on.
+
+- **Desktop (≥ lg):** media on 7 columns at the inline-start, panel on 6 columns at the inline-end, overlapping by one column, vertically centred on the media. The panel's inline-start edge is slanted (§7.1), with its own RTL polygon (§8.3).
+- **Below lg:** media on top, the panel below it, full width, no slant.
+- **Media:** the page picture, loaded eagerly with high priority (it's the LCP element). Without a picture (`/contact`, `/privacy`), a navy block with the stripe motif (§7.2), at least 16 rem high; it's decorative, so it's hidden below lg.
+- Load entrance like the hero: the panel's text rises in, staggered.
 
 ### 10.20 Page link cards
 

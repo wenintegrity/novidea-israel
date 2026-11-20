@@ -1,9 +1,15 @@
 ---
-// Customer names (docs/design-system.md §10.10). Names render as text until logo files exist.
+// Customer logo strip (docs/design-system.md §10.10). Each customer shows its logo when there is one,
+// otherwise its name as text. Logos are images of text, so the alt text is the customer's name.
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+type Customer = string | { name: string; logo: ImageMetadata };
+
 interface Props {
   id?: string;
   title: string;
-  names: string[];
+  names: Customer[];
   more?: string;
   surface: 'light' | 'subtle' | 'tint' | 'navy';
 }
@@ -15,10 +21,20 @@ const headingId = `${id ?? 'names'}-title`;
 <section id={id} tabindex={id ? '-1' : undefined} class:list={['section', `surface-${surface}`]} aria-labelledby={headingId}>
   <div class="container">
     <header class="section-header" data-animate="fade-up">
-      <h2 id={headingId}>{title}</h2>
+      <h2 id={headingId} class="title-accent">{title}</h2>
     </header>
     <ul class="names list-unstyled mb-0" data-animate-children="fade-in">
-      {names.map((name) => <li class="name">{name}</li>)}
+      {
+        names.map((item) =>
+          typeof item === 'string' ? (
+            <li class="name">{item}</li>
+          ) : (
+            <li class="name name--logo">
+              <Image src={item.logo} alt={item.name} height={80} densities={[1, 2]} class="name__logo" />
+            </li>
+          ),
+        )
+      }
       {more && <li class="name name--more">{more}</li>}
     </ul>
   </div>
@@ -34,13 +50,23 @@ const headingId = `${id ?? 'names'}-title`;
   .name {
     display: grid;
     place-items: center;
-    min-block-size: 5rem;
-    padding: var(--space-3);
+    min-block-size: 7rem;
+    padding: var(--space-4) var(--space-6);
     background-color: var(--color-white);
     border: var(--border-thin) solid var(--color-navy-200);
     text-align: center;
     font-size: var(--text-h4);
     font-weight: 700;
+  }
+
+  /* Logos keep their own colors. Wide logos are limited by the card width, tall ones by the height,
+     so they look about the same size. */
+  .name__logo {
+    display: block;
+    inline-size: auto;
+    block-size: auto;
+    max-inline-size: 100%;
+    max-block-size: 4.5rem;
   }
 
   .name--more {

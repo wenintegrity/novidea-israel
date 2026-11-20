@@ -9,7 +9,6 @@ const pages = [
   { path: '/israel', name: 'israel' },
   { path: '/contact', name: 'contact' },
   { path: '/privacy', name: 'privacy' },
-  { path: '/accessibility', name: 'accessibility' },
 ];
 
 const viewports = [
@@ -127,12 +126,11 @@ test.describe('navigation', () => {
     }
   });
 
-  test('footer links to the privacy policy and accessibility statement on every page', async ({ page }) => {
+  test('footer links to the privacy policy and cookie settings on every page', async ({ page }) => {
     for (const pg of pages) {
       await page.goto(pg.path);
       const legal = page.getByRole('navigation', { name: 'מידע משפטי' });
       await expect(legal.getByRole('link', { name: 'מדיניות פרטיות' })).toHaveAttribute('href', '/privacy');
-      await expect(legal.getByRole('link', { name: 'הצהרת נגישות' })).toHaveAttribute('href', '/accessibility');
       await expect(legal.getByRole('button', { name: 'הגדרות עוגיות' })).toBeVisible();
     }
   });
@@ -168,6 +166,43 @@ test.describe('content details', () => {
     await page.goto('/solution');
     await expect(page.locator('#lead-cta-title')).toHaveText('מוכנים להוביל את הסוכנות לעידן הבא?');
     await expect(page.locator('section:has(#lead-cta-title) a[href="/contact"]')).toBeVisible();
+  });
+
+  test('module cards alternate background color by row at each breakpoint', async ({ page }) => {
+    const rowColors = async () =>
+      page.locator('#modules .feature-card').evaluateAll((cards) =>
+        cards.map((c) => getComputedStyle(c).backgroundColor),
+      );
+    // Desktop: 3 per row, so cards 1-3 share a color and 4-6 have the other one
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto('/solution');
+    let c = await rowColors();
+    expect(new Set(c.slice(0, 3)).size).toBe(1);
+    expect(new Set(c.slice(3, 6)).size).toBe(1);
+    expect(c[3]).not.toBe(c[0]);
+    expect(c[6]).toBe(c[0]);
+    // Tablet: 2 per row
+    await page.setViewportSize({ width: 768, height: 1024 });
+    await page.reload();
+    c = await rowColors();
+    expect(c[1]).toBe(c[0]);
+    expect(c[2]).not.toBe(c[0]);
+    expect(c[3]).toBe(c[2]);
+    // Mobile: every card alternates
+    await page.setViewportSize({ width: 375, height: 812 });
+    await page.reload();
+    c = await rowColors();
+    expect(c[1]).not.toBe(c[0]);
+    expect(c[2]).toBe(c[0]);
+  });
+
+  test('home shows the customer logos with their names as alt text', async ({ page }) => {
+    await page.goto('/');
+    const logos = page.locator('#customers img');
+    await expect(logos).toHaveCount(3);
+    for (const name of ['מבטח סימון', 'קלי', 'אמנון גור']) {
+      await expect(page.locator('#customers').getByRole('img', { name })).toBeVisible();
+    }
   });
 
   test('solution page marks upcoming features as "בקרוב"', async ({ page }) => {

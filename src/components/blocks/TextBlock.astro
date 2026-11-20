@@ -24,7 +24,7 @@ const headingId = id ? `${id}-title` : undefined;
   <div class="container">
     <div class="row gy-5 align-items-center">
       <div class:list={['col-12', { 'col-lg-6': picture, 'col-lg-9': !picture }]} data-animate="fade-up">
-        {title && <h2 id={headingId}>{title}</h2>}
+        {title && <h2 id={headingId} class="title-accent">{title}</h2>}
         {paragraphs.map((p, i) => <p class:list={{ 'lead-nv': i === 0 }}>{p}</p>)}
       </div>
       {
@@ -55,5 +55,10 @@ const headingId = id ? `${id}-title` : undefined;
     inline-size: 100%;
     block-size: auto;
     box-shadow: var(--shadow-md);
+  }
+
+  /* On navy the picture's own navy background merges with the section: no shadow, no visible edge */
+  .surface-navy .text-block__picture {
+    box-shadow: none;
   }
 </style>

@@ -1,6 +1,7 @@
 ---
-// Feature items (docs/design-system.md §10.8): brand icon, title, body, and "coming soon" labels.
-// 1 column on mobile, 2 on tablet, 2 or 3 on desktop. Item headings are h3 under a block title,
+// Feature cards (docs/design-system.md §10.8): brand icon, title, body, and "coming soon" labels.
+// 1 column on mobile, 2 on tablet, 2 or 3 on desktop. Rows of cards alternate between two
+// background colors, picked from the section surface. Item headings are h3 under a block title,
 // h2 when the block has none (keeps the heading order intact).
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
@@ -46,7 +47,7 @@ const iconVariant = surface === 'navy' ? 'dark' : 'light';
         <div class="row gy-4 align-items-center section-header">
           <header class:list={['col-12', { 'col-lg-6': picture }]}>
             <div class="measure" data-animate="fade-up">
-              {title && <h2 id={headingId}>{title}</h2>}
+              {title && <h2 id={headingId} class="title-accent">{title}</h2>}
               {intro && <p class="lead-nv text-secondary-nv mb-0">{intro}</p>}
             </div>
           </header>
@@ -67,21 +68,26 @@ const iconVariant = surface === 'navy' ? 'dark' : 'light';
     }
     {/* gx-4 matches the container padding; a larger horizontal gutter overflows on mobile */}
     <ul
-      class:list={['row row-cols-1 row-cols-md-2 gx-4 gy-5 list-unstyled mb-0', { 'row-cols-lg-3': columns === 3 }]}
+      class:list={[
+        'features row row-cols-1 row-cols-md-2 gx-4 gy-4 list-unstyled mb-0',
+        { 'row-cols-lg-3 features--3': columns === 3 },
+      ]}
       data-animate-children="fade-up"
     >
       {
         items.map((item) => (
-          <li class="col feature">
-            {item.icon && <BrandIcon id={item.icon.id} variant={iconVariant} size="xl" class="feature-icon" />}
-            {item.soon && <span class="badge-soon">{t('badge.soon')}</span>}
-            {item.title && <ItemHeading class="h4 feature__title">{item.title}</ItemHeading>}
-            {item.body && <p class="text-secondary-nv mb-0">{item.body}</p>}
-            {item.soonNote && (
-              <p class="feature__soon mb-0">
-                <span class="badge-soon">{t('badge.soon')}</span> {item.soonNote}
-              </p>
-            )}
+          <li class="col">
+            <div class="feature-card">
+              {item.icon && <BrandIcon id={item.icon.id} variant={iconVariant} size="xl" class="feature-icon" />}
+              {item.soon && <span class="badge-soon">{t('badge.soon')}</span>}
+              {item.title && <ItemHeading class="h4 feature__title">{item.title}</ItemHeading>}
+              {item.body && <p class="feature__body mb-0">{item.body}</p>}
+              {item.soonNote && (
+                <p class="feature__soon mb-0">
+                  <span class="badge-soon">{t('badge.soon')}</span> {item.soonNote}
+                </p>
+              )}
+            </div>
           </li>
         ))
       }
@@ -90,16 +96,82 @@ const iconVariant = surface === 'navy' ? 'dark' : 'light';
 </section>
 
 <style>
+  /* Row colors per surface: A for odd rows, B for even rows (design-system.md §10.8) */
+  .section {
+    --card-a: var(--color-navy-50);
+    --card-b: var(--color-yellow-50);
+  }
+
+  .surface-subtle {
+    --card-a: var(--color-white);
+    --card-b: var(--color-yellow-50);
+  }
+
+  .surface-tint {
+    --card-a: var(--color-white);
+    --card-b: var(--color-navy-50);
+  }
+
+  .surface-navy {
+    --card-a: var(--color-navy-800);
+    --card-b: rgb(255 255 255 / 0.1);
+  }
+
+  .feature-card {
+    block-size: 100%;
+    padding: var(--space-6);
+    background-color: var(--card-bg, var(--card-a));
+    border-radius: var(--radius-sm);
+  }
+
+  /* Even rows. One column below md: every second card */
+  .features > li:nth-child(even) .feature-card {
+    --card-bg: var(--card-b);
+  }
+
+  /* Two columns from md: cards 3-4, 7-8, ... */
+  @media (min-width: 768px) {
+    .features > li:nth-child(even) .feature-card {
+      --card-bg: var(--card-a);
+    }
+
+    .features > li:nth-child(4n + 3) .feature-card,
+    .features > li:nth-child(4n + 4) .feature-card {
+      --card-bg: var(--card-b);
+    }
+  }
+
+  /* Three columns from lg: cards 4-6, 10-12, ... */
+  @media (min-width: 992px) {
+    .features--3 > li:nth-child(n) .feature-card {
+      --card-bg: var(--card-a);
+    }
+
+    .features--3 > li:nth-child(6n + 4) .feature-card,
+    .features--3 > li:nth-child(6n + 5) .feature-card,
+    .features--3 > li:nth-child(6n + 6) .feature-card {
+      --card-bg: var(--card-b);
+    }
+  }
+
   .feature__title {
     margin-block-end: var(--space-2);
   }
 
-  li :global(.feature-icon) {
+  .feature__body {
+    color: var(--text-secondary);
+  }
+
+  .surface-navy .feature__body {
+    color: var(--color-navy-muted);
+  }
+
+  .feature-card :global(.feature-icon) {
     margin-block-end: var(--space-4);
     transition: transform var(--duration-base) var(--ease-out);
   }
 
-  li:hover :global(.feature-icon) {
+  .feature-card:hover :global(.feature-icon) {
     transform: scale(1.08);
   }
 

@@ -28,9 +28,9 @@ const links: { key: UiKey; href: string }[] = [
         </a>
         <p class="text-secondary-nv text-sm-nv measure mt-3 mb-0">{about}</p>
       </div>
-      <nav class="col-12 col-md-6 col-lg-3 offset-lg-1" aria-labelledby="footer-nav-title">
+      <nav class="col-12 col-md-8 col-lg-6 offset-lg-1" aria-labelledby="footer-nav-title">
         <h2 class="h4" id="footer-nav-title">{t('footer.navTitle')}</h2>
-        <ul class="list-unstyled mb-0">
+        <ul class="footer-nav__list list-unstyled mb-0">
           {
             links.map((link) => (
               <li>
@@ -47,7 +47,6 @@ const links: { key: UiKey; href: string }[] = [
       <nav aria-label={t('footer.legal')}>
         <ul class="footer-legal__links list-unstyled mb-0">
           <li><a href={pagePath(locale, 'privacy')}>{t('footer.privacy')}</a></li>
-          <li><a href={pagePath(locale, 'accessibility')}>{t('footer.accessibility')}</a></li>
           <li>
             <button type="button" class="footer-link-button" data-consent-open>{t('footer.cookies')}</button>
           </li>
@@ -76,7 +75,20 @@ const links: { key: UiKey; href: string }[] = [
   }
 
   ul a:hover {
+    color: var(--color-yellow);
     text-decoration: underline;
+  }
+
+  /* Two columns of links from sm up, so the footer stays short */
+  @media (min-width: 576px) {
+    .footer-nav__list {
+      columns: 2;
+      column-gap: var(--space-8);
+    }
+
+    .footer-nav__list li {
+      break-inside: avoid;
+    }
   }
 
   .footer-legal {
@@ -95,6 +107,11 @@ const links: { key: UiKey; href: string }[] = [
     flex-wrap: wrap;
     align-items: center;
     column-gap: var(--space-6);
+  }
+
+  .footer-legal__links a:hover,
+  .footer-link-button:hover {
+    color: var(--color-yellow);
   }
 
   .footer-legal__links a {

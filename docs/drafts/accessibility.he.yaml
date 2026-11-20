@@ -1,3 +1,7 @@
+# Removed from the site on 20/11/2026 at the owner's request. Israeli regulations (regulation 35) require an
+# accessibility statement before launch: to restore it, move this file back to
+# src/content/pages/he/accessibility.yaml, fill in the coordinator details, and re-add the footer link.
+
 # /accessibility — accessibility statement (הצהרת נגישות). DRAFT: review before relying on it.
 # Required by the Equal Rights for Persons with Disabilities (Accessibility Adjustments for Service)
 # Regulations, 2013, regulation 35, and Israeli Standard IS 5568. Describes only measures that are

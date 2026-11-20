@@ -72,6 +72,7 @@
   --section-pad: var(--space-12);
   --measure: 68ch;
   --header-height: 4rem;
+  --header-nav-nudge: 0.5rem; /* desktop menu offset, lines the menu up with the logo wordmark (Header.astro) */
 
   /* Shape, depth, motion */
   --radius-none: 0;

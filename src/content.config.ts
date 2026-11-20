@@ -97,7 +97,10 @@ const pages = defineCollection({
       type: z.literal('names'),
       id: z.string().optional(),
       title: z.string().min(1),
-      names: z.array(z.string().min(1)).min(1),
+      /** A plain name, or a name with its logo (the name becomes the logo's alt text). */
+      names: z
+        .array(z.union([z.string().min(1), z.object({ name: z.string().min(1), logo: image() })]))
+        .min(1),
       /** Trailing text after the list, e.g. "ועוד". */
       more: z.string().optional(),
       surface: surface.default('subtle'),
@@ -184,7 +187,6 @@ const pages = defineCollection({
       /** Internal pages: the page header. */
       header: z
         .object({
-          eyebrow: z.string().optional(),
           title: z.string().min(1),
           intro: z.array(z.string().min(1)).default([]),
           picture: picture.optional(),

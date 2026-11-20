@@ -5,7 +5,8 @@
 //
 // For each file it:
 //   1. removes a solid white background from <id>.png (keeps anti-aliased edges smooth),
-//   2. pads to a square and scales down to 350×350 if larger,
+//   2. trims the empty margin and centres the artwork on a 350×350 square, filling FILL of it,
+//      so every icon looks the same size whatever margin its source file had,
 // then reports icons without a twin, missing names in icons.yaml, and invalid file names.
 // Safe to run repeatedly: files that are already prepared are left untouched.
 import { readdir, readFile, writeFile } from 'node:fs/promises';
@@ -14,7 +15,8 @@ import sharp from 'sharp';
 import YAML from 'yaml';
 
 const DIR = 'src/assets/icons';
-const MAX = 350;
+const SIZE = 350;
+const FILL = 0.88; // the artwork's longer side, as a share of the square
 const ID = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 
 /** White → transparent ("color to alpha"). Solid colors stay solid; only white and edge blends change. */
@@ -31,6 +33,31 @@ function removeWhite(data) {
     for (let c = 0; c < 3; c++) data[i + c] = Math.round((data[i + c] - (1 - alpha) * 255) / alpha);
     data[i + 3] = Math.round(alpha * a);
   }
+}
+
+/** Bounding box of the visible pixels (alpha > 8). */
+function bbox(data, w, h) {
+  let x0 = w, y0 = h, x1 = -1, y1 = -1;
+  for (let y = 0; y < h; y++) {
+    for (let x = 0; x < w; x++) {
+      if (data[(y * w + x) * 4 + 3] > 8) {
+        if (x < x0) x0 = x;
+        if (x > x1) x1 = x;
+        if (y < y0) y0 = y;
+        if (y > y1) y1 = y;
+      }
+    }
+  }
+  return x1 < 0 ? null : { left: x0, top: y0, width: x1 - x0 + 1, height: y1 - y0 + 1 };
+}
+
+/** Already the right size, filled and centred (within 2 px)? Then leave the file alone. */
+function isNormalized(box, w, h) {
+  const target = Math.round(SIZE * FILL);
+  const side = Math.max(box.width, box.height);
+  const cx = box.left + box.width / 2;
+  const cy = box.top + box.height / 2;
+  return w === SIZE && h === SIZE && Math.abs(side - target) <= 2 && Math.abs(cx - SIZE / 2) <= 2 && Math.abs(cy - SIZE / 2) <= 2;
 }
 
 function isOpaqueWhite(data, i) {
@@ -58,11 +85,24 @@ for (const file of files) {
     changed = true;
   }
 
+  const box = bbox(data, w, h);
   let image = sharp(data, { raw: { width: w, height: h, channels: 4 } });
-  const side = Math.max(w, h);
-  if (w !== h || side > MAX) {
-    const target = Math.min(side, MAX);
-    image = image.resize(target, target, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } });
+  if (box && !isNormalized(box, w, h)) {
+    // Trim, scale the longer side to SIZE × FILL, then pad to a centred SIZE × SIZE square.
+    const target = Math.round(SIZE * FILL);
+    const trimmed = await image.extract(box).png().toBuffer();
+    const scaled = await sharp(trimmed)
+      .resize(target, target, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
+      .png()
+      .toBuffer();
+    const pad = Math.floor((SIZE - target) / 2);
+    image = sharp(scaled).extend({
+      top: pad,
+      bottom: SIZE - target - pad,
+      left: pad,
+      right: SIZE - target - pad,
+      background: { r: 0, g: 0, b: 0, alpha: 0 },
+    });
     changed = true;
   }
 
