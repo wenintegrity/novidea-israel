@@ -2,6 +2,8 @@
 
 **Owner:** Content agent (`content`) · **Status:** partly applied (see "Status" below) · **Date:** 20/11/2026
 
+Coverage check of the site against the content document, item by item: `docs/content-coverage.md` (20/11/2026).
+
 ## Status: applied 20/11/2026
 
 The owner approved two groups: (1) Hebrew corrections that don't change meaning or facts, plus the two `seo.description` fixes, and (2) the Howden, Marsh and Leaderim quote tweaks. Only the **minimal** correction was applied, not the full rewrites proposed in §3. Everything else in this document is still a proposal.
