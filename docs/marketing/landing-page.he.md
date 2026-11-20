@@ -107,7 +107,7 @@ The home video (`Novidea-Hebrew-Israel.mp4`). Captions needed if it has narratio
 **Title (h2):** הפלטפורמה שמובילה את הסוכנויות ובתי הסוכן הגדולים בישראל
 
 - **Logos:** מבטח סימון, קלי, GUR (approved for the home page; written permission still open, Open tasks).
-- **One quote** (pending customer approval of the Hebrew translation):
+- **Quotes:** built with all four Israeli customer quotes, as on /why-novidea (owner's request, 20/11/2026). Originally drafted with one quote (pending customer approval of the Hebrew translation):
   > הפלטפורמה של נובידאה אפשרה לנו לייעל את ניהול מחזור חיי הפוליסה… ולהצמיח את העסק.
   > — שי סימקין, ACII · Howden Israel ⚠
 

@@ -351,6 +351,8 @@ test.describe('landing page /platform', () => {
     await expect(page.locator('.hero').getByRole('link', { name: 'השאירו פרטים' })).toHaveAttribute('href', '#lead-form');
     await expect(page.getByRole('link', { name: 'צפו בסרטון' })).toHaveAttribute('href', '#video');
     await expect(page.locator('#video video source')).toHaveAttribute('type', 'video/mp4');
+    // All four customer quotes, as on /why-novidea
+    await expect(page.locator('#customer-quotes .carousel-item')).toHaveCount(4);
     // The form is on the page, with the closing heading, so no lead banner linking away to /contact
     await expect(page.locator('#lead-form-title')).toHaveText('מוכנים להוביל את הסוכנות לעידן הבא?');
     await expect(page.locator('#lead-cta-title')).toHaveCount(0);

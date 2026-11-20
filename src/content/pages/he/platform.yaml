@@ -123,7 +123,7 @@ sections:
         logo: "../../../assets/logos/customers/gur.png"
     more: "ועוד"
 
-  # Proof: two customer quotes, as on /why-novidea.
+  # Proof: the four customer quotes, word for word as on /why-novidea (keep the two in sync).
   # TODO(verify): Hebrew translations approved by Novidea marketing / each customer (Open tasks §2a).
   - type: quotes
     id: customer-quotes
@@ -134,10 +134,18 @@ sections:
         name: "שי סימקין, ACII"
         role: "Managing Director"
         company: "Howden Israel"
-      - quote: "לפלטפורמה של נובידאה הייתה השפעה עצומה על העסק שלנו. היא מאפשרת לנו לייעל את ניהול הפוליסות, את המעקב אחר התביעות ואת תהליכי העבודה הפיננסיים. היא חסכה לנו זמן ומאמץ, כי היא נותנת לנו תמונת ⁦360°⁩ אמיתית של העסק בזמן אמת, וזה עוזר לנו להגדיל את השורה התחתונה."
+      - quote: "לפלטפורמה של נובידאה הייתה השפעה עצומה על העסק שלנו. היא מאפשרת לנו לייעל את ניהול הפוליסות, את המעקב אחר התביעות ואת תהליכי העבודה הפיננסיים. היא חסכה לנו זמן ומאמץ, כי היא נותנת לנו תמונת \u2066360°\u2069 אמיתית של העסק בזמן אמת, וזה עוזר לנו להגדיל את השורה התחתונה."
         name: "גבי גרנט"
         role: "CFO"
         company: "Marsh Israel"
+      - quote: "נובידאה היא טכנולוגיה חדשנית שמעצימה את העסק שלנו. זו פלטפורמה חזקה ויציבה, שנותנת לנו את הגמישות ואת יכולת הגדילה שחיפשנו. להגיב לשינויים בשוק, להציע תחומי פעילות חדשים או להתאים את עצמנו לשינויי רגולציה – כל אלה הפכו למשימות פשוטות עם נובידאה, וזה מפתח להצלחה העסקית שלנו."
+        name: "יהודה שביט"
+        role: "Director and Head of Innovation"
+        company: "לידרים"
+      - quote: "אנחנו שמחים לחזק ולהעמיק את שיתוף הפעולה עם נובידאה. הפלטפורמה המתקדמת שלה מאפשרת לנו לקדם טרנספורמציה דיגיטלית מלאה של כל מערכות הארגון, באופן שמותאם בדיוק לצרכים שלנו. עם נובידאה נשפר את היעילות ואת התהליכים התפעוליים בכל הארגון."
+        name: "אילנית חזן"
+        role: "Chief Information Officer"
+        company: "מבטח סימון"
 
   # The form, on the page itself (same HubSpot form as /contact; loads after marketing-cookie consent)
   - type: leadForm
