@@ -43,8 +43,12 @@ The site embeds form `05171e84-3123-41fc-81e0-3f8626cb3574` (portal 2799426) on 
 
 ## 3a. Home page video
 
-- [ ] **The video file:** put it in `src/assets/videos/` and set `file` in [home.yaml](src/content/pages/he/home.yaml) (see `src/assets/videos/README.md`). Until then the section shows a "הסרטון יעלה בקרוב" placeholder.
-- [ ] **Captions** (.vtt) if the video has speech (required by IS 5568 / WCAG 1.2.2), and the video's **title** (`TODO(verify)` in home.yaml).
+The video is on the home page (`src/assets/videos/Novidea-Hebrew.mp4`, 79 s, 720p, 39 MB).
+
+- [x] **Size:** the new version (39 MB) is under GitHub's 100 MB limit. A 15-25 MB version would load faster on mobile.
+- [x] **Broken burned-in captions:** the new version has none.
+- [ ] **Captions, if the video has narration:** add a Hebrew captions file (`Novidea-Hebrew.vtt`, or an .srt to convert) next to the video and set `captions` in [home.yaml](src/content/pages/he/home.yaml). Required by IS 5568 / WCAG 1.2.2. Not needed if the audio is music only.
+- [ ] **Confirm the video may be used on the Israeli site** (the original file name says it was made for Gallagher).
 - [ ] **If it moves to YouTube:** load it only after marketing consent, like the HubSpot form (design-system.md §10.24).
 
 ## 4. Technical (no input needed)

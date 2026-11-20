@@ -205,12 +205,16 @@ test.describe('content details', () => {
     }
   });
 
-  test('home shows the video placeholder until a video file is added', async ({ page }) => {
+  test('home shows the overview video with controls, a poster and a name, without autoplay', async ({ page }) => {
     await page.goto('/');
-    const placeholder = page.locator('#overview .video--placeholder');
-    await expect(placeholder).toBeVisible();
-    await expect(placeholder).toContainText('הסרטון יעלה בקרוב');
-    await expect(page.locator('#overview video')).toHaveCount(0);
+    const video = page.locator('#overview video');
+    await expect(video).toHaveCount(1);
+    await expect(video).toHaveAttribute('controls', '');
+    await expect(video).toHaveAttribute('aria-label', 'הכירו את נובידאה');
+    await expect(video).toHaveAttribute('poster', /\.webp$/);
+    await expect(video).not.toHaveAttribute('autoplay', /.*/);
+    await expect(video.locator('source')).toHaveAttribute('type', 'video/mp4');
+    await expect(page.locator('#overview .video--placeholder')).toHaveCount(0);
   });
 
   test('why-novidea: customer quotes carousel moves with the buttons and dots', async ({ page }) => {
