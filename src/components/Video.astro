@@ -72,6 +72,13 @@ const posterSrc = poster ? (await getImage({ src: poster, width: 1280, format: '
     box-shadow: var(--shadow-md);
   }
 
+  /* Captions in the site's Hebrew font, on a solid dark band for contrast over any frame */
+  .video::cue {
+    font-family: 'Rubik Variable', 'Rubik', system-ui, sans-serif;
+    background-color: rgb(16 19 56 / 0.85);
+    color: #fff;
+  }
+
   .video--placeholder {
     position: relative;
     display: grid;
