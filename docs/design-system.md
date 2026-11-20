@@ -617,6 +617,14 @@ A small yellow label with navy text ("בקרוב", 12.12:1). Above the title whe
 - Role and company are each wrapped in `<bdi>` and joined with a middle dot, so English titles and Hebrew company names don't reorder.
 - Quotation marks come from CSS `quotes` (straight in Hebrew). Quotes are verbatim, or a translation approved by the customer or Novidea marketing.
 
+### 10.26 Scroll progress
+
+A 4 px yellow line on the header's bottom edge that fills as the page scrolls, in the reading direction (from the right in Hebrew). Inside the sticky header, so it needs no z-index of its own.
+
+- **CSS only:** a scroll-driven animation (`animation-timeline: scroll(root block)`), no JavaScript. Browsers without support don't show it.
+- Decorative (`aria-hidden`). Hidden for `prefers-reduced-motion: reduce` and in print. Empty on pages too short to scroll.
+- RTL: `transform-origin` has no logical form, so `:dir(rtl)` sets its own (§8.3).
+
 ## 11. Token reference
 
 **`src/styles/tokens.css` is the source of truth.** It defines every token named in this document (colors, fonts, type scale, line-heights, spacing, shape, motion, icon sizes), the Hebrew overrides under `:root:lang(he)`, and the values that change at Bootstrap's md (768 px) and lg (992 px) breakpoints (`--section-pad`, `--slant`, `--header-height`).

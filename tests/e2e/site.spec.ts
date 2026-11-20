@@ -247,3 +247,27 @@ test.describe('content details', () => {
     expect(await title.textContent()).toContain('⁦360°⁩');
   });
 });
+
+test.describe('scroll progress', () => {
+  test.use({ reducedMotion: 'no-preference' });
+
+  test('fills from the right as the page scrolls', async ({ page }) => {
+    await page.goto('/solution');
+    const bar = page.locator('.scroll-progress');
+    const box = () => bar.evaluate((el) => {
+      const r = el.getBoundingClientRect();
+      return { width: r.width, rightGap: window.innerWidth - r.right };
+    });
+    expect((await box()).width).toBeLessThan(2);
+    await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+    await expect.poll(async () => (await box()).width).toBeGreaterThan(page.viewportSize()!.width - 2);
+    await page.evaluate(() => window.scrollTo(0, (document.documentElement.scrollHeight - innerHeight) / 2));
+    await expect.poll(async () => Math.round((await box()).width / page.viewportSize()!.width * 10)).toBe(5);
+    expect(Math.round((await box()).rightGap)).toBe(0); // anchored at the inline-start (right in RTL)
+  });
+});
+
+test('scroll progress is hidden for visitors who prefer reduced motion', async ({ page }) => {
+  await page.goto('/solution');
+  await expect(page.locator('.scroll-progress')).toBeHidden();
+});

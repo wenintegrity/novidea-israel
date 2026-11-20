@@ -90,12 +90,60 @@ const path = Astro.url.pathname;
       </div>
     </div>
   </nav>
+  {/* Reading progress (design-system.md §10.26): decorative, CSS only, no z-index of its own */}
+  <div class="scroll-progress" aria-hidden="true"></div>
 </header>
 
 <style>
   .site-header {
     background-color: var(--color-white);
     border-block-end: var(--border-thin) solid var(--color-navy-200);
+  }
+
+  /* Scroll progress: a 4 px yellow line over the header's bottom border that fills as the page
+     scrolls. Scroll-driven animation (no JavaScript); browsers without support and visitors who
+     prefer reduced motion don't see it. It grows in the reading direction: transform-origin has no
+     logical form, so RTL gets its own (design-system.md §8.3). */
+  .scroll-progress {
+    display: none;
+  }
+
+  @supports (animation-timeline: scroll()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .scroll-progress {
+        display: block;
+        position: absolute;
+        inset-inline: 0;
+        inset-block-end: calc(-1 * var(--border-thin));
+        block-size: 4px;
+        background-color: var(--color-yellow);
+        transform: scaleX(0);
+        transform-origin: 0 50%;
+        /* Longhands on purpose: the CSS minifier folds a shorthand plus animation-timeline into one
+           `animation` value, which browsers reject (the timeline isn't allowed in the shorthand) */
+        animation-name: nv-scroll-progress;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: scroll(root block);
+        pointer-events: none;
+      }
+
+      .scroll-progress:dir(rtl) {
+        transform-origin: 100% 50%;
+      }
+    }
+  }
+
+  @keyframes nv-scroll-progress {
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  @media print {
+    .scroll-progress {
+      display: none !important;
+    }
   }
 
   .navbar {
