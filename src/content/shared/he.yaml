@@ -3,7 +3,7 @@
 # Lead banner at the bottom of every page except /contact (section "פתיחת ליד")
 leadCta:
   title: "מוכנים להוביל את הסוכנות לעידן הבא?"
-  body: "הצטרפו לסוכנויות המובילות בישראל שמנהלות את תיק הלקוחות שלהן וצומחות בנובידאה. השאירו פרטים והצוות שלנו יחזור אליכם לשיחת היכרות והדגמה."
+  body: "הצטרפו לסוכנויות המובילות בישראל, שמנהלות את תיק הלקוחות שלהן בנובידאה וצומחות איתה. השאירו פרטים, והצוות שלנו יחזור אליכם לשיחת היכרות והדגמה."
   button:
     label: "השאירו פרטים"
     href: "/contact"
@@ -11,4 +11,4 @@ leadCta:
 # Footer blurb. Built only from the content document: "כותרת ראשית" (leading cloud platform),
 # "טקסט מקוצר" (Salesforce; service, claims, renewals), /capabilities ("מליד ועד פוליסה"),
 # /solution (one platform for the whole agency) and /israel (global company, HQ and R&D in Israel).
-footerAbout: "נובידאה היא פלטפורמת הענן המובילה לניהול סוכנויות ובתי סוכן, על בסיס Salesforce: מהליד הראשון ועד פוליסה, שירות, תביעות וחידושים, במערכת אחת. חברה גלובלית שהמטה ומרכז הפיתוח שלה כאן בישראל."
+footerAbout: "נובידאה היא פלטפורמת הענן המובילה לניהול סוכנויות ביטוח ובתי סוכן, על בסיס Salesforce: מהליד הראשון ועד התביעות והחידושים, במערכת אחת. מאחוריה עומדת חברה גלובלית שהמטה ומרכז הפיתוח שלה נמצאים בישראל."

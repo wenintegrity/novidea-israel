@@ -202,7 +202,7 @@ test.describe('content details', () => {
     await page.goto('/');
     const logos = page.locator('#customers img');
     await expect(logos).toHaveCount(3);
-    for (const name of ['מבטח סימון', 'קלי', 'אמנון גור']) {
+    for (const name of ['מבטח סימון', 'קלי', 'גור קבוצת ביטוח']) {
       await expect(page.locator('#customers').getByRole('img', { name })).toBeVisible();
     }
   });
@@ -365,8 +365,9 @@ test.describe('landing page /platform', () => {
   });
 });
 
-test('contact page shows the office location with map links in a new window', async ({ page }) => {
-  await page.goto('/contact');
+for (const path of ['/contact', '/israel']) {
+test(`${path} shows the office location with map links in a new window`, async ({ page }) => {
+  await page.goto(path);
   const office = page.locator('#office');
   await expect(office.locator('address')).toContainText('רחוב הפנינה 8, רעננה');
   for (const [name, host] of [['ניווט ב-Waze', 'waze.com'], ['פתיחה ב-Google Maps', 'www.google.com']]) {
@@ -376,3 +377,4 @@ test('contact page shows the office location with map links in a new window', as
     expect(new URL((await link.getAttribute('href'))!).host).toBe(host);
   }
 });
+}

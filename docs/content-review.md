@@ -1,6 +1,6 @@
 # Hebrew content review
 
-**Owner:** Content agent (`content`) · **Status:** partly applied (see "Status" below) · **Date:** 20/11/2026
+**Owner:** Content agent (`content`) · **Status:** partly applied (see "Status" below); round 2 proposals at the end ("Round 2") · **Date:** 20/11/2026
 
 Coverage check of the site against the content document, item by item: `docs/content-coverage.md` (20/11/2026).
 
@@ -354,3 +354,106 @@ Requests to the Structure agent (none blocks the edits above):
 16. **Q16 Israeli office.** Address of the new offices and support hours, for `/israel` (and `docs/seo.md` Q5)?
 17. **Q17 AI recognition.** Name, year and link of the "Top 100 AI" list in the 07/07/2026 PR. Is it FinTech Global's AIFinTech100?
 18. **Q18 AI status.** Which AI capabilities are available today (AI insights in תמונת לקוח 360°, gap detection, recommendations) and which were a preview at the conference (file summary, pitch, proactive scan)? Is the new "תמונת לקוח" module released?
+
+---
+
+## Round 2 (20/11/2026)
+
+**Status: partly applied 20/11/2026.** The owner approved R2.1 #1–#10 and the three round-1 items recommended in R2.3. They are applied as proposed (table below). Everything else in Round 2 is still a proposal. **Not approved:** the `/israel` opening-sentence variant, all N-items (N1–N9), the CTA "לתיאום הדגמה", and anything that needs Novidea.
+
+| File | Field | Change |
+|---|---|---|
+| `pages/he/platform.yaml` | `hero.lead` | …מהליד הראשון ועד פוליסה, שירות, תביעות וחידושים → …מהליד הראשון, דרך הפוליסה והשירות, ועד התביעות והחידושים (#5) |
+| `pages/he/platform.yaml` | `sections[problem].intro`, `.items[2].body` | עובדים בין → נאלצים לתמרן בין; "אין תמונה…" → "המידע מפוזר בין מערכות, ואין תמונה…" (#2) |
+| `pages/he/platform.yaml` | `sections[single-source-of-truth].title`, `.paragraphs[1]` | Hebrew-first heading "(Single Source of Truth)"; second sentence "הכול מתנהל במקום אחד: …ועד ניהול התביעות והשירות." (#1) |
+| `pages/he/platform.yaml` | `sections[platform].items[1].body`, `.items[5].body` | "דרך שליפת נתוני הר הביטוח… ועד הצעת המחיר וההפקה" (#6); workflows card as one phrase (#7) |
+| `pages/he/platform.yaml` | `sections[why].items[2].body`, `.items[4].body` | "תשתית CRM מהחזקות בעולם, מותאמת…" (#3); "הנהלה ופיתוח בישראל, ליווי הטמעה…, ותמיכה טכנית בעברית." (#4) |
+| `pages/he/platform.yaml`, `pages/he/home.yaml` | `sections[customers].names[3].name` | אמנון גור → גור קבוצת ביטוח, with a comment (#8) |
+| `pages/he/platform.yaml` | `sections[lead-form].intro` | "…שלהן בנובידאה וצומחות איתה. השאירו פרטים, והצוות…" (round 1 §3.6) |
+| `shared/he.yaml` | `footerAbout` | As R2.1 #9 |
+| `shared/he.yaml` | `leadCta.body` | As round 1 §3.8 |
+| `pages/he/contact.yaml` | `header.intro[1]` | As round 1 §3.6 |
+| `pages/he/home.yaml` | `sections[overview].paragraphs[2]`, `[3]`; `sections[explore].items[4].body` | As round 1 §3.1 |
+| `pages/he/why-novidea.yaml` | `sections[advantages].items[2].body`, `.items[3].body` | Superlatives removed, as round 1 §3.4 (item 3 without the Salesforce attribution, Q5 open). Titles unchanged |
+| `pages/he/israel.yaml` | new `location` block (`id: office`, `surface: subtle`) at the end | Title "המשרדים שלנו בישראל"; place, address, directions and mapQuery copied from `contact.yaml` (#10) |
+
+**Knock-on (Testing):** `tests/e2e/site.spec.ts` line 205 looks up the logo by the name 'אמנון גור'. It must change to 'גור קבוצת ביטוח'.
+
+Scope: the live site (https://novidea-israel.vercel.app/), with the main focus on what's new since round 1: `/platform` (`platform.yaml`), the `location` block on `/contact`, the 404 page, the new UI strings (`notFound.*`, `location.*`, `video.*`, `quotes.*`, `site.*`) and `footerAbout`. Approved SEO titles and descriptions were checked and are kept. P1 and P6 (content-coverage) were declined and aren't re-proposed.
+
+### R2.1 Top 10 improvements now
+
+All ten use only facts already on the site. The owner can approve them without waiting for Novidea. Ranked by impact for agency owners and managers. `/platform` ranks high because paid campaign traffic lands there first.
+
+| # | Page → field | Current | Proposed (ready to paste) | Why |
+|---|---|---|---|---|
+| 1 | `/platform` → `sections[single-source-of-truth].title` and `.paragraphs[1]` | title: Single Source of Truth – מקור אמת אחד לכל הסוכנות · paragraph: …פנסיה, אלמנטרי, פיננסים ופרט. מניהול הליד הראשון ועד קליטת הפרודוקציה, ניהול התביעה והשירות. בזכות Open API… | title: **מקור אמת אחד לכל הסוכנות (Single Source of Truth)** · paragraph: **נובידאה מרכזת את כל פעילות הסוכנות בפלטפורמה אחת: פנסיה, אלמנטרי, פיננסים ופרט. הכול מתנהל במקום אחד: מהליד הראשון, דרך קליטת הפרודוקציה, ועד ניהול התביעות והשירות. בזכות Open API, המערכת מתחברת בקלות לכל כלי, פורטל או ממשק.** | The heading now reads Hebrew-first, with the English term at the end in parentheses (glossary §6). The second sentence had no verb. "התביעות" matches every other page |
+| 2 | `/platform` → `sections[problem].intro` and `.items[2].body` | intro: …בישראל עובדים בין פורטלים של יצרנים… · body: אין תמונה אחת ומלאה של הלקוח. | intro: **במשך שנים, סוכנויות ובתי סוכן בישראל נאלצים לתמרן בין פורטלים של יצרנים, קובצי אקסל ומערכות Legacy שאינן מתקשרות ביניהן.** · body: **המידע מפוזר בין מערכות, ואין תמונה אחת ומלאה של הלקוח.** | "עובדים בין פורטלים" isn't idiomatic. "נאלצים לתמרן" is the source's verb, in the present tense like the heading. The card body didn't explain its title ("מידע שהולך לאיבוד") |
+| 3 | `/platform` → `sections[why].items[2].body` | ה-CRM מהחזקות בעולם, מותאם לשוק הביטוח הישראלי. | **תשתית CRM מהחזקות בעולם, מותאמת לשוק הביטוח הישראלי.** | "ה-CRM מהחזקות" mixes the definite article with "one of", and the genders clash (מהחזקות is feminine, מותאם is masculine). The proposal is the phrase already used on the home page and on `/why-novidea` |
+| 4 | `/platform` → `sections[why].items[4].body` | פיתוח, הטמעה ותמיכה טכנית בעברית, משלב האפיון ועד העבודה השוטפת. | **הנהלה ופיתוח בישראל, ליווי הטמעה משלב האפיון ועד העבודה השוטפת, ותמיכה טכנית בעברית.** | The current text can be read as "development in Hebrew", and "משלב האפיון" attaches to support. Every part comes from `/israel` |
+| 5 | `/platform` → `hero.lead` | …לסוכנויות ביטוח ובתי סוכן: מהליד הראשון ועד פוליסה, שירות, תביעות וחידושים. | **פלטפורמת ענן מונחית נתונים על בסיס Salesforce, לסוכנויות ביטוח ובתי סוכן: מהליד הראשון, דרך הפוליסה והשירות, ועד התביעות והחידושים.** | "ועד פוליסה, שירות, תביעות וחידושים" reads as four end points. This is the campaign page's subheading, so it should read cleanly at first glance |
+| 6 | `/platform` → `sections[platform].items[1].body` | תהליך מובנה מתיאום הפגישה, דרך הר הביטוח וטרום הייעוץ, ועד הצעת מחיר והפקה. | **תהליך מובנה מתיאום הפגישה, דרך שליפת נתוני הר הביטוח וטרום הייעוץ, ועד הצעת המחיר וההפקה.** | "דרך הר הביטוח" doesn't say what happens there. "שליפת נתוני הר הביטוח" is the `/solution` wording |
+| 7 | `/platform` → `sections[platform].items[5].body` | שירות, תביעות וחידושים עם SLA, משימות לצוות וכלי בקרה למנהלים. משרד ללא נייר עם חתימות דיגיטליות. | **תהליכי שירות, תביעות וחידושים אוטומטיים, עם SLA, משימות לצוות וכלי בקרה למנהלים, וגם משרד ללא נייר עם חתימות דיגיטליות.** | Two fragments ending in full stops become one phrase. "אוטומטיים" ties the body to the card title ("תהליכי עבודה אוטומטיים") |
+| 8 | Home and `/platform` → `sections[customers].names[3].name` (used as the logo's alt text) | אמנון גור | **גור קבוצת ביטוח** | The logo reads "GUR קבוצת ביטוח", so a screen-reader user hears a different name from the one sighted visitors see (IS 5568 / WCAG 1.1.1, images of text). This changes alt text only, not visible text. Q9 still decides how the customer is named in body text. "קלי" for the kali.group logo is fine |
+| 9 | Shared → `footerAbout` (every page, including `/platform`) | …מהליד הראשון ועד פוליסה, שירות, תביעות וחידושים, במערכת אחת. חברה גלובלית שהמטה ומרכז הפיתוח שלה כאן בישראל. | **נובידאה היא פלטפורמת הענן המובילה לניהול סוכנויות ביטוח ובתי סוכן, על בסיס Salesforce: מהליד הראשון ועד התביעות והחידושים, במערכת אחת. מאחוריה עומדת חברה גלובלית שהמטה ומרכז הפיתוח שלה נמצאים בישראל.** | The second sentence has no verb. "סוכנויות" lacks "ביטוח". Keeps every fact, including "חברה גלובלית". **Replaces** the round 1 proposal in §3.8 |
+| 10 | `/israel` → new `location` block at the end (same type and data as `/contact`) | (none) | `title: "המשרדים שלנו בישראל"`, and `place`, `address`, `directions`, `mapQuery` copied unchanged from `contact.yaml` `sections[office]` | A page titled "המטה כאן בישראל" is the natural place to show a real address. That's local proof for agency owners, and it's already published on `/contact`. It doesn't call Ra'anana "the HQ". Structure/Code need to confirm the block may be used on `/israel` |
+
+### R2.2 New issues in new or changed content
+
+| # | Where | Issue | Proposed |
+|---|---|---|---|
+| N1 | `platform.yaml` `sections[platform].items[4]` (AI) and `sections[why].items[3]` (ISO/SOC 2) | The marketing draft marked both ⚠ ("approval before publishing"). They went live without a `TODO(verify)` comment. The claims are no stronger than on `/capabilities` and `/why-novidea`, but there's no trail back to Q18 and Q5 | Add `# TODO(verify): Q18` and `# TODO(verify): Q5` comments above those items. No visible change |
+| N2 | `platform.yaml` `sections[video]` | Same video as the home page, but the captions `TODO(verify)` (IS 5568 / WCAG 1.2.2) is only in `home.yaml`. The paragraph also describes what the video shows, which Q2 hasn't confirmed | Copy the home page's captions TODO. Keep the paragraph: it's general and matches the narration source |
+| N3 | `/platform` and `/why-novidea` `customer-quotes` | Quotes still marked `TODO(verify)` are live. `AGENTS.md` §3.5 says a TODO(verify) item must not ship. On `/platform` they're shown to paid traffic. Howden's title is still unresolved (Q10) | Owner decision: get Novidea's written OK for the Howden and Marsh translations, or remove the quotes block from `/platform` until then. The logos stay |
+| N4 | `ui.ts` `nav.platform` (footer) | "(דף נחיתה)" is internal marketing jargon, and every visitor and screen reader gets it | Optional, since the owner chose this label: **הפלטפורמה במבט אחד** |
+| N5 | `LeadForm.astro` uses `nav.cta` as the HubSpot submit-button label | If the CTA becomes "לתיאום הדגמה" (round 1), the submit button changes too | Code: give the submit button its own key, value **שליחה**. Needed only if the CTA change is approved |
+| N6 | `/contact` | Without marketing-cookie consent, or with an ad blocker (see `leadForm.error`), there is no way to reach Novidea: no email or phone anywhere on the site | Add one line to `/contact` `header.intro`, e.g. **אפשר גם לפנות אלינו בדוא״ל [כתובת] או בטלפון [0X-XXXXXXX].** Needs Q19. A real `mailto:`/`tel:` link needs a field from Structure |
+| N7 | `privacy.yaml` "יצירת קשר": `[לעדכון: כתובת למשלוח דואר]` | The office address is now known (`docs/sources/office-location.he.md`). The placeholders are highlighted on the live page | Proposed, pending legal: **רחוב הפנינה 8, רעננה (מגדל אינפיניטי פארק, קומה 23)** |
+| N8 | `ui.ts` `location.newWindow` | "(נפתח בחלון חדש)" is masculine and longer than it needs to be | **(בחלון חדש)**. It's hidden text inside the Waze/Maps button names. Low priority |
+| N9 | Site-wide | The accessibility statement was removed at the owner's request. `docs/sitemap.md` says it's legally required (regulation 35), and the site is now public | Not copy. Flagging it as a legal blocker. The draft (`docs/drafts/accessibility.he.yaml`, round 1 §3.10) is ready apart from the coordinator's details |
+
+Checked and fine: the 404 strings (`notFound.*`, title "העמוד לא נמצא | נובידאה", plural "שחיפשתם"), `location.waze`/`location.maps` (mixed direction renders correctly, including the hidden suffix), `quotes.*` (here "ציטוט" is correct: quoting words), `video.*`, `site.shareImageAlt` (it matches the share image), the `/platform` hero alt and CTAs ("צפו בסרטון", plural), the `/contact` location text (faithful to the source; the lease term is correctly left out), the `/platform` `seo.*` fields (unique; noindex), and the copyright line "© 2026 Novidea." in RTL.
+
+**Q16 is partly answered:** the address is now known (Ra'anana, from the owner). Support hours are still open. O5 (conference block) can now say "במשרדים החדשים שלנו ברעננה".
+
+### R2.3 Round-1 proposals still waiting for a decision
+
+Referenced by section or ID; the text is in §3–§5 above.
+- **CTA "לתיאום הדגמה":** §2 last row, §3.1 `primaryCta`, §3.8 button, §3.9 `nav.cta` (knock-on N5).
+- **Home:** §3.1 `hero.lead`, `overview` paragraphs 1 (InsurTech gloss), 2 and 3, `explore` items 1, 2 and 4.
+- **`/solution`:** §3.2 intro, Single Source of Truth title and paragraph, modules 1–5 (text only; P1 declined), 6–7 (Q12), 8, 10, 11 and 14. `/platform` already uses the cleaner forms ("קליטת פרודוקציה", "Open API" without "פתוחה"), which supports these.
+- **`/capabilities`:** §3.3 `header.intro`, customer-journey 1 (Q13) and 2 (Q18), operations 1–3 (3 = Q3), dashboards 1 (Q4) and 2.
+- **`/why-novidea`:** §3.4 intro, items 1 (Q6), 2, 3 (Q5) and 4 (+ the press-release AI sentence).
+- **`/israel`:** §3.5 intro 1 and 2, items 1 and 2. No-new-facts variant of intro 1 that fixes only the person switch: **נובידאה היא חברה גלובלית עם פעילות ענפה בלונדון, בארה״ב ובאירופה, אבל הלב, המטה ומרכז הפיתוח שלה נמצאים כאן בישראל.**
+- **`/contact` and the lead banner:** §3.6 / §3.8 "וצומחות איתה" (this sentence is also on `/platform` `sections[lead-form].intro`), the inclusive role option, Q14 and HubSpot P2–P5.
+- **Privacy:** §3.7 jsDelivr, Q15. **UI:** §3.9 `rejectAll`, `video.unsupported`, `consentNeeded`. **Accessibility draft:** §3.10.
+- **New content:** §5 O1–O10 (Colmobil, experience, AI preview, conference, Top 100 AI, video text, internal links, three axes, audience); requests R1–R3. **Quotes:** §4 Mivtach Simon (Q11).
+- `footerAbout` (§3.8): replaced by R2.1 #9.
+
+**Approve these three first:**
+1. **§3.4 `/why-novidea` items 2 and 3.** Drop the unsupported superlatives "הגמיש והמתקדם בעולם" and "המחמירים ביותר". For item 3, use the wording without the Salesforce attribution until Q5 is answered. `/platform` already makes the same points without them, so `/why-novidea` is now the strongest claim on the site.
+2. **§3.1 home `overview` paragraphs 2–3 and `explore` item 4.** This is the first body text on the most-visited page: a sentence fragment, "מהווה", and a link card that says nothing ("יחד איתכם בכל שלב."). No new facts.
+3. **§3.6 / §3.8 "שמנהלות את תיק הלקוחות שלהן בנובידאה וצומחות איתה"** in the lead banner, on `/contact` and in `/platform` `lead-form`. It's the closing sentence on every page. "צומחות בנובידאה" reads as "growing inside Novidea". No new facts.
+
+### R2.4 Consistency: `/platform` vs the pages it summarises
+
+| `/platform` item | Source page | Result |
+|---|---|---|
+| `hero.lead` | Home overview (data-driven, Salesforce) | Same facts |
+| `problem` | `/solution` intro | Same pain points. The card bodies are illustrations of the problem, not claims about Novidea |
+| `single-source-of-truth` | `/solution` | Same scope. Drops "ארכיטקטורת" and the redundant "פתוחה" (better) |
+| `platform` 1–6 | `/capabilities` customer-journey and operations, `/solution` items 2 and 5 | Equal or milder. Item 2 is fixed (פוליוויז, X1). Item 3 carries "בקרוב" as on `/solution`. Item 4 (AI) has the same open status as `/capabilities` (Q18) |
+| `why` 1 | `/why-novidea` item 1 | Milder: drops "אפס זמני השבתה" (Q6) |
+| `why` 2 | Home, `/why-novidea` item 2 | Same claim. Fix the grammar (#3) |
+| `why` 3 | `/why-novidea` item 3 | Milder: no "המחמירים ביותר". Same open question (Q5) |
+| `why` 4 | `/israel` | Same facts. Fix the ambiguity (#4) |
+| `customers`, `customer-quotes`, `lead-form` | Home, `/why-novidea`, lead banner | Identical text. Quotes share the open TODO (N3) |
+
+**Conclusion:** no claim on `/platform` is stronger than its source page. Terms match the glossary. The only differences are "ניהול התביעה" (singular, also on `/solution`), which #1 aligns to "תביעות", and the Single Source of Truth heading, which now follows the glossary entry (#1).
+
+### R2.5 Needs Novidea (new or updated)
+
+- **Q19 Contact details:** a public email address and/or phone number for `/contact` (N6) and for the accessibility statement.
+- **Q20 Privacy mailing address:** may the Ra'anana office address be used for privacy requests (N7)? Legal.
+- **Q16 (updated):** address answered; support hours still open.
+- Still open and now also affecting `/platform`: Q2 (video, captions), Q5 (ISO/SOC 2), Q10 (Howden title), Q18 (AI status), quote approvals (N3), Q9 (customer names in text).

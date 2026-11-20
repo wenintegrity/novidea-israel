@@ -28,8 +28,8 @@ sections:
     surface: subtle
     paragraphs:
       - "נובידאה מובילה את המהפכה הדיגיטלית בשוק הביטוח עם פלטפורמת ענן (InsurTech) מונחית נתונים וזוכת פרסים בינלאומיים. הפלטפורמה מאיצה צמיחה, רווחיות ויעילות תפעולית עבור סוכנויות וברוקרים באמצעות כלים אנליטיים ותובנות עסקיות בזמן אמת."
-      - "עם בסיס CRM חזק כחלק מטכנולוגיית Salesforce, הפלטפורמה מהווה מערכת ליבה לסוכנות, ומאפשרת לשים את הלקוח במרכז ולחבר את כל תהליכי העבודה בסוכנות."
-      - "מתיאום פגישות, מכירות, הפקה, פרודוקציה וניהול שירות ועד ניהול תביעות וחידושים לשמירה על שירות ללקוח ברמה הגבוהה ביותר."
+      - "הפלטפורמה בנויה על תשתית ה-CRM החזקה של Salesforce ומשמשת מערכת ליבה לסוכנות: היא שמה את הלקוח במרכז ומחברת את כל תהליכי העבודה."
+      - "מתיאום פגישות, מכירות, הפקה ופרודוקציה, דרך ניהול השירות ועד תביעות וחידושים: הכול במערכת אחת, כדי לתת ללקוחות שירות ברמה הגבוהה ביותר."
     # Video: src/assets/videos/Novidea-Hebrew-Israel.mp4 (78.5 s, 720p, 39 MB). No captions, at the
     # owner's request (20/11/2026). Poster: the closing "Novidea" frame.
     # TODO(verify): if the video has narration, captions are required (IS 5568 / WCAG 1.2.2).
@@ -48,7 +48,8 @@ sections:
         logo: "../../../assets/logos/customers/mivtach-simon.png"
       - name: "קלי"
         logo: "../../../assets/logos/customers/kali.png"
-      - name: "אמנון גור"
+      # Alt text = the text in the logo ("GUR קבוצת ביטוח"), content-review Round 2 #8. Q9 still open for body text.
+      - name: "גור קבוצת ביטוח"
         logo: "../../../assets/logos/customers/gur.png"
     more: "ועוד"
 
@@ -70,5 +71,5 @@ sections:
         href: "/why-novidea"
       - icon: office-building
         title: "המטה כאן בישראל"
-        body: "יחד איתכם בכל שלב."
+        body: "הנהלה, פיתוח, ליווי הטמעה ותמיכה טכנית בעברית, כאן בישראל."
         href: "/israel"

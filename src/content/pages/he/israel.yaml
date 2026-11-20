@@ -29,3 +29,14 @@ sections:
       - icon: support-agent
         title: "תמיכה טכנית בעברית"
         body: "מענה מקצועי, זמין ומותאם לשעות ולדפוסי העבודה של השוק המקומי."
+
+  # Office location, same data as /contact (source: docs/sources/office-location.he.md, owner, 20/11/2026).
+  # Approved 20/11/2026 (content-review Round 2 #10). Doesn't call the office "the HQ".
+  - type: location
+    id: office
+    title: "המשרדים שלנו בישראל"
+    place: "מגדל אינפיניטי פארק, קומה 23"
+    address: "רחוב הפנינה 8, רעננה"
+    directions: "על גבול רעננה–כפר סבא, סמוך למחלף רעננה דרום (כביש 4, כביש 531 ודרך השרון)."
+    mapQuery: "מגדל אינפיניטי פארק, הפנינה 8, רעננה"
+    surface: subtle

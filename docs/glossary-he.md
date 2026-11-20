@@ -21,6 +21,7 @@ Items marked **(confirm)** need an answer from Novidea marketing before they're 
 | קוואלה | קוואלה (as in the source) | | Car-insurance price engine **(confirm spelling)** |
 | ביטוח-נט, גמל-נט, פנסיה-נט | With a hyphen, as in the source | | Capital Market Authority comparison sites |
 | כלמוביל (Colmobil) | כלמוביל | קולמוביל | Spelling from the press release of 29/12/2025 |
+| Waze, Google Maps | Latin, with a hyphen after a prefix: ניווט ב-Waze, פתיחה ב-Google Maps | וויז, גוגל מפות | As in the `/contact` location buttons |
 
 ## 2. Market and audience
 
@@ -88,6 +89,7 @@ Items marked **(confirm)** need an answer from Novidea marketing before they're 
 | dashboard | דשבורד, pl. דשבורדים | לוחות מחוונים | One term site-wide, including alt text |
 | report | דוח, pl. דוחות | דו״ח | |
 | Open API | Open API | Open API פתוחה (redundant), open API | |
+| Single Source of Truth | **מקור אמת אחד**; on first use or in a heading: "מקור אמת אחד (Single Source of Truth)", Hebrew first | Heading that starts with the English term; קונספט | Added 20/11/2026 (content-review Round 2) |
 | API | API; "ממשק API" only where needed | | |
 | integration / interface | אינטגרציה (generic), ממשק ל… (a specific connection) | | |
 | third-party | צד שלישי | צד-שלישי | |
