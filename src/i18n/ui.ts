@@ -11,8 +11,7 @@ export const ui = {
     'nav.label': 'ניווט ראשי',
     'nav.home': 'נובידאה, לעמוד הבית',
     'nav.homeShort': 'עמוד הבית',
-    // ⁦…⁩ keeps "(landing-page)" in order in RTL; ‑ is a non-breaking hyphen
-    'nav.platform': 'הפלטפורמה במבט אחד ⁦(landing‑page)⁩',
+    'nav.platform': 'הפלטפורמה במבט אחד (דף נחיתה)',
     'nav.open': 'פתיחת התפריט',
     'nav.close': 'סגירת התפריט',
     'nav.menu': 'תפריט',

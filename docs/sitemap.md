@@ -16,7 +16,7 @@ Hebrew pages are served at the root, English pages under `/en/`. Slugs are Engli
 | Why Novidea | `/why-novidea` | `pages/he/why-novidea.yaml` | למה נובידאה? | **Built** |
 | Headquarters in Israel | `/israel` | `pages/he/israel.yaml` | המטה כאן בישראל – יחד איתכם בכל שלב | **Built** |
 | Contact (lead) | `/contact` | `pages/he/contact.yaml` | פתיחת ליד; office location (docs/sources/office-location.he.md) | **Built**, HubSpot form loads after marketing-cookie consent; office address with Waze / Google Maps links |
-| Landing page (campaigns) | `/platform` | `pages/he/platform.yaml` | The whole site on one page (docs/marketing/landing-page.he.md) | **Built**, not in the header menu (footer link "הפלטפורמה במבט אחד (landing-page)"), `noindex`, not in `sitemap.xml` |
+| Landing page (campaigns) | `/platform` | `pages/he/platform.yaml` | The whole site on one page (docs/marketing/landing-page.he.md) | **Built**, not in the header menu (footer link "הפלטפורמה במבט אחד (דף נחיתה)"), `noindex`, not in `sitemap.xml` |
 | Blog | `/blog` | | | Planned |
 | Privacy policy | `/privacy` | `pages/he/privacy.yaml` | (drafted, not in the content document) | **Built**, draft: placeholders and legal review pending |
 | Accessibility statement (הצהרת נגישות) | `/accessibility` | draft in `docs/drafts/accessibility.he.yaml` | (drafted, not in the content document) | **Removed** from the site on 20/11/2026 at the owner's request. **Required by law before launch** (regulation 35) |
