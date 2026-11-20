@@ -157,11 +157,14 @@ Hebrew glyphs look smaller than Latin at the same size, so Hebrew body sizes are
 | `--text-h1` | 32 → 48 px / 1.15 | 32 → 48 px / 1.25 | 700 | Page title |
 | `--text-h2` | 26 → 36 px / 1.2 | 26 → 36 px / 1.3 | 700 | Section title |
 | `--text-h3` | 20 → 24 px / 1.3 | 20 → 24 px / 1.4 | 700 (en), 600 (he) | Card and feature titles |
-| `--text-h4` | 18 px / 1.4 | 18 px / 1.5 | 600 | Small headings, footer column titles |
-| `--text-body-lg` | 18 px / 1.6 | 19 px / 1.7 | 400 | Lead paragraphs |
-| `--text-body` | 16 px / 1.6 | 17 px / 1.7 | 400 | Body text |
+| `--text-h4` | 20 px / 1.4 | 21 px / 1.5 | 600 | Feature card titles, footer column titles, customer quotes |
+| `--text-body-lg` | 18 px / 1.6 | 19 px / 1.7 | 400 | Intro paragraphs (same size as body since 20/11/2026) |
+| `--text-body` | 18 px / 1.6 | 19 px / 1.7 | 400 | All paragraph text, site-wide |
+| `--text-button` | 16 px | 17 px | 500 | Buttons |
 | `--text-sm` | 14 px / 1.5 | 15 px / 1.6 | 400–500 | Captions, labels, footer |
 | `--text-xs` | 12 px / 1.5 | 13 px / 1.6 | 500 | Legal fine print only |
+
+**One paragraph size:** every paragraph, intro or not, is 19 px in Hebrew, so text sections read evenly (especially on mobile). Card titles (`--text-h4`, 21 px) stay above it.
 
 Use sizes in `rem` so text scales with the reader's browser settings. Text must stay readable at 200% zoom with no loss of content (WCAG 1.4.4).
 
@@ -309,7 +312,7 @@ The brand book shows lifestyle photography: real people at work in bright, moder
 
 ### 7.6 Title accent
 
-A short yellow bar (56 × 5 px, `--space-4` below the text) under section titles in text and feature blocks (`.title-accent`). Decorative, so contrast rules don't apply. Not used on the home hero or internal page headers, which have the slanted yellow panel.
+A short yellow bar (56 × 5 px, `--space-4` below the text) under section titles in text and feature blocks (`.title-accent`). The content below the bar always starts `--space-8` (32 px) under it, in every section type. Decorative, so contrast rules don't apply. Not used on the home hero or internal page headers, which have the slanted yellow panel.
 
 ## 8. RTL and bidirectional text
 

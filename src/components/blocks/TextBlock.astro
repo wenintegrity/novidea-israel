@@ -69,6 +69,11 @@ const headingId = id ? `${id}-title` : undefined;
     margin-block-end: 0;
   }
 
+  /* Same gap under the title bar as the other titled sections (32 px) */
+  h2 {
+    margin-block-end: var(--space-8);
+  }
+
   /* Desktop: the player fills 88% of its column, aligned to the page edge (inline-end) */
   @media (min-width: 992px) {
     .text-block__video {

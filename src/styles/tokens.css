@@ -42,9 +42,11 @@
   --text-h1: clamp(2rem, 1.648rem + 1.502vw, 3rem);
   --text-h2: clamp(1.625rem, 1.405rem + 0.939vw, 2.25rem);
   --text-h3: clamp(1.25rem, 1.162rem + 0.376vw, 1.5rem);
-  --text-h4: 1.125rem;
+  --text-h4: 1.25rem;
+  /* One paragraph size everywhere (lead = body), 20/11/2026 */
   --text-body-lg: 1.125rem;
-  --text-body: 1rem;
+  --text-body: 1.125rem;
+  --text-button: 1rem; /* buttons stay at the previous body size */
   --text-sm: 0.875rem;
   --text-xs: 0.75rem;
   --leading-display: 1.1;
@@ -103,8 +105,10 @@
 :root:lang(he) {
   --font-body: var(--font-body-he);
   --font-heading: var(--font-heading-he);
+  --text-h4: 1.3125rem; /* 21px: card and footer titles stay above the 19px text */
   --text-body-lg: 1.1875rem;
-  --text-body: 1.0625rem;
+  --text-body: 1.1875rem; /* 19px for every paragraph */
+  --text-button: 1.0625rem; /* 17px */
   --text-sm: 0.9375rem;
   --text-xs: 0.8125rem;
   --leading-display: 1.2;

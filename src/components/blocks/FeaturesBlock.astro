@@ -164,6 +164,11 @@ const iconVariant = surface === 'navy' ? 'dark' : 'light';
     }
   }
 
+  /* The section header's own margin (32 px) is the gap under the title bar, as in other sections */
+  .section-header .measure > :last-child {
+    margin-block-end: 0;
+  }
+
   .feature__title {
     margin-block-end: var(--space-2);
   }
